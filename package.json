@@ -1,25 +1,27 @@
 {
-  "name": "profile",
+  "name": "jerel-yoshida-profile",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite --config .build/vite.config.js",
-    "build": "vite build --config .build/vite.config.js",
-    "preview": "vite preview --config .build/vite.config.js",
-    "test": "vitest run --config .build/vite.config.js",
-    "test:watch": "vitest --config .build/vite.config.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/groq": "^1.2.1",
+    "@ai-sdk/openai": "^1.3.4",
+    "ai": "^4.2.6",
+    "framer-motion": "^12.5.0",
+    "lucide-react": "^0.475.0",
+    "next": "^15.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^6.2.0",
-    "vitest": "^3.1.1",
-    "@testing-library/react": "^16.2.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "jsdom": "^26.0.0"
+    "@types/node": "^22.13.9",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "typescript": "^5.8.2"
   }
 }
