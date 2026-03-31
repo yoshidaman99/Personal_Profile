@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
-import { FormEvent, useRef, useEffect } from "react";
+import { FormEvent, useRef, useEffect, ChangeEvent } from "react";
 
 interface ChatInputProps {
   value: string;
-  onChange: (val: string) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: FormEvent) => void;
   isLoading: boolean;
   inputRef: React.RefObject<HTMLInputElement | null>;
@@ -43,7 +43,7 @@ export default function ChatInput({
           className="chat-input"
           placeholder="Ask me anything about my projects, skills, experience..."
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={onChange}
           disabled={isLoading}
         />
         <motion.button
