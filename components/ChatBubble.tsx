@@ -3,15 +3,10 @@
 import { motion } from "framer-motion";
 import { Bot, User } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-
-export interface Message {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-}
+import type { UIMessage } from "ai";
 
 interface ChatBubbleProps {
-  message: Message;
+  message: UIMessage;
   isLatest: boolean;
 }
 
