@@ -5,7 +5,7 @@ import { SYSTEM_PROMPT } from "@/lib/prompt";
 export const maxDuration = 30;
 
 const zai = createOpenAI({
-  baseURL: "https://open.bigmodel.cn/api/paas/v4/",
+  baseURL: "https://api.z.ai/api/coding/paas/v4",
   apiKey: process.env.ZAI_API_KEY,
   compatibility: "compatible",
 });
