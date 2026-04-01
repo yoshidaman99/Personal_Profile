@@ -60,6 +60,8 @@ export default function RainbowCursor() {
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("touchmove", onMove);
+      inputEl?.removeEventListener("focus", onFocus);
+      inputEl?.removeEventListener("blur", onBlur);
       cancelAnimationFrame(raf);
     };
   }, []);
