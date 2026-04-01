@@ -25,7 +25,7 @@ export default function RainbowCursor() {
     if (window.matchMedia("(pointer: coarse)").matches && !window.matchMedia("(pointer: fine)").matches) return;
 
     const canvas = document.createElement("canvas");
-    canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50;";
+    canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;";
     document.body.appendChild(canvas);
     canvasRef.current = canvas;
 
