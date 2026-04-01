@@ -2,14 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
-import { FormEvent, useRef, useEffect, ChangeEvent } from "react";
+import { FormEvent, useRef, useEffect, ChangeEvent, KeyboardEvent } from "react";
 
 interface ChatInputProps {
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: (e: FormEvent) => void;
   isLoading: boolean;
-  inputRef: React.RefObject<HTMLInputElement | null>;
+  inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 export default function ChatInput({
@@ -27,6 +27,22 @@ export default function ChatInput({
     }
   }, [isLoading, inputRef]);
 
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 150) + "px";
+  }, [value, inputRef]);
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (value.trim() && !isLoading) {
+        onSubmit(e as unknown as FormEvent);
+      }
+    }
+  };
+
   return (
     <motion.form
       ref={containerRef}
@@ -37,14 +53,15 @@ export default function ChatInput({
       transition={{ duration: 0.5, delay: 1.2 }}
     >
       <div className="chat-input-wrapper">
-        <input
+        <textarea
           ref={inputRef}
-          type="text"
           className="chat-input"
           placeholder="Ask me anything about my projects, skills, experience..."
           value={value}
           onChange={onChange}
+          onKeyDown={handleKeyDown}
           disabled={isLoading}
+          rows={1}
         />
         <motion.button
           type="submit"
@@ -56,6 +73,9 @@ export default function ChatInput({
           <Send size={18} />
         </motion.button>
       </div>
+      <span className="chat-input-hint">
+        Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
+      </span>
     </motion.form>
   );
 }
