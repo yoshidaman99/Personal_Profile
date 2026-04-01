@@ -8,15 +8,27 @@ const DOT_BASE_SIZE = 24;
 export default function RainbowCursor() {
   const dotsRef = useRef<HTMLDivElement[]>([]);
   const posRef = useRef({ x: -100, y: -100 });
+  const visibleRef = useRef(true);
   const trailRef = useRef<{ x: number; y: number }[]>(
     Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }))
   );
 
   useEffect(() => {
+    const isInteractive = (el: HTMLElement | null): boolean => {
+      if (!el) return false;
+      const tag = el.tagName;
+      if (tag === "BUTTON" || tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT" || tag === "A") return true;
+      if (el.closest("button, textarea, input, select, a, [role='button'], [role='textbox']")) return true;
+      return false;
+    };
+
     const onMove = (e: MouseEvent | TouchEvent) => {
       const x = "touches" in e ? e.touches[0].clientX : e.clientX;
       const y = "touches" in e ? e.touches[0].clientY : e.clientY;
       posRef.current = { x, y };
+      if ("target" in e) {
+        visibleRef.current = !isInteractive(e.target as HTMLElement);
+      }
     };
 
     window.addEventListener("mousemove", onMove);
