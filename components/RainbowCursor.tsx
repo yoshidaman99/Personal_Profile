@@ -22,6 +22,8 @@ export default function RainbowCursor() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches && !window.matchMedia("(pointer: fine)").matches) return;
+
     const canvas = document.createElement("canvas");
     canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;";
     document.body.appendChild(canvas);
