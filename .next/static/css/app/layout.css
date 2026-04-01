@@ -595,6 +595,8 @@ body {
   font-size: 0.9rem;
   font-family: var(--font);
   padding: 0.5rem 0;
+  position: relative;
+  z-index: 2;
 }
 
 .chat-input::placeholder {
@@ -617,6 +619,8 @@ body {
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
+  position: relative;
+  z-index: 2;
   transition: opacity 0.05s ease, transform 0.05s ease, background 0.05s ease;
 }
 
