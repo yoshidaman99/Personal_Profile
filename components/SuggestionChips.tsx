@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 
 interface SuggestionChipsProps {
   onSelect: (text: string) => void;
-  visible: boolean;
 }
 
 const suggestions = [
@@ -16,9 +15,7 @@ const suggestions = [
 
 export default function SuggestionChips({
   onSelect,
-  visible,
 }: SuggestionChipsProps) {
-  if (!visible) return null;
 
   return (
     <div className="chips-container">
@@ -38,6 +35,7 @@ export default function SuggestionChips({
             scale: 1.04,
             borderColor: "var(--accent)",
             boxShadow: "0 0 20px var(--accent-dim)",
+            transition: { duration: 0.1 },
           }}
           whileTap={{ scale: 0.97 }}
         >
