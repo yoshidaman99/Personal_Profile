@@ -161,7 +161,7 @@ export default function RainbowCursor() {
           const progress = i / TRAIL_LENGTH;
           const size = DOT_BASE_SIZE * (1 - progress * 0.3);
           const hue = (i * (360 / TRAIL_LENGTH) + now * 0.1) % 360;
-          const alpha = 0.15 * (1 - progress * 0.5);
+          const alpha = 0.18 * (1 - progress * 0.5) * idleOpacity;
           const grad = ctx.createRadialGradient(trail[i].x, trail[i].y, 0, trail[i].x, trail[i].y, size);
           grad.addColorStop(0, `hsla(${hue}, 100%, 60%, ${alpha})`);
           grad.addColorStop(1, `hsla(${hue}, 100%, 60%, 0)`);
