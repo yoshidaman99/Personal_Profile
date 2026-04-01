@@ -18,7 +18,7 @@ export default function Home() {
       api: "/api/chat",
     });
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [showChips, setShowChips] = useState(true);
   const [avatarState, setAvatarState] = useState<AvatarState>("idle");
 
