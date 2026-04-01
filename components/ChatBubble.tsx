@@ -33,7 +33,7 @@ export default function ChatBubble({ message, isLatest }: ChatBubbleProps) {
     >
       {!isUser && (
         <div className="bubble-avatar">
-          <Bot size={14} strokeWidth={2.5} />
+          <img src="/avatar-frames/frame_0018.webp" alt="" className="bubble-avatar-img" />
         </div>
       )}
       <div className={`bubble ${isUser ? "bubble--user" : "bubble--avatar"}`}>
