@@ -619,7 +619,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 0.35rem;
-  margin-top: 0.5rem;
+  margin-top: 20px;
   position: relative;
   z-index: 2;
 }
