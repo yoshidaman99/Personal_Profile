@@ -6,7 +6,7 @@ import { FormEvent, useRef, useEffect, ChangeEvent, KeyboardEvent } from "react"
 
 interface ChatInputProps {
   value: string;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: (value: string) => void;
   onSubmit: (e: FormEvent) => void;
   isLoading: boolean;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
