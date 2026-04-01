@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Send, Square } from "lucide-react";
+import { Send, Square, User, FolderKanban, Wrench, Sparkles, Mail } from "lucide-react";
 import { FormEvent, useRef, useEffect, ChangeEvent, KeyboardEvent } from "react";
 
 interface ChatInputProps {
