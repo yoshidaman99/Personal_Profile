@@ -152,8 +152,8 @@ export default function RainbowCursor() {
 
       trail[0] = { x: pos.x, y: pos.y };
       for (let i = 1; i < TRAIL_LENGTH; i++) {
-        trail[i].x += (trail[i - 1].x - trail[i].x) * 0.35;
-        trail[i].y += (trail[i - 1].y - trail[i].y) * 0.35;
+        trail[i].x += (trail[i - 1].x - trail[i].x) * 0.15;
+        trail[i].y += (trail[i - 1].y - trail[i].y) * 0.15;
       }
 
       if (visible) {
