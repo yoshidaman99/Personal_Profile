@@ -627,7 +627,7 @@ body {
 .quick-nav-btn {
   background: transparent;
   border: none;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-family: var(--font);
   font-size: 1rem;
   font-weight: 500;
