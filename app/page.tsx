@@ -58,6 +58,11 @@ export default function Home() {
     append({ role: "user", content: text });
   };
 
+  const handleQuickNav = useCallback((text: string) => {
+    setShowChips(false);
+    append({ role: "user", content: text });
+  }, [append]);
+
   const hasMessages = messages.length > 0;
 
   return (
