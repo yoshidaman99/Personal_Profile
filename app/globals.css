@@ -674,6 +674,11 @@ body {
     height: 121px;
   }
 
+  .avatar-frame--image {
+    width: 150px;
+    height: 150px;
+  }
+
   .greeting-title {
     font-size: 1.35rem;
   }
