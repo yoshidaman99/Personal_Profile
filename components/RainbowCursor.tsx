@@ -41,6 +41,7 @@ export default function RainbowCursor() {
 
     const pos = { x: -100, y: -100 };
     let visible = true;
+    let tabVisible = true;
 
     const trail: { x: number; y: number }[] = Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }));
     const particles: Particle[] = [];
@@ -116,14 +117,25 @@ export default function RainbowCursor() {
       resetIdleTimer();
     };
 
+    const onVisibilityChange = () => {
+      tabVisible = !document.hidden;
+      if (!tabVisible) {
+        clearTimers();
+        ctx.clearRect(0, 0, w, h);
+      }
+    };
+
     window.addEventListener("mousemove", onMove);
     window.addEventListener("touchmove", onMove, { passive: true });
+    document.addEventListener("visibilitychange", onVisibilityChange);
     resetIdleTimer();
 
     let lastFrame = 0;
     let raf: number;
     const animate = (now: number) => {
       raf = requestAnimationFrame(animate);
+
+      if (!tabVisible) return;
 
       const delta = now - lastFrame;
       if (delta < FRAME_INTERVAL * 0.9) return;
@@ -144,15 +156,11 @@ export default function RainbowCursor() {
           const progress = i / TRAIL_LENGTH;
           const size = DOT_BASE_SIZE * (1 - progress * 0.7);
           const hue = (i * (360 / TRAIL_LENGTH) + now * 0.1) % 360;
-        const alpha = 0.4;
-        ctx.beginPath();
-        ctx.arc(trail[i].x, trail[i].y, size / 2, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${hue}, 100%, 60%, ${alpha})`;
-        ctx.shadowBlur = size;
-        ctx.shadowColor = `hsla(${hue}, 100%, 60%, 0.4)`;
+          ctx.beginPath();
+          ctx.arc(trail[i].x, trail[i].y, size / 2, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${hue}, 100%, 60%, 0.4)`;
           ctx.fill();
         }
-        ctx.shadowBlur = 0;
       }
 
       for (let i = particles.length - 1; i >= 0; i--) {
@@ -170,11 +178,8 @@ export default function RainbowCursor() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, size / 2, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.life})`;
-        ctx.shadowBlur = size * 2;
-        ctx.shadowColor = `hsl(${p.hue}, 100%, 60%)`;
         ctx.fill();
       }
-      ctx.shadowBlur = 0;
     };
     raf = requestAnimationFrame(animate);
 
@@ -182,6 +187,7 @@ export default function RainbowCursor() {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("touchmove", onMove);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       clearTimers();
       cancelAnimationFrame(raf);
       cancelAnimationFrame(checkInteractiveRaf);
