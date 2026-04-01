@@ -84,7 +84,8 @@ export default function RainbowCursor() {
             borderRadius: "50%",
             pointerEvents: "none",
             zIndex: 9999,
-            willChange: "transform, backgroundColor",
+            willChange: "transform, backgroundColor, opacity",
+            transition: "opacity 0.2s ease",
           }}
         />
       ))}
