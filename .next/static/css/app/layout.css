@@ -562,7 +562,7 @@ body {
 .chat-input-wrapper {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: 100px;
