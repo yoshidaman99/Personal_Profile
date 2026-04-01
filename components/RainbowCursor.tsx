@@ -6,9 +6,10 @@ const TRAIL_LENGTH = 20;
 const DOT_BASE_SIZE = 24;
 const IDLE_TIMEOUT = 2000;
 const FIREWORK_PARTICLES = 12;
+const MAX_PARTICLES = 200;
+const FRAME_INTERVAL = 1000 / 60;
 
 interface Particle {
-  el: HTMLDivElement;
   x: number;
   y: number;
   vx: number;
@@ -18,50 +19,63 @@ interface Particle {
 }
 
 export default function RainbowCursor() {
-  const dotsRef = useRef<HTMLDivElement[]>([]);
-  const posRef = useRef({ x: -100, y: -100 });
-  const visibleRef = useRef(true);
-  const trailRef = useRef<{ x: number; y: number }[]>(
-    Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }))
-  );
-  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const idleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const lastMoveRef = useRef(0);
-  const particlesRef = useRef<Particle[]>([]);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    const container = document.createElement("div");
-    container.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;";
-    document.body.appendChild(container);
-    containerRef.current = container;
+    const canvas = document.createElement("canvas");
+    canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;";
+    document.body.appendChild(canvas);
+    canvasRef.current = canvas;
 
-    const isOverInteractive = (x: number, y: number) => {
-      const el = document.elementFromPoint(x, y) as HTMLElement | null;
-      if (!el) return false;
-      const tag = el.tagName.toLowerCase();
-      if (tag === "button" || tag === "textarea" || tag === "input" || tag === "a" || tag === "select") return true;
-      if (el.closest("button, a, textarea, input, select, [role='button']")) return true;
-      if (el.classList.contains("chat-input") || el.closest(".chat-input-wrapper, .chat-input-container")) return true;
-      return false;
+    const ctx = canvas.getContext("2d", { alpha: true })!;
+    let w = 0, h = 0;
+    const resize = () => {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * devicePixelRatio;
+      canvas.height = h * devicePixelRatio;
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const pos = { x: -100, y: -100 };
+    const prevPos = { x: -100, y: -100 };
+    let visible = true;
+    let moving = false;
+
+    const trail: { x: number; y: number }[] = Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }));
+    const particles: Particle[] = [];
+
+    const interactiveTags = new Set(["button", "textarea", "input", "a", "select"]);
+
+    let checkInteractiveRaf = 0;
+    let lastInteractiveCheck = false;
+
+    const checkInteractive = (x: number, y: number) => {
+      cancelAnimationFrame(checkInteractiveRaf);
+      checkInteractiveRaf = requestAnimationFrame(() => {
+        const el = document.elementFromPoint(x, y) as HTMLElement | null;
+        if (!el) { lastInteractiveCheck = false; return; }
+        const tag = el.tagName.toLowerCase();
+        if (interactiveTags.has(tag) || el.closest("button, a, textarea, input, select, [role='button']") ||
+            el.classList.contains("chat-input") || el.closest(".chat-input-wrapper, .chat-input-container")) {
+          lastInteractiveCheck = true;
+        } else {
+          lastInteractiveCheck = false;
+        }
+        visible = !lastInteractiveCheck;
+      });
     };
 
     const spawnFirework = (cx: number, cy: number) => {
+      if (particles.length >= MAX_PARTICLES) return;
       const baseHue = Math.random() * 360;
       for (let i = 0; i < FIREWORK_PARTICLES; i++) {
         const angle = (Math.PI * 2 * i) / FIREWORK_PARTICLES + (Math.random() - 0.5) * 0.5;
         const speed = 2 + Math.random() * 4;
-        const el = document.createElement("div");
-        el.style.cssText = `
-          position:fixed;top:0;left:0;
-          width:6px;height:6px;border-radius:50%;
-          pointer-events:none;will-change:transform,opacity;
-        `;
-        container.appendChild(el);
-        particlesRef.current.push({
-          el,
-          x: cx,
-          y: cy,
+        particles.push({
+          x: cx, y: cy,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 1,
@@ -70,20 +84,24 @@ export default function RainbowCursor() {
       }
     };
 
+    let idleTimer: ReturnType<typeof setTimeout> | null = null;
+    let idleInterval: ReturnType<typeof setInterval> | null = null;
+
+    const clearTimers = () => {
+      if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+      if (idleInterval) { clearInterval(idleInterval); idleInterval = null; }
+    };
+
     const resetIdleTimer = () => {
-      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-      if (idleIntervalRef.current) clearInterval(idleIntervalRef.current);
-      idleTimerRef.current = null;
-      idleIntervalRef.current = null;
-      lastMoveRef.current = performance.now();
-      idleTimerRef.current = setTimeout(() => {
-        if (visibleRef.current) {
-          spawnFirework(posRef.current.x, posRef.current.y);
-          idleIntervalRef.current = setInterval(() => {
-            if (visibleRef.current) {
+      clearTimers();
+      idleTimer = setTimeout(() => {
+        if (visible) {
+          spawnFirework(pos.x, pos.y);
+          idleInterval = setInterval(() => {
+            if (visible) {
               spawnFirework(
-                posRef.current.x + (Math.random() - 0.5) * 40,
-                posRef.current.y + (Math.random() - 0.5) * 40
+                pos.x + (Math.random() - 0.5) * 40,
+                pos.y + (Math.random() - 0.5) * 40
               );
             }
           }, 600);
@@ -94,8 +112,10 @@ export default function RainbowCursor() {
     const onMove = (e: MouseEvent | TouchEvent) => {
       const x = "touches" in e ? e.touches[0].clientX : e.clientX;
       const y = "touches" in e ? e.touches[0].clientY : e.clientY;
-      posRef.current = { x, y };
-      visibleRef.current = !isOverInteractive(x, y);
+      pos.x = x;
+      pos.y = y;
+      moving = true;
+      checkInteractive(x, y);
       resetIdleTimer();
     };
 
@@ -103,29 +123,46 @@ export default function RainbowCursor() {
     window.addEventListener("touchmove", onMove, { passive: true });
     resetIdleTimer();
 
+    let lastFrame = 0;
     let raf: number;
-    const animate = () => {
-      const trail = trailRef.current;
-      trail[0] = { ...posRef.current };
-      for (let i = 1; i < TRAIL_LENGTH; i++) {
-        trail[i].x += (trail[i - 1].x - trail[i].x) * 0.35;
-        trail[i].y += (trail[i - 1].y - trail[i].y) * 0.35;
+    const animate = (now: number) => {
+      raf = requestAnimationFrame(animate);
+
+      const delta = now - lastFrame;
+      if (delta < FRAME_INTERVAL * 0.9) return;
+      lastFrame = now;
+
+      ctx.clearRect(0, 0, w, h);
+
+      if (!visible && particles.length === 0) return;
+
+      if (moving) {
+        trail[0] = { x: pos.x, y: pos.y };
+        for (let i = 1; i < TRAIL_LENGTH; i++) {
+          trail[i].x += (trail[i - 1].x - trail[i].x) * 0.35;
+          trail[i].y += (trail[i - 1].y - trail[i].y) * 0.35;
+        }
+        prevPos.x = pos.x;
+        prevPos.y = pos.y;
+        moving = false;
       }
 
-      dotsRef.current.forEach((dot, i) => {
-        if (!dot) return;
-        const progress = i / TRAIL_LENGTH;
-        const size = DOT_BASE_SIZE * (1 - progress * 0.7);
-        const hue = (i * (360 / TRAIL_LENGTH) + performance.now() * 0.1) % 360;
-        dot.style.transform = `translate(${trail[i].x - size / 2}px, ${trail[i].y - size / 2}px)`;
-        dot.style.width = `${size}px`;
-        dot.style.height = `${size}px`;
-        dot.style.backgroundColor = `hsl(${hue}, 100%, 60%)`;
-        dot.style.boxShadow = `0 0 ${size}px hsl(${hue}, 100%, 60%)`;
-        dot.style.opacity = visibleRef.current ? "1" : "0";
-      });
+      if (visible) {
+        for (let i = TRAIL_LENGTH - 1; i >= 0; i--) {
+          const progress = i / TRAIL_LENGTH;
+          const size = DOT_BASE_SIZE * (1 - progress * 0.7);
+          const hue = (i * (360 / TRAIL_LENGTH) + now * 0.1) % 360;
+          const alpha = 1 - progress * 0.3;
+          ctx.beginPath();
+          ctx.arc(trail[i].x, trail[i].y, size / 2, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${hue}, 100%, 60%, ${alpha})`;
+          ctx.shadowBlur = size;
+          ctx.shadowColor = `hsl(${hue}, 100%, 60%)`;
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+      }
 
-      const particles = particlesRef.current;
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.x += p.vx;
@@ -134,57 +171,31 @@ export default function RainbowCursor() {
         p.vx *= 0.98;
         p.life -= 0.015;
         if (p.life <= 0) {
-          p.el.remove();
           particles.splice(i, 1);
           continue;
         }
         const size = 6 * p.life;
-        p.el.style.transform = `translate(${p.x - size / 2}px, ${p.y - size / 2}px)`;
-        p.el.style.width = `${size}px`;
-        p.el.style.height = `${size}px`;
-        p.el.style.backgroundColor = `hsl(${p.hue}, 100%, 60%)`;
-        p.el.style.boxShadow = `0 0 ${size * 2}px hsl(${p.hue}, 100%, 60%)`;
-        p.el.style.opacity = `${p.life}`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, size / 2, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.life})`;
+        ctx.shadowBlur = size * 2;
+        ctx.shadowColor = `hsl(${p.hue}, 100%, 60%)`;
+        ctx.fill();
       }
-
-      raf = requestAnimationFrame(animate);
+      ctx.shadowBlur = 0;
     };
     raf = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("touchmove", onMove);
-      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-      if (idleIntervalRef.current) clearInterval(idleIntervalRef.current);
+      window.removeEventListener("resize", resize);
+      clearTimers();
       cancelAnimationFrame(raf);
-      particlesRef.current.forEach((p) => p.el.remove());
-      particlesRef.current = [];
-      container.remove();
+      cancelAnimationFrame(checkInteractiveRaf);
+      canvas.remove();
     };
   }, []);
 
-  return (
-    <>
-      {Array.from({ length: TRAIL_LENGTH }).map((_, i) => (
-        <div
-          key={i}
-          ref={(el) => {
-            if (el) dotsRef.current[i] = el;
-          }}
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: DOT_BASE_SIZE,
-            height: DOT_BASE_SIZE,
-            borderRadius: "50%",
-            pointerEvents: "none",
-            zIndex: 9999,
-            willChange: "transform, backgroundColor, opacity",
-            transition: "opacity 0.2s ease",
-          }}
-        />
-      ))}
-    </>
-  );
+  return null;
 }
