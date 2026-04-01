@@ -578,6 +578,29 @@ body {
   opacity: 0.5;
 }
 
+.chat-input-hint {
+  display: block;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+  margin-top: 0.4rem;
+  padding: 0 1.25rem;
+  position: relative;
+  z-index: 2;
+}
+
+.chat-input-hint kbd {
+  display: inline-block;
+  padding: 0.05rem 0.3rem;
+  font-family: var(--font);
+  font-size: 0.65rem;
+  background: var(--border);
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  margin: 0 0.1rem;
+}
+
 .send-button {
   width: 40px;
   height: 40px;
