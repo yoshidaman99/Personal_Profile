@@ -532,6 +532,7 @@ body {
 }
 
 .chat-input-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
   background: var(--bg-input);
@@ -539,11 +540,50 @@ body {
   border-radius: 100px;
   padding: 0.35rem 0.35rem 0.35rem 1.25rem;
   transition: border-color 0.05s ease, box-shadow 0.05s ease, background 0.05s ease;
+  overflow: hidden;
+}
+
+.chat-input-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #ff0000,
+    #ff8800,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0088ff,
+    #8800ff,
+    #ff00ff,
+    #ff0000
+  );
+  animation: rotate-glow 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.chat-input-wrapper:focus-within::before {
+  opacity: 0.5;
+}
+
+.chat-input-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--bg-input);
+  border-radius: 100px;
+  z-index: 1;
 }
 
 .chat-input-wrapper:focus-within {
-  border-color: var(--input-focus-border);
-  box-shadow: 0 0 0 3px var(--input-focus-ring), 0 0 30px var(--input-focus-outer);
+  border-color: transparent;
+  box-shadow: 0 0 30px rgba(255, 100, 100, 0.15);
 }
 
 .chat-input {
