@@ -133,6 +133,7 @@ export default function Home() {
           value={input}
           onChange={setInput}
           onSubmit={handleSubmit}
+          onStop={stop}
           isLoading={isLoading}
           inputRef={inputRef}
         />
