@@ -23,6 +23,7 @@ export default function Avatar({ state }: AvatarProps) {
   const mousePos = useRef({ x: 0.5, y: 0.5 });
   const imagesRef = useRef<Map<number, HTMLImageElement>>(new Map());
   const [loaded, setLoaded] = useState(false);
+  const debugRef = useRef(false);
   const [debug, setDebug] = useState(false);
   const [debugInfo, setDebugInfo] = useState({ x: 0.5, y: 0.5, frame: DEFAULT_FRAME });
   const rafRef = useRef<number>(0);
