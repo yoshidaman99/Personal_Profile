@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   }
 
   const result = streamText({
-    model: getModel(),
+    model: zai("glm-4.7"),
     system: SYSTEM_PROMPT,
     messages,
     temperature: 0.7,
