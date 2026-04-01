@@ -130,7 +130,7 @@ export default function Home() {
 
         <ChatInput
           value={input}
-          onChange={handleInputChange}
+          onChange={setInput}
           onSubmit={handleSubmit}
           isLoading={isLoading}
           inputRef={inputRef}
