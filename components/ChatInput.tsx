@@ -21,6 +21,7 @@ export default function ChatInput({
   onStop,
   isLoading,
   inputRef,
+  onQuickNav,
 }: ChatInputProps) {
   const containerRef = useRef<HTMLFormElement>(null);
 
