@@ -89,6 +89,18 @@ export default function ChatInput({
           </motion.button>
         )}
       </div>
+      <div className="quick-nav">
+        {["me", "projects", "skills", "fun", "contact"].map((label) => (
+          <button
+            key={label}
+            type="button"
+            className="quick-nav-btn"
+            onClick={() => onQuickNav(`Tell me about ${label === "me" ? "yourself" : label}`)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
       <span className="chat-input-hint">
         Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
       </span>
