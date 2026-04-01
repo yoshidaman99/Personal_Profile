@@ -97,18 +97,9 @@ export default function RainbowCursor() {
 
     const resetIdleTimer = () => {
       clearTimers();
+      isIdle = false;
       idleTimer = setTimeout(() => {
-        if (visible) {
-          spawnFirework(pos.x, pos.y);
-          idleInterval = setInterval(() => {
-            if (visible) {
-              spawnFirework(
-                pos.x + (Math.random() - 0.5) * 40,
-                pos.y + (Math.random() - 0.5) * 40
-              );
-            }
-          }, 600);
-        }
+        isIdle = true;
       }, IDLE_TIMEOUT);
     };
 
