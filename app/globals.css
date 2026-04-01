@@ -555,6 +555,8 @@ body {
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
+  position: relative;
+  z-index: 2;
   transition: opacity 0.05s ease, transform 0.05s ease, background 0.05s ease;
 }
 
