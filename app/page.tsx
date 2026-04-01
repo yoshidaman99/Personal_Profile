@@ -74,6 +74,21 @@ export default function Home() {
           }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
+          <AnimatePresence>
+            {hasMessages && (
+              <motion.button
+                className="back-btn"
+                onClick={handleBack}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.94 }}
+              >
+                <ArrowLeft size={16} />
+              </motion.button>
+            )}
+          </AnimatePresence>
           <Avatar state={avatarState} />
 
           <motion.div
