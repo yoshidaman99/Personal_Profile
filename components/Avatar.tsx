@@ -57,7 +57,7 @@ export default function Avatar({ state }: AvatarProps) {
       };
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "a" && e.ctrlKey) {
