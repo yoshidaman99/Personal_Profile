@@ -91,6 +91,11 @@ export default function Avatar({ state }: AvatarProps) {
 
     drawDefault();
 
+    let thinkIdx = 0;
+    let thinkTimer = 0;
+
+    const THINK_FRAMES = [183, 184, 185, 186, 187];
+
     const update = () => {
       if (!loaded) {
         drawDefault();
@@ -98,23 +103,36 @@ export default function Avatar({ state }: AvatarProps) {
         return;
       }
 
-      const x = mousePos.current.x;
-      let targetFrame: number;
-      if (x <= 0.46) {
-        targetFrame = Math.round(109 - (x / 0.46) * 63);
-      } else if (x <= 0.5) {
-        targetFrame = Math.round(46 - ((x - 0.46) / 0.04) * 25);
-      } else if (x <= 0.559) {
-        targetFrame = Math.round(21 + ((x - 0.5) / 0.059) * 129);
-      } else {
-        targetFrame = Math.round(150 + ((x - 0.559) / 0.441) * 42);
-      }
+      let clamped: number;
 
-      const current = frameRef.current;
-      const diff = targetFrame - current;
-      const lerped = Math.round(current + diff * 0.12);
-      const clamped = Math.max(1, Math.min(TOTAL_FRAMES, lerped));
-      frameRef.current = clamped;
+      if (state === "thinking") {
+        thinkTimer++;
+        if (thinkTimer % 8 === 0) {
+          thinkIdx = (thinkIdx + 1) % THINK_FRAMES.length;
+        }
+        clamped = THINK_FRAMES[thinkIdx];
+        frameRef.current = clamped;
+      } else {
+        thinkIdx = 0;
+        thinkTimer = 0;
+        const x = mousePos.current.x;
+        let targetFrame: number;
+        if (x <= 0.46) {
+          targetFrame = Math.round(109 - (x / 0.46) * 63);
+        } else if (x <= 0.5) {
+          targetFrame = Math.round(46 - ((x - 0.46) / 0.04) * 25);
+        } else if (x <= 0.559) {
+          targetFrame = Math.round(21 + ((x - 0.5) / 0.059) * 129);
+        } else {
+          targetFrame = Math.round(150 + ((x - 0.559) / 0.441) * 42);
+        }
+
+        const current = frameRef.current;
+        const diff = targetFrame - current;
+        const lerped = Math.round(current + diff * 0.12);
+        clamped = Math.max(1, Math.min(TOTAL_FRAMES, lerped));
+        frameRef.current = clamped;
+      }
 
       if (debugRef.current) {
         setDebugInfo({ x, y: mousePos.current.y, frame: clamped });
