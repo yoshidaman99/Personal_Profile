@@ -135,7 +135,7 @@ export default function Avatar({ state }: AvatarProps) {
       }
 
       if (debugRef.current) {
-        setDebugInfo({ x, y: mousePos.current.y, frame: clamped });
+        setDebugInfo({ x: mousePos.current.x, y: mousePos.current.y, frame: clamped });
       }
 
       const img = imagesRef.current.get(clamped);
