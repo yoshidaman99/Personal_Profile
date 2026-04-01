@@ -53,6 +53,7 @@ export default function RainbowCursor() {
         dot.style.height = `${size}px`;
         dot.style.backgroundColor = `hsl(${hue}, 100%, 60%)`;
         dot.style.boxShadow = `0 0 ${size}px hsl(${hue}, 100%, 60%)`;
+        dot.style.opacity = visibleRef.current ? "1" : "0";
       });
 
       raf = requestAnimationFrame(animate);
