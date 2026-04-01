@@ -2,16 +2,17 @@
 
 import { useChat } from "ai/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Avatar from "@/components/Avatar";
 import ChatBubble from "@/components/ChatBubble";
 import SuggestionChips from "@/components/SuggestionChips";
 import ChatInput from "@/components/ChatInput";
+import ThemeToggle from "@/components/ThemeToggle";
 
 type AvatarState = "idle" | "thinking" | "speaking";
 
 export default function Home() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+  const { messages, input, handleInputChange, handleSubmit, isLoading, append } =
     useChat({
       api: "/api/chat",
     });
@@ -45,13 +46,7 @@ export default function Home() {
 
   const handleChipSelect = (text: string) => {
     setShowChips(false);
-    handleInputChange({ target: { value: text } } as any);
-    setTimeout(() => {
-      const form = document.querySelector("form") as HTMLFormElement;
-      if (form) {
-        form.requestSubmit();
-      }
-    }, 100);
+    append({ role: "user", content: text });
   };
 
   const hasMessages = messages.length > 0;
@@ -59,8 +54,9 @@ export default function Home() {
   return (
     <main className="main">
       <div className="noise-overlay" />
+      <ThemeToggle />
 
-      <div className="content-wrapper">
+      <div className={`content-wrapper${!hasMessages ? " content-wrapper--centered" : ""}`}>
         <motion.div
           className="avatar-section"
           animate={{
@@ -89,31 +85,33 @@ export default function Home() {
 
         <AnimatePresence>
           {showChips && (
-            <SuggestionChips onSelect={handleChipSelect} visible={showChips} />
+            <SuggestionChips onSelect={handleChipSelect} />
           )}
         </AnimatePresence>
 
-        <div className="messages-area">
-          <AnimatePresence mode="popLayout">
-            {messages.map((message, i) => (
-              <ChatBubble
-                key={message.id}
-                message={message}
-                isLatest={i === messages.length - 1}
-              />
-            ))}
-          </AnimatePresence>
-          <div ref={messagesEndRef} />
-        </div>
-      </div>
+        {hasMessages && (
+          <div className="messages-area">
+            <AnimatePresence mode="popLayout">
+              {messages.map((message, i) => (
+                <ChatBubble
+                  key={message.id}
+                  message={message}
+                  isLatest={i === messages.length - 1}
+                />
+              ))}
+            </AnimatePresence>
+            <div ref={messagesEndRef} />
+          </div>
+        )}
 
-      <ChatInput
-        value={input}
-        onChange={handleInputChange}
-        onSubmit={handleSubmit}
-        isLoading={isLoading}
-        inputRef={inputRef}
-      />
+        <ChatInput
+          value={input}
+          onChange={handleInputChange}
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
+          inputRef={inputRef}
+        />
+      </div>
     </main>
   );
 }
