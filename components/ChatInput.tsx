@@ -79,7 +79,7 @@ export default function ChatInput({
         <textarea
           ref={inputRef}
           className="chat-input"
-          placeholder="Ask me anything..."
+          placeholder={placeholder.current}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
