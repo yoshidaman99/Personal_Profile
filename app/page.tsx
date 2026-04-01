@@ -141,6 +141,7 @@ export default function Home() {
           onStop={stop}
           isLoading={isLoading}
           inputRef={inputRef}
+          onQuickNav={handleQuickNav}
         />
       </div>
     </main>
