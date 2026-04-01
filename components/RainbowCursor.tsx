@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 
 const TRAIL_LENGTH = 50;
-const DOT_BASE_SIZE = 140;
-const IDLE_TIMEOUT = 2000;
+const DOT_BASE_SIZE = 220;
+const IDLE_TIMEOUT = 3000;
 const FIREWORK_PARTICLES = 10;
 const MAX_PARTICLES = 80;
 const FRAME_INTERVAL = 1000 / 30;
