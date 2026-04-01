@@ -58,7 +58,7 @@ export default function ChatInput({
           className="chat-input"
           placeholder="Ask me anything about my projects, skills, experience..."
           value={value}
-          onChange={onChange}
+          onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={isLoading}
           rows={1}
