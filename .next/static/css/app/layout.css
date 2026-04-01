@@ -552,10 +552,8 @@ body {
   height: 200%;
   background: conic-gradient(
     from 0deg,
-    transparent 0%,
-    var(--accent) 15%,
-    transparent 30%,
-    transparent 100%
+    var(--accent) 0%,
+    var(--accent) 100%
   );
   animation: rotate-glow 2s linear infinite;
   opacity: 0;
