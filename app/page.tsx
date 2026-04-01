@@ -3,6 +3,7 @@
 import { useChat } from "ai/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState, useCallback } from "react";
+import { ArrowLeft } from "lucide-react";
 import Avatar from "@/components/Avatar";
 import ChatBubble from "@/components/ChatBubble";
 import SuggestionChips from "@/components/SuggestionChips";
