@@ -72,10 +72,21 @@ export default function RainbowCursor() {
 
     const resetIdleTimer = () => {
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      if (idleIntervalRef.current) clearInterval(idleIntervalRef.current);
+      idleTimerRef.current = null;
+      idleIntervalRef.current = null;
       lastMoveRef.current = performance.now();
       idleTimerRef.current = setTimeout(() => {
         if (visibleRef.current) {
           spawnFirework(posRef.current.x, posRef.current.y);
+          idleIntervalRef.current = setInterval(() => {
+            if (visibleRef.current) {
+              spawnFirework(
+                posRef.current.x + (Math.random() - 0.5) * 40,
+                posRef.current.y + (Math.random() - 0.5) * 40
+              );
+            }
+          }, 600);
         }
       }, IDLE_TIMEOUT);
     };
