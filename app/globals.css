@@ -554,6 +554,20 @@ body {
   padding: 0.5rem 0;
   position: relative;
   z-index: 2;
+  resize: none;
+  max-height: 150px;
+  line-height: 1.5;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+}
+
+.chat-input::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-input::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 2px;
 }
 
 .chat-input::placeholder {
