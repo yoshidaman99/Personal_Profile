@@ -691,11 +691,11 @@ body {
 .quick-nav-btn {
   background: transparent;
   border: none;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-family: var(--font);
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.65rem 1.25rem;
   border-radius: 100px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -708,6 +708,8 @@ body {
 }
 
 .quick-nav-btn svg {
+  width: 18px;
+  height: 18px;
   opacity: 0.5;
   transition: opacity 0.2s ease;
 }
@@ -725,7 +727,7 @@ body {
   position: absolute;
   right: -4px;
   color: var(--border);
-  font-size: 0.65rem;
+  font-size: 1rem;
   pointer-events: none;
 }
 
