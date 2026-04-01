@@ -636,6 +636,9 @@ body {
   cursor: pointer;
   transition: all 0.15s ease;
   letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .quick-nav-btn:hover {
