@@ -233,9 +233,10 @@ body {
 }
 
 .theme-toggle:hover {
+  background: var(--chip-hover-bg);
   border-color: var(--accent);
   color: var(--accent);
-  box-shadow: 0 0 16px var(--accent-dim);
+  box-shadow: 0 0 20px var(--accent-dim);
 }
 
 .content-wrapper {
