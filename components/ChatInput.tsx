@@ -24,6 +24,25 @@ export default function ChatInput({
   onQuickNav,
 }: ChatInputProps) {
   const containerRef = useRef<HTMLFormElement>(null);
+  const placeholder = useRef(
+    typeof window !== "undefined" && window.innerWidth < 640
+      ? "Ask me anything..."
+      : "Ask me anything about my projects, skills, experience..."
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const update = (e: MediaQueryListEvent | MediaQueryList) => {
+      placeholder.current = e.matches
+        ? "Ask me anything..."
+        : "Ask me anything about my projects, skills, experience...";
+      const el = inputRef.current;
+      if (el) el.placeholder = placeholder.current;
+    };
+    update(mq);
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [inputRef]);
 
   useEffect(() => {
     if (!isLoading) {
