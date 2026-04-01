@@ -848,6 +848,27 @@ body {
     padding: 0.5rem 1rem 1rem;
   }
 
+  .quick-nav {
+    gap: 4px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .quick-nav-btn {
+    font-size: 0.8rem;
+    padding: 0.45rem 0.8rem;
+  }
+
+  .quick-nav-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .quick-nav-btn:not(:last-child)::after {
+    font-size: 0.8rem;
+    right: -3px;
+  }
+
   .messages-area {
     padding: 0.5rem 0;
   }
