@@ -50,6 +50,7 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem("theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}})()`,
           }}
         />
+        <RainbowCursor />
         {children}
       </body>
     </html>
