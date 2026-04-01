@@ -218,7 +218,7 @@ body {
   position: fixed;
   top: 1.25rem;
   right: 1.25rem;
-  z-index: 50;
+  z-index: 200;
   width: 38px;
   height: 38px;
   border-radius: 50%;
