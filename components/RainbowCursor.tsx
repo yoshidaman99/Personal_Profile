@@ -159,11 +159,15 @@ export default function RainbowCursor() {
       if (visible) {
         for (let i = TRAIL_LENGTH - 1; i >= 0; i--) {
           const progress = i / TRAIL_LENGTH;
-          const size = DOT_BASE_SIZE * (1 - progress * 0.7);
+          const size = DOT_BASE_SIZE * (1 - progress * 0.5);
           const hue = (i * (360 / TRAIL_LENGTH) + now * 0.1) % 360;
+          const alpha = 0.12 * (1 - progress * 0.6);
+          const grad = ctx.createRadialGradient(trail[i].x, trail[i].y, 0, trail[i].x, trail[i].y, size);
+          grad.addColorStop(0, `hsla(${hue}, 100%, 60%, ${alpha})`);
+          grad.addColorStop(1, `hsla(${hue}, 100%, 60%, 0)`);
           ctx.beginPath();
-          ctx.arc(trail[i].x, trail[i].y, size / 2, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${hue}, 100%, 60%, 0.4)`;
+          ctx.arc(trail[i].x, trail[i].y, size, 0, Math.PI * 2);
+          ctx.fillStyle = grad;
           ctx.fill();
         }
       }
