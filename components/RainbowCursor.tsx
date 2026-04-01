@@ -128,7 +128,6 @@ export default function RainbowCursor() {
     };
 
     window.addEventListener("mousemove", onMove);
-    window.addEventListener("touchmove", onMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
     resetIdleTimer();
 
