@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { Send, Square } from "lucide-react";
 import { FormEvent, useRef, useEffect, ChangeEvent, KeyboardEvent } from "react";
 
 interface ChatInputProps {
   value: string;
   onChange: (value: string) => void;
   onSubmit: (e: FormEvent) => void;
+  onStop: () => void;
   isLoading: boolean;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
@@ -16,6 +17,7 @@ export default function ChatInput({
   value,
   onChange,
   onSubmit,
+  onStop,
   isLoading,
   inputRef,
 }: ChatInputProps) {
@@ -63,15 +65,27 @@ export default function ChatInput({
           disabled={isLoading}
           rows={1}
         />
-        <motion.button
-          type="submit"
-          className="send-button"
-          disabled={!value.trim() || isLoading}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.92 }}
-        >
-          <Send size={18} />
-        </motion.button>
+        {isLoading ? (
+          <motion.button
+            type="button"
+            className="stop-button"
+            onClick={onStop}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            <Square size={16} fill="currentColor" />
+          </motion.button>
+        ) : (
+          <motion.button
+            type="submit"
+            className="send-button"
+            disabled={!value.trim()}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            <Send size={18} />
+          </motion.button>
+        )}
       </div>
       <span className="chat-input-hint">
         Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
