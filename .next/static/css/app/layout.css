@@ -578,7 +578,7 @@ body {
 
 .chat-input-wrapper:focus-within {
   border-color: transparent;
-  box-shadow: 0 0 30px var(--accent-dim);
+  box-shadow: 0 0 30px rgba(255, 100, 100, 0.15);
 }
 
 .chat-input {
