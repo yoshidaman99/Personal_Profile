@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
+import RainbowCursor from "@/components/RainbowCursor";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -42,8 +43,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={manrope.variable}>
-      <body>{children}</body>
+    <html lang="en" className={manrope.variable} data-theme="dark" suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}})()`,
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
