@@ -56,7 +56,16 @@ export default function Avatar({ state }: AvatarProps) {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "d" && e.ctrlKey) setDebug((v) => !v);
+    };
+    window.addEventListener("keydown", handleKey);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("keydown", handleKey);
+    };
   }, []);
 
   useEffect(() => {
