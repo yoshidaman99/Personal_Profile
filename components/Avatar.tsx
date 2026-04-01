@@ -155,6 +155,14 @@ export default function Avatar({ state }: AvatarProps) {
           Thinking<span className="thinking-dots"><span>.</span><span>.</span><span>.</span></span>
         </motion.div>
       )}
+
+      {debug && (
+        <div className="avatar-debug">
+          <div>x: {debugInfo.x.toFixed(3)}</div>
+          <div>y: {debugInfo.y.toFixed(3)}</div>
+          <div>frame: {debugInfo.frame}</div>
+        </div>
+      )}
     </div>
   );
 }
