@@ -108,7 +108,7 @@ export default function Avatar({ state }: AvatarProps) {
 
       let clamped: number;
 
-      if (state === "thinking") {
+      if (stateRef.current === "thinking") {
         thinkTimer++;
         if (thinkTimer % 8 === 0) {
           thinkIdx = (thinkIdx + 1) % THINK_FRAMES.length;
