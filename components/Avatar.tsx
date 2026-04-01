@@ -103,6 +103,10 @@ export default function Avatar({ state }: AvatarProps) {
       const clamped = Math.max(1, Math.min(TOTAL_FRAMES, lerped));
       frameRef.current = clamped;
 
+      if (debug) {
+        setDebugInfo({ x, y: mousePos.current.y, frame: clamped });
+      }
+
       const img = imagesRef.current.get(clamped);
       if (img && img.complete && img.naturalWidth > 0) {
         if (canvas.width !== img.naturalWidth || canvas.height !== img.naturalHeight) {
