@@ -551,12 +551,10 @@ body {
 .chat-input-wrapper::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200%;
-  height: 200%;
+  inset: -2px;
+  border-radius: 100px;
   background: conic-gradient(
-    from 0deg,
+    from var(--glow-angle),
     transparent 0%,
     var(--accent) 5%,
     transparent 10%,
