@@ -561,13 +561,8 @@ body {
     transparent 100%
   );
   animation: rotate-glow 2s linear infinite;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 0;
-}
-
-.chat-input-wrapper:focus-within::before {
   opacity: 1;
+  z-index: 0;
 }
 
 .chat-input-wrapper::after {
