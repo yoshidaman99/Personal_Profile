@@ -109,7 +109,7 @@ export default function Avatar({ state }: AvatarProps) {
       const clamped = Math.max(1, Math.min(TOTAL_FRAMES, lerped));
       frameRef.current = clamped;
 
-      if (debug) {
+      if (debugRef.current) {
         setDebugInfo({ x, y: mousePos.current.y, frame: clamped });
       }
 
