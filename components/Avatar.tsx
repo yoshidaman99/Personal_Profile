@@ -176,6 +176,17 @@ export default function Avatar({ state }: AvatarProps) {
         />
       </motion.div>
 
+      {state === "thinking" && (
+        <motion.div
+          className="thinking-text"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          Thinking<span className="thinking-dots"><span>.</span><span>.</span><span>.</span></span>
+        </motion.div>
+      )}
+
       {debug && (
         <div className="avatar-debug">
           <div>x: {debugInfo.x.toFixed(3)}</div>
