@@ -185,7 +185,7 @@ export default function RainbowCursor() {
         }
         const size = 12 * p.life;
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size);
-        grad.addColorStop(0, `hsla(${p.hue}, 100%, 60%, ${p.life * 0.3})`);
+        grad.addColorStop(0, `hsla(${p.hue}, 100%, 60%, ${p.life * 0.3 * idleOpacity})`);
         grad.addColorStop(1, `hsla(${p.hue}, 100%, 60%, 0)`);
         ctx.beginPath();
         ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
