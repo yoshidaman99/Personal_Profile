@@ -496,7 +496,7 @@ body {
     transparent 10%,
     transparent 100%
   );
-  animation: rotate-glow 6s linear infinite;
+  animation: rotate-glow 4s linear infinite;
   opacity: 1;
   z-index: 0;
   transition: opacity 0.3s ease, background 0.3s ease;
