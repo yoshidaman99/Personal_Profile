@@ -183,7 +183,7 @@ export default function RainbowCursor() {
           particles.splice(i, 1);
           continue;
         }
-        const size = 12 * p.life;
+        const size = 20 * p.life;
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size);
         grad.addColorStop(0, `hsla(${p.hue}, 100%, 60%, ${p.life * 0.3 * idleOpacity})`);
         grad.addColorStop(1, `hsla(${p.hue}, 100%, 60%, 0)`);
