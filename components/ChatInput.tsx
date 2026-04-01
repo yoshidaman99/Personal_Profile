@@ -89,6 +89,9 @@ export default function ChatInput({
           </motion.button>
         )}
       </div>
+      <span className="chat-input-hint">
+        Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
+      </span>
       <div className="quick-nav">
         {["me", "projects", "skills", "fun", "contact"].map((label) => (
           <button
@@ -101,9 +104,6 @@ export default function ChatInput({
           </button>
         ))}
       </div>
-      <span className="chat-input-hint">
-        Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
-      </span>
     </motion.form>
   );
 }
