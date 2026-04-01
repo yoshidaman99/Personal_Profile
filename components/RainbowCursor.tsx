@@ -25,6 +25,7 @@ export default function RainbowCursor() {
     Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }))
   );
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const idleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastMoveRef = useRef(0);
   const particlesRef = useRef<Particle[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
