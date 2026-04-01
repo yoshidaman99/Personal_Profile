@@ -13,7 +13,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 type AvatarState = "idle" | "thinking" | "speaking";
 
 export default function Home() {
-  const { messages, input, setInput, handleSubmit, isLoading, append, setMessages } =
+  const { messages, input, setInput, handleSubmit, isLoading, stop, append, setMessages } =
     useChat({
       api: "/api/chat",
     });
