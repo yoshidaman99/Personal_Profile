@@ -14,21 +14,18 @@ export default function RainbowCursor() {
   );
 
   useEffect(() => {
-    const isInteractive = (el: HTMLElement | null): boolean => {
-      if (!el) return false;
-      const tag = el.tagName;
-      if (tag === "BUTTON" || tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT" || tag === "A") return true;
-      if (el.closest("button, textarea, input, select, a, [role='button'], [role='textbox']")) return true;
-      return false;
-    };
+    const inputEl = document.querySelector(".chat-input");
+
+    const onFocus = () => { visibleRef.current = false; };
+    const onBlur = () => { visibleRef.current = true; };
+
+    inputEl?.addEventListener("focus", onFocus);
+    inputEl?.addEventListener("blur", onBlur);
 
     const onMove = (e: MouseEvent | TouchEvent) => {
       const x = "touches" in e ? e.touches[0].clientX : e.clientX;
       const y = "touches" in e ? e.touches[0].clientY : e.clientY;
       posRef.current = { x, y };
-      if ("target" in e) {
-        visibleRef.current = !isInteractive(e.target as HTMLElement);
-      }
     };
 
     window.addEventListener("mousemove", onMove);
