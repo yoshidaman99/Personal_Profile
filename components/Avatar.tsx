@@ -104,8 +104,10 @@ export default function Avatar({ state }: AvatarProps) {
         targetFrame = Math.round(109 - (x / 0.46) * 63);
       } else if (x <= 0.5) {
         targetFrame = Math.round(46 - ((x - 0.46) / 0.04) * 25);
+      } else if (x <= 0.559) {
+        targetFrame = Math.round(21 + ((x - 0.5) / 0.059) * 129);
       } else {
-        targetFrame = Math.round(21 + 342 * (x - 0.5));
+        targetFrame = Math.round(150 + ((x - 0.559) / 0.441) * 42);
       }
 
       const current = frameRef.current;
