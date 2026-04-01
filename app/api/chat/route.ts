@@ -4,18 +4,11 @@ import { SYSTEM_PROMPT } from "@/lib/prompt";
 
 export const maxDuration = 30;
 
-function getModel() {
-  if (process.env.ZAI_API_KEY) {
-    const zai = createOpenAI({
-      baseURL: "https://open.bigmodel.cn/api/paas/v4/",
-      apiKey: process.env.ZAI_API_KEY,
-    });
-    return zai("GLM-4.7");
-  }
-  throw new Error(
-    "No API key configured. Set ZAI_API_KEY in your .env file."
-  );
-}
+const zai = createOpenAI({
+  baseURL: "https://open.bigmodel.cn/api/paas/v4/",
+  apiKey: process.env.ZAI_API_KEY,
+  compatibility: "compatible",
+});
 
 const MAX_MESSAGES = 50;
 
