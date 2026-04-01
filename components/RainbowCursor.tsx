@@ -155,6 +155,7 @@ export default function RainbowCursor() {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("touchmove", onMove);
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      if (idleIntervalRef.current) clearInterval(idleIntervalRef.current);
       cancelAnimationFrame(raf);
       particlesRef.current.forEach((p) => p.el.remove());
       particlesRef.current = [];
