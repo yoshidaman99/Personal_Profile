@@ -40,7 +40,6 @@ export default function RainbowCursor() {
     window.addEventListener("resize", resize);
 
     const pos = { x: -100, y: -100 };
-    const prevPos = { x: -100, y: -100 };
     let visible = true;
 
     const trail: { x: number; y: number }[] = Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }));
