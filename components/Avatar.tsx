@@ -99,9 +99,14 @@ export default function Avatar({ state }: AvatarProps) {
       }
 
       const x = mousePos.current.x;
-      const targetFrame = x <= 0.5
-        ? Math.round(1 + 40 * x)
-        : Math.round(21 + 342 * (x - 0.5));
+      let targetFrame: number;
+      if (x <= 0.46) {
+        targetFrame = Math.round(109 - (x / 0.46) * 63);
+      } else if (x <= 0.5) {
+        targetFrame = Math.round(46 - ((x - 0.46) / 0.04) * 25);
+      } else {
+        targetFrame = Math.round(21 + 342 * (x - 0.5));
+      }
 
       const current = frameRef.current;
       const diff = targetFrame - current;
