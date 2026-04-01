@@ -646,9 +646,15 @@ body {
 .quick-nav-btn svg {
   width: 18px;
   height: 18px;
-  opacity: 0.5;
+  opacity: 0.6;
   transition: opacity 0.2s ease;
 }
+
+.quick-nav-btn:nth-child(1) svg { color: #00e5ff; }
+.quick-nav-btn:nth-child(2) svg { color: #a78bfa; }
+.quick-nav-btn:nth-child(3) svg { color: #34d399; }
+.quick-nav-btn:nth-child(4) svg { color: #fbbf24; }
+.quick-nav-btn:nth-child(5) svg { color: #f472b6; }
 
 .quick-nav-btn:hover {
   color: var(--accent);
