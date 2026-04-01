@@ -11,6 +11,7 @@ interface ChatInputProps {
   onStop: () => void;
   isLoading: boolean;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
+  onQuickNav: (text: string) => void;
 }
 
 export default function ChatInput({
