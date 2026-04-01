@@ -59,7 +59,12 @@ export default function Avatar({ state }: AvatarProps) {
     window.addEventListener("mousemove", handleMouseMove);
 
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "a" && e.ctrlKey) setDebug((v) => !v);
+      if (e.key === "a" && e.ctrlKey) {
+        setDebug((v) => {
+          debugRef.current = !v;
+          return !v;
+        });
+      }
     };
     window.addEventListener("keydown", handleKey);
 
