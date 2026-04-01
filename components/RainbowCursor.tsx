@@ -142,7 +142,13 @@ export default function RainbowCursor() {
 
       ctx.clearRect(0, 0, w, h);
 
-      if (!visible && particles.length === 0) return;
+      if (isIdle) {
+        idleOpacity = Math.max(0, idleOpacity - FADE_SPEED);
+      } else {
+        idleOpacity = Math.min(1, idleOpacity + FADE_SPEED * 2);
+      }
+
+      if ((!visible && particles.length === 0) || idleOpacity <= 0) return;
 
       trail[0] = { x: pos.x, y: pos.y };
       for (let i = 1; i < TRAIL_LENGTH; i++) {
