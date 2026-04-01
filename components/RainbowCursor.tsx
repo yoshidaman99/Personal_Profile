@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const TRAIL_LENGTH = 50;
+const TRAIL_LENGTH = 20;
 const DOT_BASE_SIZE = 220;
 const IDLE_TIMEOUT = 3000;
 const FIREWORK_PARTICLES = 10;
