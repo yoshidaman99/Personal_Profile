@@ -1,24 +1,51 @@
 import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { SYSTEM_PROMPT } from "@/lib/prompt";
 
 export const maxDuration = 30;
 
 function getModel() {
-  if (process.env.GROQ_API_KEY) {
-    return groq("llama-3.3-70b-versatile");
-  }
-  if (process.env.OPENAI_API_KEY) {
-    return openai("gpt-4o-mini");
+  if (process.env.ZAI_API_KEY) {
+    const zai = createOpenAI({
+      baseURL: "https://open.bigmodel.cn/api/paas/v4/",
+      apiKey: process.env.ZAI_API_KEY,
+    });
+    return zai("GLM-4.7");
   }
   throw new Error(
-    "No API key configured. Set GROQ_API_KEY or OPENAI_API_KEY in your .env file."
+    "No API key configured. Set ZAI_API_KEY in your .env file."
   );
 }
 
+const MAX_MESSAGES = 50;
+
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const body = await req.json();
+  const { messages } = body;
+
+  if (
+    !Array.isArray(messages) ||
+    messages.length === 0 ||
+    messages.length > MAX_MESSAGES
+  ) {
+    return new Response(
+      JSON.stringify({ error: "Invalid messages payload" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  for (const msg of messages) {
+    if (
+      typeof msg.role !== "string" ||
+      typeof msg.content !== "string" ||
+      !["user", "assistant", "system"].includes(msg.role)
+    ) {
+      return new Response(
+        JSON.stringify({ error: "Invalid message format" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }
 
   const result = streamText({
     model: getModel(),
