@@ -94,11 +94,11 @@ export default function ChatInput({
       </span>
       <div className="quick-nav">
         {[
-          { label: "me", icon: <User size={12} /> },
-          { label: "projects", icon: <FolderKanban size={12} /> },
-          { label: "skills", icon: <Wrench size={12} /> },
-          { label: "fun", icon: <Sparkles size={12} /> },
-          { label: "contact", icon: <Mail size={12} /> },
+          { label: "me", icon: <User size={18} /> },
+          { label: "projects", icon: <FolderKanban size={18} /> },
+          { label: "skills", icon: <Wrench size={18} /> },
+          { label: "fun", icon: <Sparkles size={18} /> },
+          { label: "contact", icon: <Mail size={18} /> },
         ].map(({ label, icon }) => (
           <button
             key={label}
