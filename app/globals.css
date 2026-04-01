@@ -629,9 +629,9 @@ body {
   border: none;
   color: var(--text-muted);
   font-family: var(--font);
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  padding: 0.35rem 0.7rem;
+  padding: 0.5rem 1rem;
   border-radius: 100px;
   cursor: pointer;
   transition: all 0.2s ease;
