@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 const TRAIL_LENGTH = 20;
-const DOT_BASE_SIZE = 8;
+const DOT_BASE_SIZE = 24;
 
 export default function RainbowCursor() {
   const dotsRef = useRef<HTMLDivElement[]>([]);
