@@ -560,9 +560,14 @@ body {
     transparent 10%,
     transparent 100%
   );
-  animation: rotate-glow 2s linear infinite;
+  animation: rotate-glow 6s linear infinite;
   opacity: 1;
   z-index: 0;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.chat-input-wrapper:focus-within::before {
+  opacity: 0;
 }
 
 .chat-input-wrapper::after {
@@ -576,7 +581,7 @@ body {
 
 .chat-input-wrapper:focus-within {
   border-color: transparent;
-  box-shadow: 0 0 30px var(--accent-dim);
+  box-shadow: 0 0 20px var(--accent-dim), 0 0 60px var(--accent-glow), 0 0 100px var(--accent-glow);
 }
 
 .chat-input {
