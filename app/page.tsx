@@ -27,18 +27,19 @@ export default function Home() {
     }
   }, [messages.length]);
 
+  const prevLoadingRef = useRef(false);
+
   useEffect(() => {
     if (isLoading) {
       setAvatarState("thinking");
-    } else if (
-      messages.length > 0 &&
-      messages[messages.length - 1].role === "assistant"
-    ) {
+      prevLoadingRef.current = true;
+    } else if (prevLoadingRef.current) {
+      prevLoadingRef.current = false;
       setAvatarState("speaking");
       const timer = setTimeout(() => setAvatarState("idle"), 2000);
       return () => clearTimeout(timer);
     }
-  }, [isLoading, messages]);
+  }, [isLoading]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
