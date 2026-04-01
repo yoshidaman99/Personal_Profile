@@ -4,6 +4,18 @@ import { useEffect, useRef } from "react";
 
 const TRAIL_LENGTH = 20;
 const DOT_BASE_SIZE = 24;
+const IDLE_TIMEOUT = 2000;
+const FIREWORK_PARTICLES = 12;
+
+interface Particle {
+  el: HTMLDivElement;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  hue: number;
+}
 
 export default function RainbowCursor() {
   const dotsRef = useRef<HTMLDivElement[]>([]);
@@ -12,8 +24,17 @@ export default function RainbowCursor() {
   const trailRef = useRef<{ x: number; y: number }[]>(
     Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }))
   );
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastMoveRef = useRef(0);
+  const particlesRef = useRef<Particle[]>([]);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const container = document.createElement("div");
+    container.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;";
+    document.body.appendChild(container);
+    containerRef.current = container;
+
     const isOverInteractive = (x: number, y: number) => {
       const el = document.elementFromPoint(x, y) as HTMLElement | null;
       if (!el) return false;
@@ -24,15 +45,51 @@ export default function RainbowCursor() {
       return false;
     };
 
+    const spawnFirework = (cx: number, cy: number) => {
+      const baseHue = Math.random() * 360;
+      for (let i = 0; i < FIREWORK_PARTICLES; i++) {
+        const angle = (Math.PI * 2 * i) / FIREWORK_PARTICLES + (Math.random() - 0.5) * 0.5;
+        const speed = 2 + Math.random() * 4;
+        const el = document.createElement("div");
+        el.style.cssText = `
+          position:fixed;top:0;left:0;
+          width:6px;height:6px;border-radius:50%;
+          pointer-events:none;will-change:transform,opacity;
+        `;
+        container.appendChild(el);
+        particlesRef.current.push({
+          el,
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1,
+          hue: (baseHue + i * (360 / FIREWORK_PARTICLES)) % 360,
+        });
+      }
+    };
+
+    const resetIdleTimer = () => {
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      lastMoveRef.current = performance.now();
+      idleTimerRef.current = setTimeout(() => {
+        if (visibleRef.current) {
+          spawnFirework(posRef.current.x, posRef.current.y);
+        }
+      }, IDLE_TIMEOUT);
+    };
+
     const onMove = (e: MouseEvent | TouchEvent) => {
       const x = "touches" in e ? e.touches[0].clientX : e.clientX;
       const y = "touches" in e ? e.touches[0].clientY : e.clientY;
       posRef.current = { x, y };
       visibleRef.current = !isOverInteractive(x, y);
+      resetIdleTimer();
     };
 
     window.addEventListener("mousemove", onMove);
     window.addEventListener("touchmove", onMove, { passive: true });
+    resetIdleTimer();
 
     let raf: number;
     const animate = () => {
@@ -56,6 +113,28 @@ export default function RainbowCursor() {
         dot.style.opacity = visibleRef.current ? "1" : "0";
       });
 
+      const particles = particlesRef.current;
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.08;
+        p.vx *= 0.98;
+        p.life -= 0.015;
+        if (p.life <= 0) {
+          p.el.remove();
+          particles.splice(i, 1);
+          continue;
+        }
+        const size = 6 * p.life;
+        p.el.style.transform = `translate(${p.x - size / 2}px, ${p.y - size / 2}px)`;
+        p.el.style.width = `${size}px`;
+        p.el.style.height = `${size}px`;
+        p.el.style.backgroundColor = `hsl(${p.hue}, 100%, 60%)`;
+        p.el.style.boxShadow = `0 0 ${size * 2}px hsl(${p.hue}, 100%, 60%)`;
+        p.el.style.opacity = `${p.life}`;
+      }
+
       raf = requestAnimationFrame(animate);
     };
     raf = requestAnimationFrame(animate);
@@ -63,7 +142,11 @@ export default function RainbowCursor() {
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("touchmove", onMove);
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
       cancelAnimationFrame(raf);
+      particlesRef.current.forEach((p) => p.el.remove());
+      particlesRef.current = [];
+      container.remove();
     };
   }, []);
 
