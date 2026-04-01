@@ -186,7 +186,6 @@ export default function RainbowCursor() {
 
     return () => {
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("touchmove", onMove);
       window.removeEventListener("resize", resize);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       clearTimers();
