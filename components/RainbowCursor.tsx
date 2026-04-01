@@ -25,7 +25,7 @@ export default function RainbowCursor() {
     if (window.matchMedia("(pointer: coarse)").matches && !window.matchMedia("(pointer: fine)").matches) return;
 
     const canvas = document.createElement("canvas");
-    canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;";
+    canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50;";
     document.body.appendChild(canvas);
     canvasRef.current = canvas;
 
@@ -34,12 +34,11 @@ export default function RainbowCursor() {
     const resize = () => {
       w = window.innerWidth;
       h = window.innerHeight;
-      canvas.width = w * devicePixelRatio;
-      canvas.height = h * devicePixelRatio;
-      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      canvas.width = w;
+      canvas.height = h;
     };
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", resize, { passive: true });
 
     const pos = { x: -100, y: -100 };
     let visible = true;
@@ -123,11 +122,16 @@ export default function RainbowCursor() {
       tabVisible = !document.hidden;
       if (!tabVisible) {
         clearTimers();
+        cancelAnimationFrame(raf);
         ctx.clearRect(0, 0, w, h);
+      } else {
+        lastFrame = performance.now();
+        raf = requestAnimationFrame(animate);
+        resetIdleTimer();
       }
     };
 
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
     resetIdleTimer();
 
