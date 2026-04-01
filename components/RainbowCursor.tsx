@@ -113,7 +113,6 @@ export default function RainbowCursor() {
       const y = "touches" in e ? e.touches[0].clientY : e.clientY;
       pos.x = x;
       pos.y = y;
-      moving = true;
       checkInteractive(x, y);
       resetIdleTimer();
     };
