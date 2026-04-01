@@ -414,6 +414,13 @@ body {
   border-color: var(--border-hover);
 }
 
+.bubble-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .bubble {
   max-width: 80%;
   padding: 0.75rem 1rem;
