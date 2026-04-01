@@ -93,14 +93,20 @@ export default function ChatInput({
         Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
       </span>
       <div className="quick-nav">
-        {["me", "projects", "skills", "fun", "contact"].map((label) => (
+        {[
+          { label: "me", icon: <User size={12} /> },
+          { label: "projects", icon: <FolderKanban size={12} /> },
+          { label: "skills", icon: <Wrench size={12} /> },
+          { label: "fun", icon: <Sparkles size={12} /> },
+          { label: "contact", icon: <Mail size={12} /> },
+        ].map(({ label, icon }) => (
           <button
             key={label}
             type="button"
             className="quick-nav-btn"
             onClick={() => onQuickNav(`Tell me about ${label === "me" ? "yourself" : label}`)}
           >
-            {label}
+            {icon} {label}
           </button>
         ))}
       </div>
