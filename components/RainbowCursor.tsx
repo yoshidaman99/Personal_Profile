@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-const TRAIL_LENGTH = 16;
-const DOT_BASE_SIZE = 20;
+const TRAIL_LENGTH = 30;
+const DOT_BASE_SIZE = 60;
 const IDLE_TIMEOUT = 2000;
-const FIREWORK_PARTICLES = 8;
-const MAX_PARTICLES = 100;
+const FIREWORK_PARTICLES = 10;
+const MAX_PARTICLES = 80;
 const FRAME_INTERVAL = 1000 / 30;
 
 interface Particle {
