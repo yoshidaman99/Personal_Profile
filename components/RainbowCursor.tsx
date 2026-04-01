@@ -136,15 +136,10 @@ export default function RainbowCursor() {
 
       if (!visible && particles.length === 0) return;
 
-      if (moving) {
-        trail[0] = { x: pos.x, y: pos.y };
-        for (let i = 1; i < TRAIL_LENGTH; i++) {
-          trail[i].x += (trail[i - 1].x - trail[i].x) * 0.35;
-          trail[i].y += (trail[i - 1].y - trail[i].y) * 0.35;
-        }
-        prevPos.x = pos.x;
-        prevPos.y = pos.y;
-        moving = false;
+      trail[0] = { x: pos.x, y: pos.y };
+      for (let i = 1; i < TRAIL_LENGTH; i++) {
+        trail[i].x += (trail[i - 1].x - trail[i].x) * 0.35;
+        trail[i].y += (trail[i - 1].y - trail[i].y) * 0.35;
       }
 
       if (visible) {
