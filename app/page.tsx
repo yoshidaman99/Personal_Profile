@@ -86,6 +86,7 @@ export default function Home() {
                 whileTap={{ scale: 0.94 }}
               >
                 <ArrowLeft size={16} />
+                <span>New chat</span>
               </motion.button>
             )}
           </AnimatePresence>
