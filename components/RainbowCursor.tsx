@@ -144,12 +144,12 @@ export default function RainbowCursor() {
           const progress = i / TRAIL_LENGTH;
           const size = DOT_BASE_SIZE * (1 - progress * 0.7);
           const hue = (i * (360 / TRAIL_LENGTH) + now * 0.1) % 360;
-          const alpha = 1 - progress * 0.3;
-          ctx.beginPath();
-          ctx.arc(trail[i].x, trail[i].y, size / 2, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${hue}, 100%, 60%, ${alpha})`;
-          ctx.shadowBlur = size;
-          ctx.shadowColor = `hsl(${hue}, 100%, 60%)`;
+        const alpha = 0.4;
+        ctx.beginPath();
+        ctx.arc(trail[i].x, trail[i].y, size / 2, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${hue}, 100%, 60%, ${alpha})`;
+        ctx.shadowBlur = size;
+        ctx.shadowColor = `hsla(${hue}, 100%, 60%, 0.4)`;
           ctx.fill();
         }
         ctx.shadowBlur = 0;
