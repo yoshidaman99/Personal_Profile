@@ -42,7 +42,6 @@ export default function RainbowCursor() {
     const pos = { x: -100, y: -100 };
     const prevPos = { x: -100, y: -100 };
     let visible = true;
-    let moving = false;
 
     const trail: { x: number; y: number }[] = Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }));
     const particles: Particle[] = [];
