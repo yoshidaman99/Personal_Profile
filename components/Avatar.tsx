@@ -75,6 +75,8 @@ export default function Avatar({ state }: AvatarProps) {
     };
   }, []);
 
+  useEffect(() => { stateRef.current = state; }, [state]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
