@@ -103,6 +103,22 @@ export default function Home() {
                 />
               ))}
             </AnimatePresence>
+            {isLoading && (
+              <motion.div
+                className="thinking-indicator"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+              >
+                <span className="thinking-label">Thinking</span>
+                <span className="thinking-dots-inline">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+              </motion.div>
+            )}
             <div ref={messagesEndRef} />
           </div>
         )}
