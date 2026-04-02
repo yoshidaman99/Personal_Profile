@@ -210,9 +210,7 @@ body {
 
 .content-wrapper--projects > .avatar-section {
   margin-top: 0 !important;
-  margin-left: -1.5rem;
-  margin-right: -1.5rem;
-  width: calc(100% + 3rem);
+  width: 100%;
   position: sticky;
   top: 0;
   z-index: 5;
@@ -229,8 +227,8 @@ body {
   content: "";
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 1.5rem;
+  right: 1.5rem;
   height: 1px;
   background: var(--border);
 }
