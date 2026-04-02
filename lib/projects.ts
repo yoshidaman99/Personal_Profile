@@ -70,10 +70,10 @@ export const projects: Project[] = [
       { step: "Log Ingestion Summary", detail: "Logs success/failure metrics of the data ingestion process" },
     ],
     benefits: [
-      { label: "$40K Annual Savings", info: "No need to hire a data encoder — the workflow handles it all" },
-      { label: "100% Fully Automated" },
-      { label: "Instant Data Scaling" },
-      { label: "Zero Human Error" },
+      { label: "$40K Annual Savings", icon: "dollar", info: "No need to hire a data encoder — the workflow handles it all" },
+      { label: "100% Fully Automated", icon: "zap" },
+      { label: "Instant Data Scaling", icon: "trending" },
+      { label: "Zero Human Error", icon: "shield" },
     ],
     impact: "Eliminated the need for a dedicated data encoder, saving the client $40K annually while enabling instant scaling of dataset processing with zero manual intervention.",
     chatPrompt:
@@ -101,10 +101,10 @@ export const projects: Project[] = [
       { step: "Verify & Repeat", detail: "Loops through all remaining batches until every vector has been enriched with district metadata" },
     ],
     benefits: [
-      { label: "Bulk Metadata Updates", info: "Enriches existing vectors with district name metadata automatically" },
-      { label: "API Limit Safe" },
-      { label: "Zero Manual Editing" },
-      { label: "100% Fully Automated" },
+      { label: "Bulk Metadata Updates", icon: "database", info: "Enriches existing vectors with district name metadata automatically" },
+      { label: "API Limit Safe", icon: "shield" },
+      { label: "Zero Manual Editing", icon: "check" },
+      { label: "100% Fully Automated", icon: "zap" },
     ],
     impact: "Enabled bulk enrichment of thousands of Pinecone vectors with district metadata in a single automated run — a task that would have required hours of manual editing per record through the Pinecone console.",
     chatPrompt:
