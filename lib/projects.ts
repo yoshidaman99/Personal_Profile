@@ -132,10 +132,10 @@ export const projects: Project[] = [
       { step: "Response Synthesis", detail: "Agent synthesizes retrieved data into a natural, accurate response delivered to the user" },
     ],
     benefits: [
-      { label: "24/7 Instant Answers" },
-      { label: "Context-Aware Chat" },
-      { label: "Data-Driven Accuracy" },
-      { label: "Zero Wait Time" },
+      { label: "24/7 Instant Answers", icon: "clock" },
+      { label: "Context-Aware Chat", icon: "brain" },
+      { label: "Data-Driven Accuracy", icon: "target" },
+      { label: "Zero Wait Time", icon: "zap" },
     ],
     impact: "Deployed a fully autonomous chatbot capable of referencing complex district datasets instantly, eliminating wait times and drastically reducing the support burden on administrative staff.",
     chatPrompt:
