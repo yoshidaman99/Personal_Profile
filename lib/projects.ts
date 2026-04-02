@@ -4,6 +4,7 @@ export interface Project {
   image: string;
   description: string;
   tags: string[];
+  benefits: string[];
   chatPrompt: string;
 }
 
