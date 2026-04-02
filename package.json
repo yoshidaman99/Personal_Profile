@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prebuild": "vitest run",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -20,9 +23,14 @@
     "react-markdown": "^9.0.3"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^22.13.9",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "typescript": "^5.8.2"
+    "@vitejs/plugin-react": "^6.0.1",
+    "jsdom": "^29.0.1",
+    "typescript": "^5.8.2",
+    "vitest": "^4.1.2"
   }
 }
