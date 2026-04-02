@@ -859,6 +859,18 @@ body {
   opacity: 0.9;
 }
 
+.search-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  position: relative;
+  z-index: 2;
+}
+
 .stop-button {
   width: 40px;
   height: 40px;
