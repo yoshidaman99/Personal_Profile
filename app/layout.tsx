@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import RainbowCursor from "@/components/RainbowCursor";
 import "./globals.css";
 
@@ -39,6 +40,10 @@ export const metadata: Metadata = {
     "Email Automation",
     "Webhooks",
     "Locumsmart",
+    "Twilio",
+    "ETL Pipeline",
+    "Data Sync",
+    "Microsoft SQL",
     "Philippines",
   ],
   openGraph: {
@@ -66,11 +71,13 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}})()`,
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(!t){t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}})()`,
           }}
         />
         <RainbowCursor />
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   );
