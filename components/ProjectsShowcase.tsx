@@ -1,10 +1,23 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, DollarSign, Zap, TrendingUp, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  DollarSign,
+  Zap,
+  TrendingUp,
+  ShieldCheck,
+  Database,
+  Clock,
+  Brain,
+  Target,
+  Mail,
+  RefreshCw,
+  Bell,
+} from "lucide-react";
 import Image from "next/image";
 import { projects, type Project } from "@/lib/projects";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, type ReactNode } from "react";
 
 interface ProjectsShowcaseProps {
   visible: boolean;
