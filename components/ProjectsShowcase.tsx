@@ -80,8 +80,9 @@ export default function ProjectsShowcase({
                   />
                   <div className="project-image-overlay" />
                   <div className="project-benefits">
-                    {project.benefits.map((benefit) => (
+                    {project.benefits.map((benefit, idx) => (
                       <span key={benefit} className="project-benefit-tag">
+                        {benefitIcons[idx] ?? <Zap />}
                         {benefit}
                       </span>
                     ))}
