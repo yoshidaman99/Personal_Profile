@@ -63,6 +63,8 @@ export default function Home() {
 
   const handleQuickNav = useCallback((text: string) => {
     if (text.toLowerCase().includes("project")) {
+      stop();
+      setMessages([]);
       setShowProjects(true);
       setShowChips(false);
       return;
@@ -70,7 +72,7 @@ export default function Home() {
     setShowProjects(false);
     setShowChips(false);
     append({ role: "user", content: text });
-  }, [append]);
+  }, [append, stop, setMessages]);
 
   const handleProjectsBack = useCallback(() => {
     setShowProjects(false);
