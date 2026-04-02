@@ -1092,7 +1092,7 @@ body {
   scrollbar-color: transparent transparent;
 }
 
-.projects-showcase:hover {
+.projects-showcase.is-scrolling {
   scrollbar-color: var(--border-hover) transparent;
 }
 
@@ -1110,7 +1110,7 @@ body {
   transition: background 0.3s ease;
 }
 
-.projects-showcase:hover::-webkit-scrollbar-thumb {
+.projects-showcase.is-scrolling::-webkit-scrollbar-thumb {
   background: var(--border-hover);
 }
 
