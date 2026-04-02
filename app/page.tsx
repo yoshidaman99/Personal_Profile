@@ -3,34 +3,48 @@
 import { useChat } from "ai/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ArrowLeft } from "lucide-react";
-import Avatar from "@/components/Avatar";
+import AvatarHeader from "@/components/AvatarHeader";
 import ChatBubble from "@/components/ChatBubble";
 import SuggestionChips from "@/components/SuggestionChips";
 import ChatInput from "@/components/ChatInput";
 import ThemeToggle from "@/components/ThemeToggle";
 import ProjectsShowcase from "@/components/ProjectsShowcase";
+import { useAvatarState } from "@/lib/hooks/useAvatarState";
+import { useChatNavigation } from "@/lib/hooks/useChatNavigation";
 import type { Project } from "@/lib/projects";
 
-type AvatarState = "idle" | "thinking" | "speaking";
+const SESSION_KEY = "jerel-chat-messages";
 
 export default function Home() {
   const { messages, input, setInput, handleSubmit, isLoading, stop, append, setMessages } =
     useChat({
       api: "/api/chat",
+      initialMessages: (() => {
+        if (typeof window === "undefined") return [];
+        try {
+          const saved = sessionStorage.getItem(SESSION_KEY);
+          return saved ? JSON.parse(saved) : [];
+        } catch {
+          return [];
+        }
+      })(),
     });
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [showChips, setShowChips] = useState(true);
-  const [avatarState, setAvatarState] = useState<AvatarState>("idle");
+  const [showChips, setShowChips] = useState(messages.length === 0);
+  const avatarState = useAvatarState(isLoading);
   const [showProjects, setShowProjects] = useState(false);
 
-  const handleBack = useCallback(() => {
-    setMessages([]);
-    setShowChips(true);
-    setAvatarState("idle");
-    inputRef.current?.focus();
-  }, [setMessages]);
+  useEffect(() => {
+    try {
+      if (messages.length > 0) {
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages));
+      } else {
+        sessionStorage.removeItem(SESSION_KEY);
+      }
+    } catch {}
+  }, [messages]);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -38,126 +52,60 @@ export default function Home() {
     }
   }, [messages.length]);
 
-  const prevLoadingRef = useRef(false);
-
-  useEffect(() => {
-    if (isLoading) {
-      setAvatarState("thinking");
-      prevLoadingRef.current = true;
-    } else if (prevLoadingRef.current) {
-      prevLoadingRef.current = false;
-      setAvatarState("speaking");
-      const timer = setTimeout(() => setAvatarState("idle"), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading]);
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleChipSelect = (text: string) => {
-    setShowChips(false);
-    append({ role: "user", content: text });
-  };
+  const setAvatarIdle = useCallback(() => {}, []);
 
-  const handleQuickNav = useCallback((text: string) => {
-    if (text.toLowerCase().includes("project")) {
-      stop();
-      setMessages([]);
-      setShowProjects(true);
-      setShowChips(false);
-      return;
-    }
-    setShowProjects(false);
-    setShowChips(false);
-    append({ role: "user", content: text });
-  }, [append, stop, setMessages]);
+  const { handleBack, handleChipSelect, handleQuickNav, handleProjectsBack, handleLearnMore } =
+    useChatNavigation({
+      append,
+      stop,
+      setMessages,
+      setInput,
+      setShowChips,
+      setShowProjects,
+      setAvatarIdle,
+      inputRef,
+    });
 
-  const handleProjectsBack = useCallback(() => {
-    setShowProjects(false);
-    setShowChips(true);
-    setInput("");
-  }, [setInput]);
+  const handleBackWithClear = useCallback(() => {
+    sessionStorage.removeItem(SESSION_KEY);
+    handleBack();
+  }, [handleBack]);
 
-  const handleLearnMore = useCallback(
+  const handleLearnMoreWithProject = useCallback(
     (project: Project) => {
-      setShowProjects(false);
-      append({ role: "user", content: project.chatPrompt });
+      handleLearnMore(project.chatPrompt);
     },
-    [append]
+    [handleLearnMore]
   );
 
   const hasMessages = messages.length > 0;
 
   return (
     <main className="main">
+      <a href="#chat-input" className="skip-link">Skip to chat input</a>
       <div className="noise-overlay" />
 
       <div className={`content-wrapper${!hasMessages ? " content-wrapper--centered" : ""}${showProjects ? " content-wrapper--projects" : ""}`}>
-        <motion.div
-          className="avatar-section"
-          animate={{
-            scale: hasMessages && !showProjects ? 0.85 : 1,
-            y: hasMessages && !showProjects ? -10 : 0,
-          }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          <AnimatePresence>
-            {hasMessages && !showProjects && (
-              <motion.button
-                className="back-btn"
-                onClick={handleBack}
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.94 }}
-              >
-                <ArrowLeft size={16} />
-                <span>New chat</span>
-              </motion.button>
-            )}
-          </AnimatePresence>
-          <Avatar state={avatarState} />
-
-          <motion.div
-            className="greeting"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h1 className="greeting-title">
-              Hey, I&apos;m Jerel Yoshida{" "}
-              <span className="wave-emoji">👋</span>
-            </h1>
-            <p className="greeting-subtitle">
-              AI Automation Specialist — Panabo City, PH
-            </p>
-          </motion.div>
-
-          <div className="header-actions">
-            <AnimatePresence>
-              {showProjects && (
-                <motion.button
-                  className="back-btn"
-                  onClick={handleProjectsBack}
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.94 }}
-                >
-                  <ArrowLeft size={16} />
-                  <span>Back</span>
-                </motion.button>
-              )}
-            </AnimatePresence>
-            {showProjects && <ThemeToggle />}
-          </div>
-        </motion.div>
+        <AvatarHeader
+          avatarState={avatarState}
+          hasMessages={hasMessages}
+          showProjects={showProjects}
+          onBack={handleBackWithClear}
+          onProjectsBack={handleProjectsBack}
+          themeToggleSlot={<ThemeToggle />}
+        />
 
         {!showProjects && <ThemeToggle />}
+
+        <div className="avatar-status-text" role="status" aria-live="polite">
+          {avatarState === "thinking" && "Jerel is thinking..."}
+          {avatarState === "speaking" && "Jerel is responding"}
+          {avatarState === "idle" && hasMessages && "Jerel is ready"}
+        </div>
 
         <AnimatePresence>
           {showChips && (
@@ -168,12 +116,12 @@ export default function Home() {
         <ProjectsShowcase
           visible={showProjects}
           onBack={handleProjectsBack}
-          onLearnMore={handleLearnMore}
+          onLearnMore={handleLearnMoreWithProject}
           filter={input}
         />
 
         {hasMessages && (
-          <div className="messages-area">
+          <div className="messages-area" role="log" aria-label="Chat messages" aria-live="polite">
             <AnimatePresence mode="popLayout">
               {messages.map((message, i) => (
                 <ChatBubble
