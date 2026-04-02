@@ -65,6 +65,7 @@ export default function ChatInput({
   }, [value, inputRef]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (isShowcase) return;
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       if (value.trim() && !isLoading) {
