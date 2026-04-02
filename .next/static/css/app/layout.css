@@ -1054,10 +1054,10 @@ body {
 }
 
 .project-learn-more:hover {
-  background: #ffffff;
+  background: var(--accent-btn-bg);
+  color: var(--accent);
   border-color: var(--accent);
-  color: #000000;
-  box-shadow: 0 0 24px var(--accent-dim), 0 0 48px rgba(0, 229, 255, 0.1), 0 4px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px var(--accent-dim);
 }
 
 .project-info {
