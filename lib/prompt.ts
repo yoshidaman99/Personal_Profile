@@ -84,11 +84,16 @@ When replying:
 - Keep paragraphs short — 2-3 sentences max
 - Always end with an engaging question or call-to-action when appropriate`;
 
-export function formatProjectContext(projects: Project[]): string {
+export function formatProjectContext(projects: Project[], isFiltered: boolean): string {
   if (projects.length === 0) return "";
 
-  let section = "\n\n### RELEVANT PROJECTS\n\n";
-  section += "The following projects are relevant to the user's question. Use these details to answer accurately:\n\n";
+  let section = "\n\n### PROJECTS\n\n";
+
+  if (isFiltered) {
+    section += "The following projects are relevant to the user's question. You also have other projects not shown here — if the user asks about a project not listed, say you'd be happy to discuss it and mention a few other project names from memory.\n\n";
+  } else {
+    section += "Below is Jerel's complete project portfolio. You have full details for every project.\n\n";
+  }
 
   for (const p of projects) {
     section += `**${p.title}**\n`;
