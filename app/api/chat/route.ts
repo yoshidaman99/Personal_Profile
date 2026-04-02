@@ -80,8 +80,8 @@ export async function POST(req: Request) {
 
   const lastUserMessage = [...sanitized].reverse().find((m) => m.role === "user");
   const userQuery = typeof lastUserMessage?.content === "string" ? lastUserMessage.content : "";
-  const relevantProjects = searchProjects(userQuery);
-  const systemPrompt = BASE_PROMPT + formatProjectContext(relevantProjects);
+  const { projects: relevantProjects, isFiltered } = searchProjects(userQuery);
+  const systemPrompt = BASE_PROMPT + formatProjectContext(relevantProjects, isFiltered);
 
   const result = streamText({
     model: zai("glm-5-turbo"),
