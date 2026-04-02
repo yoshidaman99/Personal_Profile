@@ -89,19 +89,18 @@ export default function Home() {
   return (
     <main className="main">
       <div className="noise-overlay" />
-      <ThemeToggle />
 
       <div className={`content-wrapper${!hasMessages ? " content-wrapper--centered" : ""}${showProjects ? " content-wrapper--projects" : ""}`}>
         <motion.div
           className="avatar-section"
           animate={{
-            scale: hasMessages ? 0.85 : 1,
-            y: hasMessages ? -10 : 0,
+            scale: hasMessages && !showProjects ? 0.85 : 1,
+            y: hasMessages && !showProjects ? -10 : 0,
           }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <AnimatePresence>
-            {hasMessages && (
+            {hasMessages && !showProjects && (
               <motion.button
                 className="back-btn"
                 onClick={handleBack}
@@ -132,7 +131,29 @@ export default function Home() {
               AI Automation Specialist — Panabo City, PH
             </p>
           </motion.div>
+
+          <div className="header-actions">
+            <AnimatePresence>
+              {showProjects && (
+                <motion.button
+                  className="back-btn"
+                  onClick={handleProjectsBack}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.94 }}
+                >
+                  <ArrowLeft size={16} />
+                  <span>Back</span>
+                </motion.button>
+              )}
+            </AnimatePresence>
+            {showProjects && <ThemeToggle />}
+          </div>
         </motion.div>
+
+        {!showProjects && <ThemeToggle />}
 
         <AnimatePresence>
           {showChips && (
