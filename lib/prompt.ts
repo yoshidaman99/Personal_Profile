@@ -187,6 +187,29 @@ An advanced **n8n** workflow engineered to handle heavy data migrations from **Z
 
 **Tags:** \`n8n\`, \`Zoho API (Recruit)\`, \`File Processing (ZIP/CSV)\`, \`Custom Code (JavaScript)\`, \`Microsoft SQL Server\`
 
+**Zoho Recruit AI Resume Parser & Data Backfill**
+An advanced data enrichment pipeline built in **n8n** that audits **Zoho Recruit** for candidate profiles missing crucial metadata. The workflow dynamically extracts candidate resumes—utilizing a **Google Drive** conversion API workaround for difficult file types—and feeds the raw text into an **AI Agent** powered by **DeepSeek** and **Gemini**. The AI reads the unstructured resume, identifies the missing 'Profession' or 'Speciality', automatically updates the Zoho Recruit database via REST API, and logs the changes to a **Google Sheet**.
+
+**Workflow Steps:**
+1. **Query Missing Profiles** — Queries Zoho Recruit API for candidates missing 'Profession' or 'Speciality' fields and merges the result lists
+2. **Loop & Extract Text** — Loops through each candidate and attempts to extract raw text from their attached resume
+3. **Smart Document Conversion** — If direct extraction fails, uploads the file to Google Drive for OCR/conversion, extracts text from the resulting Doc, then deletes the temp file
+4. **AI Parsing (DeepSeek / Gemini)** — Feeds the resume text into an AI Agent configured with DeepSeek and Gemini models to analyze and deduce the missing fields
+5. **Parse AI Response** — Parses the AI output back into structured JSON containing the extracted profession and speciality
+6. **Update Zoho Recruit** — Routes the structured data via HTTP request to push the AI-extracted fields back into the candidate's Zoho Recruit profile
+7. **Log to Google Sheets** — Appends a record of each successful update to a Google Sheet for auditing and tracking
+
+**Tech Stack:** n8n, Zoho Recruit API, Google Drive API, Google Sheets API, DeepSeek LLM, Gemini LLM
+
+**Key Benefits:**
+- **AI Data Enrichment** — Uses DeepSeek and Gemini LLMs to intelligently parse unstructured resume data
+- **Automated Resume Parsing** — Handles multiple file types with smart OCR fallback via Google Drive
+- **Smart OCR Conversion** — Converts difficult file formats automatically without manual intervention
+- **Zero Manual Entry** — Completely eliminates manual data entry for backfilling candidate profiles
+- **$32K Annual Savings** — Replaces hours of manual profile editing with an automated AI pipeline
+
+**Tags:** \`n8n\`, \`Zoho Recruit API\`, \`AI Agents (DeepSeek / Gemini)\`, \`Google Drive API\`, \`Google Sheets API\`
+
 ### CONTACT / NEXT STEPS
 Jerel is open to freelance consulting, full-time automation roles, or collaborations.
 - **Best way to connect:** Book a free strategy call at https://calendly.com
