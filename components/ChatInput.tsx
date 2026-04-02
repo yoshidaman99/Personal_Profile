@@ -23,6 +23,7 @@ export default function ChatInput({
   isLoading,
   inputRef,
   onQuickNav,
+  isShowcase = false,
 }: ChatInputProps) {
   const containerRef = useRef<HTMLFormElement>(null);
   const placeholder = useRef(
@@ -32,6 +33,11 @@ export default function ChatInput({
   );
 
   useEffect(() => {
+    if (isShowcase) {
+      const el = inputRef.current;
+      if (el) el.placeholder = "Filter projects by name, tag, or keyword...";
+      return;
+    }
     const mq = window.matchMedia("(max-width: 640px)");
     const update = (e: MediaQueryListEvent | MediaQueryList) => {
       placeholder.current = e.matches
@@ -43,7 +49,7 @@ export default function ChatInput({
     update(mq);
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
-  }, [inputRef]);
+  }, [inputRef, isShowcase]);
 
   useEffect(() => {
     if (!isLoading) {
