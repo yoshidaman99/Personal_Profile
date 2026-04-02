@@ -198,6 +198,8 @@ body {
 
 .content-wrapper--centered > .avatar-section {
   margin-top: auto;
+  padding: 0 1.5rem;
+  width: 100%;
 }
 
 .content-wrapper--centered > .chat-input-container {
