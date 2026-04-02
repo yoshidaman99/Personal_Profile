@@ -91,7 +91,7 @@ export default function Home() {
       <div className="noise-overlay" />
       <ThemeToggle />
 
-      <div className={`content-wrapper${!hasMessages ? " content-wrapper--centered" : ""}`}>
+      <div className={`content-wrapper${!hasMessages ? " content-wrapper--centered" : ""}${showProjects ? " content-wrapper--projects" : ""}`}>
         <motion.div
           className="avatar-section"
           animate={{
