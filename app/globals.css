@@ -875,6 +875,86 @@ body {
   }
 }
 
+@media (max-height: 700px) {
+  .content-wrapper--centered {
+    gap: 0.75rem;
+  }
+
+  .avatar-glow {
+    width: 130px;
+    height: 130px;
+  }
+
+  .greeting-title {
+    font-size: 1.35rem;
+  }
+
+  .greeting-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .greeting {
+    margin-top: 0.5rem;
+  }
+
+  .chips-container {
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-height: 550px) {
+  .content-wrapper--centered {
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .avatar-glow {
+    width: 90px;
+    height: 90px;
+  }
+
+  .greeting-title {
+    font-size: 1.1rem;
+  }
+
+  .greeting-subtitle {
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+  }
+
+  .greeting {
+    margin-top: 0.25rem;
+  }
+
+  .chips-container {
+    margin-top: 0.5rem;
+  }
+
+  .chip {
+    font-size: 0.68rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .chat-input-container {
+    padding: 0.5rem 1rem 0.75rem;
+  }
+
+  .quick-nav {
+    margin-top: 12px;
+    gap: 4px;
+  }
+
+  .quick-nav-btn {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .quick-nav-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
 .projects-showcase {
   width: 100%;
   max-width: 680px;
