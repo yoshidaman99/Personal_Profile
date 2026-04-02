@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Send, Square, User, FolderKanban, Wrench, Sparkles, Mail } from "lucide-react";
+import { Send, Square, User, FolderKanban, Wrench, Sparkles, Mail, Search } from "lucide-react";
 import { FormEvent, useRef, useEffect, ChangeEvent, KeyboardEvent } from "react";
 
 interface ChatInputProps {
@@ -12,6 +12,7 @@ interface ChatInputProps {
   isLoading: boolean;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
   onQuickNav: (text: string) => void;
+  isShowcase?: boolean;
 }
 
 export default function ChatInput({
