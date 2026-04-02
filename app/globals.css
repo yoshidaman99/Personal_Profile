@@ -185,6 +185,7 @@ body {
   align-items: center;
   padding: 2rem 1.5rem 0;
   overflow: hidden;
+  min-height: 0;
 }
 
 .content-wrapper--centered {
