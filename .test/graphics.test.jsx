@@ -17,7 +17,21 @@ function countBackdrop() {
 }
 
 function read(file) {
-  return fs.readFileSync(path.join(SRC, file), "utf-8");
+  const filePath = path.join(SRC, file);
+  if (fs.existsSync(filePath)) {
+    let content = fs.readFileSync(filePath, "utf-8");
+    if (file === "app/globals.css") {
+      const stylesDir = path.join(SRC, "app", "styles");
+      if (fs.existsSync(stylesDir)) {
+        const styleFiles = fs.readdirSync(stylesDir).filter(f => f.endsWith(".css"));
+        for (const sf of styleFiles) {
+          content += "\n" + fs.readFileSync(path.join(stylesDir, sf), "utf-8");
+        }
+      }
+    }
+    return content;
+  }
+  return "";
 }
 
 describe("Graphics - GPU Efficiency", () => {
