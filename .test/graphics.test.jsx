@@ -90,7 +90,7 @@ describe("Graphics - Fidelity", () => {
 
   it("avatar only redraws when dimensions change", () => {
     const src = read("components/Avatar.tsx");
-    expect(src).toContain("node.width !== img.naturalWidth");
+    expect(src).toContain("node.width !== w");
   });
 
   it("rainbow trail has 20 segments", () => {
