@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type AvatarState = "idle" | "thinking" | "speaking";
@@ -36,6 +36,21 @@ if (typeof window !== "undefined") {
 export default function Avatar({ state }: AvatarProps) {
   const stateRef = useRef<AvatarState>(state);
   stateRef.current = state;
+  const [ready, setReady] = useState(imagesLoaded);
+
+  useEffect(() => {
+    if (imagesLoaded) {
+      setReady(true);
+      return;
+    }
+    const interval = setInterval(() => {
+      if (imagesLoaded) {
+        setReady(true);
+        clearInterval(interval);
+      }
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
 
   const canvasRef = useCallback((node: HTMLCanvasElement | null) => {
     if (!node) return;
@@ -46,6 +61,8 @@ export default function Avatar({ state }: AvatarProps) {
     let raf = 0;
     const mousePos = { x: 0.5, y: 0.5 };
     const MAX_SIZE = 512;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const onMouseMove = (e: MouseEvent) => {
       mousePos.x = e.clientX / window.innerWidth;
@@ -82,6 +99,9 @@ export default function Avatar({ state }: AvatarProps) {
 
       if (stateRef.current === "thinking") {
         clamped = 183;
+        frame = clamped;
+      } else if (prefersReducedMotion) {
+        clamped = DEFAULT_FRAME;
         frame = clamped;
       } else {
         const x = mousePos.x;
@@ -120,10 +140,16 @@ export default function Avatar({ state }: AvatarProps) {
     <div className="avatar-container">
       <div className="avatar-glow" />
       <div className="avatar-frame avatar-frame--image avatar-float">
+        {!ready && (
+          <div className="avatar-skeleton" aria-label="Loading avatar" />
+        )}
         <canvas
           ref={canvasRef}
           className="avatar-image"
           draggable={false}
+          style={{ display: ready ? "block" : "none" }}
+          role="img"
+          aria-label="Jerel Yoshida's animated avatar"
         />
       </div>
 
