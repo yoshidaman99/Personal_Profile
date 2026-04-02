@@ -352,6 +352,7 @@ body {
 .content-wrapper--projects > .chat-input-container {
   margin-bottom: 0 !important;
   width: 100%;
+  max-width: none;
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
@@ -372,6 +373,7 @@ body {
 
 .content-wrapper--projects {
   gap: 0;
+  padding-top: 0;
 }
 
 .avatar-section {
@@ -721,6 +723,13 @@ body {
   flex-shrink: 0;
 }
 
+.chat-input-inner {
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .chat-input-wrapper {
   position: relative;
   display: flex;
@@ -914,6 +923,18 @@ body {
 
 .send-button:not(:disabled):hover {
   opacity: 0.9;
+}
+
+.search-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  position: relative;
+  z-index: 2;
 }
 
 .stop-button {
@@ -1142,7 +1163,38 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 0 0.5rem;
+  padding: 1.5rem 1rem;
+  flex: 1 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.projects-showcase.is-scrolling {
+  scrollbar-color: var(--border-hover) transparent;
+}
+
+.projects-showcase::-webkit-scrollbar {
+  width: 6px;
+}
+
+.projects-showcase::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.projects-showcase::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+  -webkit-transition: background 0.3s ease;
+  transition: background 0.3s ease;
+}
+
+.projects-showcase.is-scrolling::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+}
+
+.projects-showcase::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 .projects-title {
@@ -1156,6 +1208,16 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.projects-messages-area {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 0;
 }
 
 .project-card {
