@@ -1,10 +1,15 @@
+export interface Benefit {
+  label: string;
+  info?: string;
+}
+
 export interface Project {
   id: string;
   title: string;
   image: string;
   description: string;
   tags: string[];
-  benefits: string[];
+  benefits: Benefit[];
   chatPrompt: string;
 }
 
