@@ -72,6 +72,13 @@ export default function ProjectsShowcase({
                     sizes="(max-width: 640px) 100vw, 560px"
                   />
                   <div className="project-image-overlay" />
+                  <div className="project-benefits">
+                    {project.benefits.map((benefit) => (
+                      <span key={benefit} className="project-benefit-tag">
+                        {benefit}
+                      </span>
+                    ))}
+                  </div>
                   <motion.button
                     className="project-learn-more"
                     onClick={() => onLearnMore(project)}
