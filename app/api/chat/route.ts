@@ -41,13 +41,13 @@ export async function POST(req: Request) {
     );
   }
 
+  const validRoles = new Set(["user", "assistant", "system"]);
+  const sanitized: CoreMessage[] = [];
+
   for (const msg of messages) {
     if (
       typeof msg !== "object" ||
-      msg === null ||
-      typeof (msg as Record<string, unknown>).role !== "string" ||
-      typeof (msg as Record<string, unknown>).content !== "string" ||
-      !["user", "assistant", "system"].includes((msg as Record<string, unknown>).role as string)
+      msg === null
     ) {
       return new Response(
         JSON.stringify({ error: "Invalid message format" }),
@@ -55,18 +55,32 @@ export async function POST(req: Request) {
       );
     }
 
-    if ((msg as Record<string, unknown>).content.length > MAX_CONTENT_LENGTH) {
+    const m = msg as Record<string, unknown>;
+    if (
+      typeof m.role !== "string" ||
+      typeof m.content !== "string" ||
+      !validRoles.has(m.role)
+    ) {
+      return new Response(
+        JSON.stringify({ error: "Invalid message format" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (m.content.length > MAX_CONTENT_LENGTH) {
       return new Response(
         JSON.stringify({ error: "Message content exceeds maximum length" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
+
+    sanitized.push({ role: m.role as CoreMessage["role"], content: m.content });
   }
 
   const result = streamText({
     model: zai("glm-5-turbo"),
     system: SYSTEM_PROMPT,
-    messages: messages as { role: string; content: string }[],
+    messages: sanitized,
     temperature: 0.7,
     maxTokens: 1024,
   });
