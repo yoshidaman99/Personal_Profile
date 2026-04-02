@@ -288,6 +288,22 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   align-items: center;
+  justify-content: flex-start;
+}
+
+.content-wrapper--projects > .avatar-section .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.content-wrapper--projects > .avatar-section .header-actions .theme-toggle {
+  position: static;
+}
+
+.content-wrapper--projects > .avatar-section .header-actions .back-btn {
+  margin-bottom: 0;
 }
 
 .content-wrapper--projects > .avatar-section::after {
