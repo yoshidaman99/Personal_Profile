@@ -75,7 +75,8 @@ export default function Home() {
   const handleProjectsBack = useCallback(() => {
     setShowProjects(false);
     setShowChips(true);
-  }, []);
+    setInput("");
+  }, [setInput]);
 
   const handleLearnMore = useCallback(
     (project: Project) => {
