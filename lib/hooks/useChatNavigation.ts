@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback } from "react";
-import type { UIMessage } from "ai";
+import type { Message } from "ai";
 
 interface UseChatNavigationOptions {
   append: (msg: { role: "user"; content: string }) => void;
   stop: () => void;
-  setMessages: (msgs: UIMessage[] | ((prev: UIMessage[]) => UIMessage[])) => void;
+  setMessages: (msgs: Message[] | ((prev: Message[]) => Message[])) => void;
   setInput: (val: string) => void;
   setShowChips: (val: boolean) => void;
   setShowProjects: (val: boolean) => void;
