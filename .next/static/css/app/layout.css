@@ -302,6 +302,7 @@ body {
 
 .content-wrapper--projects > .avatar-section .avatar-container {
   gap: 0;
+  flex-shrink: 0;
 }
 
 .content-wrapper--projects > .avatar-section .avatar-glow {
@@ -333,14 +334,15 @@ body {
 
 .content-wrapper--projects > .chat-input-container {
   margin-bottom: 0 !important;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  width: calc(100% + 3rem);
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
   z-index: 5;
   background: var(--bg-primary);
   padding: 0.5rem 1.5rem 1rem;
-  margin-left: -1.5rem;
-  margin-right: -1.5rem;
 }
 
 .content-wrapper--projects > .chat-input-container::before {
