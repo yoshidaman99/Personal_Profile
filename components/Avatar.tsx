@@ -13,10 +13,10 @@ const TOTAL_FRAMES = 192;
 const DEFAULT_FRAME = 21;
 
 function getFrameUrl(frame: number) {
-  return "/avatar-frames/frame_" + String(frame).padStart(4, "0") + ".webp";
+  return ;
 }
 
-const imagesMap = new Map();
+const imagesMap = new Map<number, HTMLImageElement>();
 let imagesLoaded = false;
 
 if (typeof window !== "undefined") {
@@ -34,12 +34,11 @@ if (typeof window !== "undefined") {
 }
 
 export default function Avatar({ state }: AvatarProps) {
-  const stateRef = useRef(state);
+  const stateRef = useRef<AvatarState>(state);
   stateRef.current = state;
 
   const canvasRef = useCallback((node: HTMLCanvasElement | null) => {
     if (!node) return;
-
     const ctx = node.getContext("2d");
     if (!ctx) return;
 
@@ -47,7 +46,7 @@ export default function Avatar({ state }: AvatarProps) {
     let raf = 0;
     const mousePos = { x: 0.5, y: 0.5 };
 
-    const onMouseMove = (e) => {
+    const onMouseMove = (e: MouseEvent) => {
       mousePos.x = e.clientX / window.innerWidth;
       mousePos.y = e.clientY / window.innerHeight;
     };
@@ -72,14 +71,14 @@ export default function Avatar({ state }: AvatarProps) {
         return;
       }
 
-      let clamped;
+      let clamped: number;
 
       if (stateRef.current === "thinking") {
         clamped = 183;
         frame = clamped;
       } else {
         const x = mousePos.x;
-        let targetFrame;
+        let targetFrame: number;
         if (x <= 0.46) {
           targetFrame = Math.round(109 - (x / 0.46) * 63);
         } else if (x <= 0.5) {
