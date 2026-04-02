@@ -43,6 +43,16 @@ export default function ProjectsShowcase({
     return () => clearTimeout(scrollTimer.current);
   }, []);
 
+  const filteredProjects = projects.filter((p) => {
+    const q = filter.toLowerCase().trim();
+    if (!q) return true;
+    return (
+      p.title.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q) ||
+      p.tags.some((t) => t.toLowerCase().includes(q))
+    );
+  });
+
   const benefitIcons: Record<number, React.ReactNode> = {
     0: <DollarSign />,
     1: <Zap />,
@@ -72,7 +82,7 @@ export default function ProjectsShowcase({
           </motion.h2>
 
           <div className="projects-grid">
-            {projects.map((project, i) => (
+            {filteredProjects.map((project, i) => (
               <motion.div
                 key={project.id}
                 className="project-card"
