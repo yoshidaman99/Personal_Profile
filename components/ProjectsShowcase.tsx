@@ -25,7 +25,7 @@ export default function ProjectsShowcase({
   messagesEndRef,
 }: ProjectsShowcaseProps) {
   const showcaseRef = useRef<HTMLDivElement>(null);
-  const scrollTimer = useRef<ReturnType<typeof setTimeout>>();
+  const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleScroll = useCallback(() => {
     const el = showcaseRef.current;
