@@ -74,7 +74,7 @@ export async function POST(req: Request) {
       );
     }
 
-    sanitized.push({ role: m.role as CoreMessage["role"], content: m.content });
+    sanitized.push({ role: m.role as "user" | "assistant" | "system", content: m.content });
   }
 
   const result = streamText({
