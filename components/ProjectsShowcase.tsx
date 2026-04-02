@@ -4,17 +4,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, DollarSign, Zap, TrendingUp, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { projects, type Project } from "@/lib/projects";
+import ChatBubble from "@/components/ChatBubble";
+import type { UIMessage } from "ai/react";
+import type { RefObject } from "react";
 
 interface ProjectsShowcaseProps {
   visible: boolean;
   onBack: () => void;
   onLearnMore: (project: Project) => void;
+  messages: UIMessage[];
+  messagesEndRef: RefObject<HTMLDivElement | null>;
 }
 
 export default function ProjectsShowcase({
   visible,
   onBack,
   onLearnMore,
+  messages,
+  messagesEndRef,
 }: ProjectsShowcaseProps) {
   const benefitIcons: Record<number, React.ReactNode> = {
     0: <DollarSign />,
@@ -97,6 +104,21 @@ export default function ProjectsShowcase({
               </motion.div>
             ))}
           </div>
+
+          {messages.length > 0 && (
+            <div className="projects-messages-area">
+              <AnimatePresence mode="popLayout">
+                {messages.map((message, i) => (
+                  <ChatBubble
+                    key={message.id}
+                    message={message}
+                    isLatest={i === messages.length - 1}
+                  />
+                ))}
+              </AnimatePresence>
+              <div ref={messagesEndRef} />
+            </div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
