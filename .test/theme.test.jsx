@@ -60,6 +60,9 @@ describe("Inline script fallback", () => {
     const getTheme = () => {
       try {
         var t = localStorage.getItem("theme");
+        if (!t) {
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
         return t === "light" ? "light" : "dark";
       } catch (e) {
         return "dark";
