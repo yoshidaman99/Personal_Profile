@@ -13,7 +13,7 @@ const TOTAL_FRAMES = 192;
 const DEFAULT_FRAME = 21;
 
 function getFrameUrl(frame: number) {
-  return ;
+  return `/avatar-frames/frame_${String(frame).padStart(4, "0")}.webp`;
 }
 
 const imagesMap = new Map<number, HTMLImageElement>();
