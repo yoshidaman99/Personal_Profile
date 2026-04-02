@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type AvatarState = "idle" | "thinking" | "speaking";
@@ -27,22 +27,16 @@ if (typeof window !== "undefined") {
     const idx = i;
     img.onload = () => {
       loadedCount++;
-      if (loadedCount === TOTAL_FRAMES) {
-        imagesLoaded = true;
-      }
+      if (loadedCount === TOTAL_FRAMES) imagesLoaded = true;
     };
     imagesMap.set(idx, img);
   }
 }
 
-function subscribeMouse(callback: () => void) {
-  window.addEventListener("mousemove", callback, { passive: true });
-  return () => window.removeEventListener("mousemove", callback);
-}
-
-const emptyMouse = { x: 0.5, y: 0.5 };
-
 export default function Avatar({ state }: AvatarProps) {
+  const stateRef = useRef<AvatarState>(state);
+  stateRef.current = state;
+
   const canvasRef = useCallback((node: HTMLCanvasElement | null) => {
     if (!node) return;
 
@@ -52,24 +46,13 @@ export default function Avatar({ state }: AvatarProps) {
     let frame = DEFAULT_FRAME;
     let raf = 0;
     const mousePos = { x: 0.5, y: 0.5 };
-    let currentState: AvatarState = "idle";
-    let isDebug = false;
 
     const onMouseMove = (e: MouseEvent) => {
       mousePos.x = e.clientX / window.innerWidth;
       mousePos.y = e.clientY / window.innerHeight;
     };
 
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "a" && e.ctrlKey) {
-        isDebug = !isDebug;
-        const debugEl = document.querySelector(".avatar-debug") as HTMLElement | null;
-        if (debugEl) debugEl.style.display = isDebug ? "block" : "none";
-      }
-    };
-
     window.addEventListener("mousemove", onMouseMove, { passive: true });
-    window.addEventListener("keydown", onKey);
 
     const drawDefault = () => {
       const img = imagesMap.get(DEFAULT_FRAME);
@@ -91,7 +74,7 @@ export default function Avatar({ state }: AvatarProps) {
 
       let clamped: number;
 
-      if (currentState === "thinking") {
+      if (stateRef.current === "thinking") {
         clamped = 183;
         frame = clamped;
       } else {
@@ -128,22 +111,9 @@ export default function Avatar({ state }: AvatarProps) {
 
     raf = requestAnimationFrame(update);
 
-    const stateObserver = new MutationObserver(() => {
-      const container = node.closest(".avatar-container");
-      if (!container) return;
-      const thinkingEl = container.querySelector(".thinking-text");
-      currentState = thinkingEl ? "thinking" : "idle";
-    });
-    stateObserver.observe(node.closest(".avatar-container")!, {
-      childList: true,
-      subtree: true,
-    });
-
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("keydown", onKey);
-      stateObserver.disconnect();
     };
   }, []);
 
