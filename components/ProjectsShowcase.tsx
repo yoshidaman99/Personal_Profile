@@ -136,21 +136,6 @@ export default function ProjectsShowcase({
               </motion.div>
             ))}
           </div>
-
-          {messages.length > 0 && (
-            <div className="projects-messages-area">
-              <AnimatePresence mode="popLayout">
-                {messages.map((message, i) => (
-                  <ChatBubble
-                    key={message.id}
-                    message={message}
-                    isLatest={i === messages.length - 1}
-                  />
-                ))}
-              </AnimatePresence>
-              <div ref={messagesEndRef} />
-            </div>
-          )}
         </motion.div>
       )}
     </AnimatePresence>
