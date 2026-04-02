@@ -6,13 +6,25 @@ import path from "path";
 
 const SRC = path.resolve(__dirname, "..");
 
+function getAllCss() {
+  let css = fs.readFileSync(path.join(SRC, "app", "globals.css"), "utf-8");
+  const stylesDir = path.join(SRC, "app", "styles");
+  if (fs.existsSync(stylesDir)) {
+    const files = fs.readdirSync(stylesDir).filter(f => f.endsWith(".css"));
+    for (const f of files) {
+      css += "\n" + fs.readFileSync(path.join(stylesDir, f), "utf-8");
+    }
+  }
+  return css;
+}
+
 function countAnims() {
-  const c = fs.readFileSync(path.join(SRC, "app", "globals.css"), "utf-8");
+  const c = getAllCss();
   return (c.match(/@keyframes\s+[\w-]+/g) || []).length;
 }
 
 function countBackdrop() {
-  const c = fs.readFileSync(path.join(SRC, "app", "globals.css"), "utf-8");
+  const c = getAllCss();
   return (c.match(/backdrop-filter/g) || []).length;
 }
 
