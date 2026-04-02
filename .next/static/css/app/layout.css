@@ -253,15 +253,98 @@ body {
 }
 
 .content-wrapper--centered {
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1.5rem;
   padding: 1rem 1.5rem;
   overflow-y: auto;
   min-height: 0;
 }
 
+.content-wrapper--centered > .avatar-section {
+  margin-top: auto;
+}
+
+.content-wrapper--centered > .chat-input-container {
+  margin-bottom: auto;
+}
+
 .content-wrapper--centered .chat-input-container {
   padding: 0.75rem 0 1rem;
+}
+
+.content-wrapper--projects > .avatar-section {
+  margin-top: 0 !important;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  flex-direction: row;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  background: var(--bg-primary);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.content-wrapper--projects > .avatar-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.content-wrapper--projects > .avatar-section .avatar-container {
+  gap: 0;
+}
+
+.content-wrapper--projects > .avatar-section .avatar-glow {
+  display: none;
+}
+
+.content-wrapper--projects > .avatar-section .avatar-float {
+  animation: none;
+}
+
+.content-wrapper--projects > .avatar-section .avatar-frame--image {
+  width: 40px;
+  height: 40px;
+}
+
+.content-wrapper--projects > .avatar-section .greeting {
+  margin-top: 0;
+  text-align: left;
+}
+
+.content-wrapper--projects > .avatar-section .greeting-title {
+  font-size: 0.95rem;
+}
+
+.content-wrapper--projects > .avatar-section .greeting-subtitle {
+  font-size: 0.75rem;
+  margin-top: 0.1rem;
+}
+
+.content-wrapper--projects > .chat-input-container {
+  margin-bottom: 0 !important;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  background: var(--bg-primary);
+  padding-top: 0.5rem;
+}
+
+.content-wrapper--projects > .chat-input-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
 }
 
 .avatar-section {
