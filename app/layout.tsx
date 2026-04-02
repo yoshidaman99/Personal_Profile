@@ -28,12 +28,16 @@ export const metadata: Metadata = {
     "WordPress Developer",
     "Workflow Automation",
     "n8n",
+    "Pinecone",
+    "Vector Database",
+    "Pinecone Metadata",
+    "n8n Automation",
     "Philippines",
   ],
   openGraph: {
     title: "Jerel Yoshida — AI Automation Specialist",
     description:
-      "Chat with Jerel's AI avatar about automation, web development, and how to streamline your business.",
+      "Chat with Jerel's AI avatar about automation, n8n workflows, Pinecone vector databases, Go High Level, and how to streamline your business.",
     type: "website",
   },
 };
