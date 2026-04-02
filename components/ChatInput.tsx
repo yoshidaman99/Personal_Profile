@@ -105,6 +105,10 @@ export default function ChatInput({
           >
             <Square size={16} fill="currentColor" />
           </motion.button>
+        ) : isShowcase ? (
+          <span className="search-icon">
+            <Search size={18} />
+          </span>
         ) : (
           <motion.button
             type="submit"
@@ -117,27 +121,31 @@ export default function ChatInput({
           </motion.button>
         )}
       </div>
-      <span className="chat-input-hint">
-        Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
-      </span>
-      <div className="quick-nav">
-        {[
-          { label: "me", icon: <User size={18} /> },
-          { label: "projects", icon: <FolderKanban size={18} /> },
-          { label: "skills", icon: <Wrench size={18} /> },
-          { label: "fun", icon: <Sparkles size={18} /> },
-          { label: "contact", icon: <Mail size={18} /> },
-        ].map(({ label, icon }) => (
-          <button
-            key={label}
-            type="button"
-            className="quick-nav-btn"
-            onClick={() => onQuickNav(`Tell me about ${label === "me" ? "yourself" : label}`)}
-          >
-            {icon} {label}
-          </button>
-        ))}
-      </div>
+      {!isShowcase && (
+        <>
+          <span className="chat-input-hint">
+            Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
+          </span>
+          <div className="quick-nav">
+            {[
+              { label: "me", icon: <User size={18} /> },
+              { label: "projects", icon: <FolderKanban size={18} /> },
+              { label: "skills", icon: <Wrench size={18} /> },
+              { label: "fun", icon: <Sparkles size={18} /> },
+              { label: "contact", icon: <Mail size={18} /> },
+            ].map(({ label, icon }) => (
+              <button
+                key={label}
+                type="button"
+                className="quick-nav-btn"
+                onClick={() => onQuickNav(`Tell me about ${label === "me" ? "yourself" : label}`)}
+              >
+                {icon} {label}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
       </div>
     </motion.form>
   );
