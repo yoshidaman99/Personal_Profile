@@ -992,9 +992,10 @@ body {
 }
 
 .project-learn-more:hover {
-  background: var(--accent-btn-bg);
+  background: rgba(255, 255, 255, 0.15);
   color: var(--accent);
   border-color: var(--accent);
+  font-weight: 500;
   box-shadow: 0 0 20px var(--accent-dim);
 }
 
