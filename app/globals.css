@@ -1086,6 +1086,8 @@ body {
   flex-direction: column;
   gap: 1rem;
   padding: 1.5rem 0.5rem;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .projects-title {
