@@ -15,6 +15,7 @@ interface ProjectsShowcaseProps {
   onLearnMore: (project: Project) => void;
   messages: UIMessage[];
   messagesEndRef: RefObject<HTMLDivElement | null>;
+  filter: string;
 }
 
 export default function ProjectsShowcase({
@@ -23,6 +24,7 @@ export default function ProjectsShowcase({
   onLearnMore,
   messages,
   messagesEndRef,
+  filter,
 }: ProjectsShowcaseProps) {
   const showcaseRef = useRef<HTMLDivElement>(null);
   const scrollTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
