@@ -3,13 +3,26 @@ export interface Benefit {
   info?: string;
 }
 
+export interface WorkflowStep {
+  step: string;
+  detail: string;
+}
+
 export interface Project {
   id: string;
   title: string;
+  subtitle: string;
   image: string;
+  alt: string;
   description: string;
+  category: string;
+  role: string;
+  year: string;
   tags: string[];
+  techStack: string[];
+  workflowSteps: WorkflowStep[];
   benefits: Benefit[];
+  impact: string;
   chatPrompt: string;
 }
 
