@@ -932,9 +932,11 @@ body {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  background: var(--accent);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: #ffffff;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 100px;
   padding: 0.45rem 1rem;
   font-size: 0.78rem;
@@ -942,7 +944,7 @@ body {
   font-family: var(--font);
   cursor: pointer;
   z-index: 2;
-  transition: opacity 0.15s ease, box-shadow 0.15s ease;
+  transition: opacity 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .project-benefits {
