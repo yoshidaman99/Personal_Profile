@@ -23,8 +23,7 @@ describe("Loading - Layout & Metadata", () => {
   it("font-display is set to swap for performance", () => {
     const layoutPath = path.resolve(__dirname, "../app/layout.tsx");
     const content = fs.readFileSync(layoutPath, "utf-8");
-    expect(content).toContain("display: 'swap'");
-    expect(content).toContain("display: 'swap'"); 
+    expect(content).toContain("display: \"swap\""); 
   });
 });
 
