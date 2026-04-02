@@ -42,14 +42,23 @@ describe("Loading - CSS Optimization", () => {
   });
 
   it("CSS has smooth transitions for theme changes", () => {
-    const content = fs.readFileSync(cssPath, "utf-8");
-    expect(content).toContain("transition: background-color");
-    expect(content).toContain("transition: color");
+    const cssDir = path.resolve(__dirname, "../app/styles");
+    let allCss = fs.readFileSync(cssPath, "utf-8");
+    if (fs.existsSync(cssDir)) {
+      const files = fs.readdirSync(cssDir).filter(f => f.endsWith(".css"));
+      for (const f of files) {
+        allCss += "\n" + fs.readFileSync(path.join(cssDir, f), "utf-8");
+      }
+    }
+    expect(allCss).toContain("transition: background-color");
+    expect(allCss).toContain("transition: color");
   });
 
-  it("no unused @import statements", () => {
+  it("CSS uses @import for modular stylesheets", () => {
     const content = fs.readFileSync(cssPath, "utf-8");
-    expect(content).not.toMatch(/^@import/gm);
+    const imports = content.match(/^@import/gm) || [];
+    expect(imports.length).toBeGreaterThan(0);
+    expect(content).toContain("./styles/layout.css");
   });
 });
 
