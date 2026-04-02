@@ -19,19 +19,9 @@ export default function Home() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [showChips, setShowChips] = useState(messages.length === 0);
+  const [showChips, setShowChips] = useState(true);
   const avatarState = useAvatarState(isLoading);
   const [showProjects, setShowProjects] = useState(false);
-
-  useEffect(() => {
-    try {
-      if (messages.length > 0) {
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages));
-      } else {
-        sessionStorage.removeItem(SESSION_KEY);
-      }
-    } catch {}
-  }, [messages]);
 
   useEffect(() => {
     if (messages.length > 0) {
