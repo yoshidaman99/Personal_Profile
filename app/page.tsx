@@ -140,6 +140,12 @@ export default function Home() {
           )}
         </AnimatePresence>
 
+        <ProjectsShowcase
+          visible={showProjects}
+          onBack={handleProjectsBack}
+          onLearnMore={handleLearnMore}
+        />
+
         {hasMessages && (
           <div className="messages-area">
             <AnimatePresence mode="popLayout">
