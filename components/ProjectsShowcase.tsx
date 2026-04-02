@@ -59,11 +59,23 @@ export default function ProjectsShowcase({
     );
   });
 
-  const benefitIcons: Record<number, React.ReactNode> = {
-    0: <DollarSign />,
-    1: <Zap />,
-    2: <TrendingUp />,
-    3: <ShieldCheck />,
+  const getBenefitIcon = (label: string): ReactNode => {
+    const l = label.toLowerCase();
+    if (l.includes("$") || l.includes("savings")) return <DollarSign />;
+    if (l.includes("renewal")) return <RefreshCw />;
+    if (l.includes("email") || l.includes("parsing")) return <Mail />;
+    if (l.includes("notification") || l.includes("missed")) return <Bell />;
+    if (l.includes("bulk") || l.includes("metadata")) return <Database />;
+    if (l.includes("api limit") || l.includes("api safe")) return <ShieldCheck />;
+    if (l.includes("manual")) return <ShieldCheck />;
+    if (l.includes("24/7")) return <Clock />;
+    if (l.includes("context")) return <Brain />;
+    if (l.includes("accuracy") || l.includes("data-driven")) return <Target />;
+    if (l.includes("wait time")) return <Zap />;
+    if (l.includes("scaling") || l.includes("instant")) return <TrendingUp />;
+    if (l.includes("automated") || l.includes("automation")) return <Zap />;
+    if (l.includes("zero")) return <ShieldCheck />;
+    return <Zap />;
   };
 
   return (
