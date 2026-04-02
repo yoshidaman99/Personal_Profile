@@ -74,6 +74,47 @@ An automation workflow built in **n8n** that takes text data from a Google Sprea
 
 **Tags:** \`n8n\`, \`Google Sheets\`, \`Pinecone\`, \`OpenAI\`
 
+**Update Pinecone Metadata with District Names**
+An n8n workflow that targets existing vectors in a **Pinecone** database and enriches them with new metadata — specifically district names linked to video IDs. Vectors are batched in groups of 100 to stay within API limits, then updated via **HTTP POST** requests to the Pinecone REST API.
+
+**Workflow Steps:**
+1. **Target Existing Vectors** — Queries the Pinecone database to fetch existing vector records that need metadata enrichment
+2. **Batch Vectors (100 per group)** — Groups vectors into batches of 100 to stay within Pinecone's API rate limits and payload size constraints
+3. **Fetch District Names** — Retrieves the correct district name for each vector based on its associated video ID
+4. **HTTP POST Update** — Sends batched update requests via REST API to Pinecone, appending the district name to each vector's metadata
+5. **Repeat Until Complete** — Loops through all remaining batches until every vector has been updated
+
+**Tech Stack:** n8n, HTTP Requests (REST API), Pinecone
+
+**Key Benefits:**
+- **Bulk Metadata Updates** — Enriches existing vectors with district name metadata automatically without re-ingesting data
+- **API Limit Safe** — Batching in groups of 100 ensures no API rate limit violations
+- **Zero Manual Editing** — No need to manually open Pinecone or edit records one by one
+- **100% Fully Automated** — The entire enrichment pipeline runs end-to-end with no human intervention
+
+**Tags:** \`n8n\`, \`HTTP Requests\`, \`Pinecone\`, \`REST API\`
+
+**AI RAG Chatbot for School Districts**
+An intelligent, real-time chatbot built in **n8n** utilizing a **Retrieval-Augmented Generation (RAG)** architecture. It represents the front-end user experience that utilizes the data ingested in the previous workflows. The AI Agent uses an **OpenAI Chat Model** for generating human-like responses, **Simple Memory** for retaining conversation context, and a **Pinecone Vector Store** (with OpenAI Embeddings) to retrieve factual, domain-specific district data before answering.
+
+**Workflow Steps:**
+1. **Chat Trigger** — Activates when a user types a prompt into the chat interface
+2. **AI Agent Orchestration** — Processes the user's intent and decides which tools to use
+3. **OpenAI Chat Model** — Powers the "brain" of the agent, generating human-like conversational responses
+4. **Simple Memory** — Retains the history of the current chat session so the bot remembers context from previous questions
+5. **Vector Search Query** — OpenAI Embeddings convert the user's query into a vector to search the Pinecone Vector Store for relevant factual data
+6. **Response Synthesis** — Agent synthesizes the retrieved data into a natural, accurate response and delivers it to the user
+
+**Tech Stack:** n8n, OpenAI API, Pinecone, Vector Embeddings, Prompt Engineering
+
+**Key Benefits:**
+- **24/7 Instant Answers** — Users get immediate responses at any time of day
+- **Context-Aware Chat** — Simple Memory keeps the conversation flowing naturally across multiple questions
+- **Data-Driven Accuracy** — Every answer is grounded in real district data retrieved from Pinecone
+- **Zero Wait Time** — No more waiting for a human agent to look up information
+
+**Tags:** \`AI Chatbot\`, \`RAG Architecture\`, \`Conversational AI\`, \`LLM Integration\`
+
 ### CONTACT / NEXT STEPS
 Jerel is open to freelance consulting, full-time automation roles, or collaborations.
 - **Best way to connect:** Book a free strategy call at https://calendly.com
