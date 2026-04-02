@@ -22,14 +22,23 @@ export default function Avatar({ state }: AvatarProps) {
   const frameRef = useRef(DEFAULT_FRAME);
   const mousePos = useRef({ x: 0.5, y: 0.5 });
   const imagesRef = useRef<Map<number, HTMLImageElement>>(new Map());
+  const loadedRef = useRef(false);
   const [loaded, setLoaded] = useState(false);
   const stateRef = useRef(state);
   const debugRef = useRef(false);
   const [debug, setDebug] = useState(false);
   const [debugInfo, setDebugInfo] = useState({ x: 0.5, y: 0.5, frame: DEFAULT_FRAME });
   const rafRef = useRef<number>(0);
+  const initRef = useRef(false);
 
   useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
+  useEffect(() => {
+    if (initRef.current) return;
+    initRef.current = true;
+
     let loadedCount = 0;
     const map = new Map<number, HTMLImageElement>();
 
@@ -39,7 +48,8 @@ export default function Avatar({ state }: AvatarProps) {
       const idx = i;
       img.onload = () => {
         loadedCount++;
-        if (loadedCount === TOTAL_FRAMES) {
+        if (loadedCount === TOTAL_FRAMES && !loadedRef.current) {
+          loadedRef.current = true;
           setLoaded(true);
         }
       };
@@ -75,8 +85,6 @@ export default function Avatar({ state }: AvatarProps) {
     };
   }, []);
 
-  useEffect(() => { stateRef.current = state; }, [state]);
-
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -94,13 +102,8 @@ export default function Avatar({ state }: AvatarProps) {
 
     drawDefault();
 
-    let thinkIdx = 0;
-    let thinkTimer = 0;
-
-    const THINK_FRAMES = [183, 184, 185, 186, 187];
-
     const update = () => {
-      if (!loaded) {
+      if (!loadedRef.current) {
         drawDefault();
         rafRef.current = requestAnimationFrame(update);
         return;
@@ -112,8 +115,6 @@ export default function Avatar({ state }: AvatarProps) {
         clamped = 183;
         frameRef.current = clamped;
       } else {
-        thinkIdx = 0;
-        thinkTimer = 0;
         const x = mousePos.current.x;
         let targetFrame: number;
         if (x <= 0.46) {
@@ -152,7 +153,7 @@ export default function Avatar({ state }: AvatarProps) {
 
     rafRef.current = requestAnimationFrame(update);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [loaded]);
+  }, []);
 
   return (
     <div className="avatar-container">
@@ -190,7 +191,7 @@ export default function Avatar({ state }: AvatarProps) {
         <div className="avatar-debug">
           <div>x: {debugInfo.x.toFixed(3)}</div>
           <div>y: {debugInfo.y.toFixed(3)}</div>
-          <div>frame: {debugInfo.frame}</div>
+          <div>frame: {debugInfo.debugInfo}</div>
         </div>
       )}
     </div>
