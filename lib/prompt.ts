@@ -163,6 +163,30 @@ A scheduled **n8n** ETL pipeline that automatically extracts daily message logs 
 
 **Tags:** \`n8n\`, \`Twilio API\`, \`Microsoft SQL Server\`, \`JavaScript\`, \`Cron Scheduling\`
 
+**Zoho Jobs Bulk Import to MS SQL**
+An advanced **n8n** workflow engineered to handle heavy data migrations from **Zoho Recruit**. It systematically authenticates with the Zoho API, triggers a bulk data export, downloads and decompresses the resulting ZIP archive, parses the raw CSV contents, cleans the data using custom **JavaScript** code, and iteratively loads the records into a **Microsoft SQL Server** database.
+
+**Workflow Steps:**
+1. **Manual Trigger** — Initiates the workflow manually to begin the bulk import process
+2. **Zoho Access Token** — HTTP POST request authenticates with Zoho and retrieves a secure session token
+3. **Zoho Bulk Request** — HTTP POST request to Zoho Recruit instructs the system to generate a bulk export of job data
+4. **Get Bulk Data** — HTTP request downloads the newly generated bulk data file
+5. **Decompress Archive** — File processing node unzips and extracts the downloaded ZIP archive
+6. **Extract from File (CSV)** — Parses the raw CSV text from the unzipped file into usable JSON data
+7. **Code (Data Transform)** — Custom JavaScript node cleans, formats, and maps the parsed CSV data to match the destination database schema
+8. **Loop Over Items** — Control node iterates through the formatted list of jobs one by one or in small batches
+9. **Microsoft SQL Insert** — Executes a database query to insert or update the iterated records into Microsoft SQL Server
+
+**Tech Stack:** n8n, Zoho Recruit API, Microsoft SQL Server, CSV/ZIP Processing, JavaScript
+
+**Key Benefits & ROI:**
+- **Bulk Data Migration** — Handles large-scale data downloads and migrations from Zoho Recruit
+- **Automated File Unzipping** — ZIP archives are extracted automatically without any manual intervention
+- **Zero Manual Parsing** — CSV parsing and data formatting run entirely through code nodes
+- **$40K Annual Savings** — Eliminated the need for manual file handling and data entry
+
+**Tags:** \`n8n\`, \`Zoho API (Recruit)\`, \`File Processing (ZIP/CSV)\`, \`Custom Code (JavaScript)\`, \`Microsoft SQL Server\`
+
 ### CONTACT / NEXT STEPS
 Jerel is open to freelance consulting, full-time automation roles, or collaborations.
 - **Best way to connect:** Book a free strategy call at https://calendly.com
