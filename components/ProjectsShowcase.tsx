@@ -6,6 +6,7 @@ import Image from "next/image";
 import { projects, type Project } from "@/lib/projects";
 import ChatBubble from "@/components/ChatBubble";
 import type { UIMessage } from "ai";
+import { useRef, useCallback, useEffect } from "react";
 import type { RefObject } from "react";
 
 interface ProjectsShowcaseProps {
@@ -23,7 +24,22 @@ export default function ProjectsShowcase({
   messages,
   messagesEndRef,
 }: ProjectsShowcaseProps) {
-  const benefitIcons: Record<number, React.ReactNode> = {
+  const showcaseRef = useRef<HTMLDivElement>(null);
+  const scrollTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  const handleScroll = useCallback(() => {
+    const el = showcaseRef.current;
+    if (!el) return;
+    el.classList.add("is-scrolling");
+    clearTimeout(scrollTimer.current);
+    scrollTimer.current = setTimeout(() => {
+      el.classList.remove("is-scrolling");
+    }, 800);
+  }, []);
+
+  useEffect(() => {
+    return () => clearTimeout(scrollTimer.current);
+  }, []);
     0: <DollarSign />,
     1: <Zap />,
     2: <TrendingUp />,
