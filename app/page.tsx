@@ -167,8 +167,6 @@ export default function Home() {
           visible={showProjects}
           onBack={handleProjectsBack}
           onLearnMore={handleLearnMore}
-          messages={messages}
-          messagesEndRef={messagesEndRef}
           filter={input}
         />
 
