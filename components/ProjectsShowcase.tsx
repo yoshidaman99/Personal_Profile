@@ -93,7 +93,8 @@ export default function ProjectsShowcase({
                     whileHover={{ scale: 1.06 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Learn more →
+                    <ArrowRight size={14} />
+                    Learn more
                   </motion.button>
                 </div>
 
