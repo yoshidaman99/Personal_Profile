@@ -23,6 +23,7 @@ export default function Home() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [showChips, setShowChips] = useState(true);
   const [avatarState, setAvatarState] = useState<AvatarState>("idle");
+  const [showProjects, setShowProjects] = useState(false);
 
   const handleBack = useCallback(() => {
     setMessages([]);
