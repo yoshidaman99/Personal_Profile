@@ -45,6 +45,7 @@ export default function Avatar({ state }: AvatarProps) {
     let frame = DEFAULT_FRAME;
     let raf = 0;
     const mousePos = { x: 0.5, y: 0.5 };
+    const MAX_SIZE = 512;
 
     const onMouseMove = (e: MouseEvent) => {
       mousePos.x = e.clientX / window.innerWidth;
@@ -53,20 +54,26 @@ export default function Avatar({ state }: AvatarProps) {
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
 
-    const drawDefault = () => {
-      const img = imagesMap.get(DEFAULT_FRAME);
-      if (img && img.complete && img.naturalWidth > 0) {
-        node.width = img.naturalWidth;
-        node.height = img.naturalHeight;
-        ctx.drawImage(img, 0, 0);
+    const drawImage = (img: HTMLImageElement) => {
+      if (!img.complete || img.naturalWidth === 0) return;
+      const scale = Math.min(MAX_SIZE / img.naturalWidth, MAX_SIZE / img.naturalHeight, 1);
+      const w = Math.round(img.naturalWidth * scale);
+      const h = Math.round(img.naturalHeight * scale);
+      if (node.width !== w || node.height !== h) {
+        node.width = w;
+        node.height = h;
       }
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
     };
 
-    drawDefault();
+    const img = imagesMap.get(DEFAULT_FRAME);
+    if (img) drawImage(img);
 
     const update = () => {
       if (!imagesLoaded) {
-        drawDefault();
+        const defaultImg = imagesMap.get(DEFAULT_FRAME);
+        if (defaultImg) drawImage(defaultImg);
         raf = requestAnimationFrame(update);
         return;
       }
@@ -95,15 +102,8 @@ export default function Avatar({ state }: AvatarProps) {
         frame = clamped;
       }
 
-      const img = imagesMap.get(clamped);
-      if (img && img.complete && img.naturalWidth > 0) {
-        if (node.width !== img.naturalWidth || node.height !== img.naturalHeight) {
-          node.width = img.naturalWidth;
-          node.height = img.naturalHeight;
-        }
-        ctx.clearRect(0, 0, node.width, node.height);
-        ctx.drawImage(img, 0, 0);
-      }
+      const currentImg = imagesMap.get(clamped);
+      if (currentImg) drawImage(currentImg);
 
       raf = requestAnimationFrame(update);
     };
