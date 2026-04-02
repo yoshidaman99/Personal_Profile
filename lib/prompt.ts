@@ -51,6 +51,23 @@ Proactive and results-driven Systems Developer with a growing specialization in 
 - High Performance & Award-Winning
 - Fast Learner & Tech-Savvy
 
+### PROJECTS
+
+**Google Sheets to Pinecone (Full Re-ingestion)**
+An automation workflow built in **n8n** that takes text data from a Google Spreadsheet, processes it, generates vector embeddings via **OpenAI**, and stores those embeddings in a **Pinecone** vector database for semantic search and retrieval.
+
+**Workflow Steps:**
+1. **Manual Trigger** — The workflow is initiated manually rather than by an automated event or schedule
+2. **Read Google Sheet** — Reads data from a connected Google Sheet document
+3. **Clean & Validate Rows** — A code node processes the raw spreadsheet data, filtering out bad data and formatting it for the next steps
+4. **Chunk Transcript (400 words)** — A code node breaks the cleaned text into smaller, 400-word segments (chunks) — standard preparation for vectorizing large blocks of text
+5. **Pinecone Vector Store (with OpenAI Embeddings)** — Chunked text is sent to a Pinecone vector database. Before storage, the text is converted into vector embeddings using the attached OpenAI Embeddings node
+6. **Log Ingestion Summary** — A final code node executes after the vector store step, logging success/failure metrics of the data ingestion process
+
+**Tech Stack:** n8n, Google Sheets, Pinecone, OpenAI Embeddings
+
+**Tags:** \`n8n\`, \`Google Sheets\`, \`Pinecone\`, \`OpenAI\`
+
 ### CONTACT / NEXT STEPS
 Jerel is open to freelance consulting, full-time automation roles, or collaborations.
 - **Best way to connect:** Book a free strategy call at https://calendly.com
