@@ -1028,12 +1028,7 @@ body {
 
 @media (max-width: 640px) {
   .project-image-wrapper {
-    height: 220px;
-  }
-
-  .project-benefit-tag {
-    font-size: 0.72rem;
-    padding: 0.45rem 0.85rem;
+    height: 180px;
   }
 
   .project-info {
