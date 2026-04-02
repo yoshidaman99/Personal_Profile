@@ -74,6 +74,26 @@ An automation workflow built in **n8n** that takes text data from a Google Sprea
 
 **Tags:** \`n8n\`, \`Google Sheets\`, \`Pinecone\`, \`OpenAI\`
 
+**Update Pinecone Metadata with District Names**
+An n8n workflow that targets existing vectors in a **Pinecone** database and enriches them with new metadata — specifically district names linked to video IDs. Vectors are batched in groups of 100 to stay within API limits, then updated via **HTTP POST** requests to the Pinecone REST API.
+
+**Workflow Steps:**
+1. **Target Existing Vectors** — Queries the Pinecone database to fetch existing vector records that need metadata enrichment
+2. **Batch Vectors (100 per group)** — Groups vectors into batches of 100 to stay within Pinecone's API rate limits and payload size constraints
+3. **Fetch District Names** — Retrieves the correct district name for each vector based on its associated video ID
+4. **HTTP POST Update** — Sends batched update requests via REST API to Pinecone, appending the district name to each vector's metadata
+5. **Repeat Until Complete** — Loops through all remaining batches until every vector has been updated
+
+**Tech Stack:** n8n, HTTP Requests (REST API), Pinecone
+
+**Key Benefits:**
+- **Bulk Metadata Updates** — Enriches existing vectors with district name metadata automatically without re-ingesting data
+- **API Limit Safe** — Batching in groups of 100 ensures no API rate limit violations
+- **Zero Manual Editing** — No need to manually open Pinecone or edit records one by one
+- **100% Fully Automated** — The entire enrichment pipeline runs end-to-end with no human intervention
+
+**Tags:** \`n8n\`, \`HTTP Requests\`, \`Pinecone\`, \`REST API\`
+
 ### CONTACT / NEXT STEPS
 Jerel is open to freelance consulting, full-time automation roles, or collaborations.
 - **Best way to connect:** Book a free strategy call at https://calendly.com
