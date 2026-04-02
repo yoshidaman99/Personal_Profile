@@ -47,18 +47,6 @@ export default function Home() {
       inputRef,
     });
 
-  const handleBackWithClear = useCallback(() => {
-    sessionStorage.removeItem(SESSION_KEY);
-    handleBack();
-  }, [handleBack]);
-
-  const handleLearnMoreWithProject = useCallback(
-    (project: Project) => {
-      handleLearnMore(project.chatPrompt);
-    },
-    [handleLearnMore]
-  );
-
   const hasMessages = messages.length > 0;
 
   return (
