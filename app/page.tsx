@@ -172,7 +172,7 @@ export default function Home() {
           filter={input}
         />
 
-        {!showProjects && hasMessages && (
+        {hasMessages && (
           <div className="messages-area">
             <AnimatePresence mode="popLayout">
               {messages.map((message, i) => (
