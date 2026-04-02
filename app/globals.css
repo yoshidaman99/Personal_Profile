@@ -256,6 +256,7 @@ body {
 .content-wrapper--projects > .avatar-section .greeting {
   margin-top: 0;
   text-align: left;
+  flex-shrink: 0;
 }
 
 .content-wrapper--projects > .avatar-section .greeting-title {
