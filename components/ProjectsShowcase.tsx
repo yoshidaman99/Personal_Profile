@@ -17,8 +17,6 @@ export default function ProjectsShowcase({
   visible,
   onBack,
   onLearnMore,
-  messages,
-  messagesEndRef,
   filter,
 }: ProjectsShowcaseProps) {
   const showcaseRef = useRef<HTMLDivElement>(null);
@@ -93,7 +91,7 @@ export default function ProjectsShowcase({
                 <div className="project-image-wrapper">
                   <Image
                     src={project.image}
-                    alt={project.title}
+                    alt={project.alt}
                     fill
                     className="project-image"
                     sizes="(max-width: 640px) 100vw, 560px"
