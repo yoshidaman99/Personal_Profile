@@ -125,7 +125,7 @@ export default function ProjectsShowcase({
                   <div className="project-benefits">
                     {project.benefits.map((benefit, idx) => (
                       <span key={benefit.label} className="project-benefit-tag">
-                        {benefitIcons[idx] ?? <Zap />}
+                        {getBenefitIcon(benefit.label)}
                         {benefit.label}
                       </span>
                     ))}
