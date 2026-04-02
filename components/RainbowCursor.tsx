@@ -25,6 +25,15 @@ export default function RainbowCursor() {
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches && !window.matchMedia("(pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const isLowEnd = typeof navigator !== "undefined" && navigator.hardwareConcurrency
+      ? navigator.hardwareConcurrency <= 2
+      : false;
+
+    const trailLength = isLowEnd ? 12 : TRAIL_LENGTH;
+    const dotBaseSize = isLowEnd ? 140 : DOT_BASE_SIZE;
+    const maxParticles = isLowEnd ? 60 : MAX_PARTICLES;
 
     const canvas = document.createElement("canvas");
     canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;";
@@ -51,7 +60,7 @@ export default function RainbowCursor() {
     let hasPoppedOnIdle = false;
     const FADE_SPEED = 0.03;
 
-    const trail: { x: number; y: number }[] = Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }));
+    const trail: { x: number; y: number }[] = Array.from({ length: trailLength }, () => ({ x: -100, y: -100 }));
     const particles: Particle[] = [];
 
     const interactiveTags = new Set(["button", "textarea", "input", "a", "select"]);
@@ -76,17 +85,18 @@ export default function RainbowCursor() {
     };
 
     const spawnFirework = (cx: number, cy: number) => {
-      if (particles.length >= MAX_PARTICLES) return;
+      if (particles.length >= maxParticles) return;
       const baseHue = Math.random() * 360;
-      for (let i = 0; i < FIREWORK_PARTICLES; i++) {
-        const angle = (Math.PI * 2 * i) / FIREWORK_PARTICLES + (Math.random() - 0.5) * 0.5;
+      const count = isLowEnd ? 5 : FIREWORK_PARTICLES;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
         const speed = 2 + Math.random() * 4;
         particles.push({
           x: cx, y: cy,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 1,
-          hue: (baseHue + i * (360 / FIREWORK_PARTICLES)) % 360,
+          hue: (baseHue + i * (360 / count)) % 360,
           size: 20,
         });
       }
@@ -94,29 +104,32 @@ export default function RainbowCursor() {
 
     const spawnPop = (cx: number, cy: number) => {
       const baseHue = Math.random() * 360;
-      for (let i = 0; i < POP_PARTICLES; i++) {
-        const angle = (Math.PI * 2 * i) / POP_PARTICLES + (Math.random() - 0.5) * 0.3;
+      const popCount = isLowEnd ? 12 : POP_PARTICLES;
+      for (let i = 0; i < popCount; i++) {
+        const angle = (Math.PI * 2 * i) / popCount + (Math.random() - 0.5) * 0.3;
         const speed = 3 + Math.random() * 8;
         particles.push({
           x: cx, y: cy,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 1,
-          hue: (baseHue + i * (360 / POP_PARTICLES)) % 360,
+          hue: (baseHue + i * (360 / popCount)) % 360,
           size: 12 + Math.random() * 14,
         });
       }
-      for (let i = 0; i < 8; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 1 + Math.random() * 3;
-        particles.push({
-          x: cx, y: cy,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          life: 0.8,
-          hue: (baseHue + 60) % 360,
-          size: 28 + Math.random() * 20,
-        });
+      if (!isLowEnd) {
+        for (let i = 0; i < 8; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1 + Math.random() * 3;
+          particles.push({
+            x: cx, y: cy,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 0.8,
+            hue: (baseHue + 60) % 360,
+            size: 28 + Math.random() * 20,
+          });
+        }
       }
     };
 
@@ -186,30 +199,26 @@ export default function RainbowCursor() {
         idleOpacity = Math.min(1, idleOpacity + FADE_SPEED * 2);
       }
 
-      if (!prevVisible && visible) {
-        // came back from interactive element — no pop needed
-      }
       if (prevVisible && !visible && idleOpacity > 0.5) {
         spawnPop(pos.x, pos.y);
       }
       prevVisible = visible;
 
       if ((!visible && particles.length === 0) || idleOpacity <= 0) {
-        // still render particles even when invisible
         if (particles.length === 0) return;
       }
 
       trail[0] = { x: pos.x, y: pos.y };
-      for (let i = 1; i < TRAIL_LENGTH; i++) {
+      for (let i = 1; i < trailLength; i++) {
         trail[i].x += (trail[i - 1].x - trail[i].x) * 0.15;
         trail[i].y += (trail[i - 1].y - trail[i].y) * 0.15;
       }
 
       if (visible) {
-        for (let i = TRAIL_LENGTH - 1; i >= 0; i--) {
-          const progress = i / TRAIL_LENGTH;
-          const size = DOT_BASE_SIZE * (1 - progress * 0.3);
-          const hue = (i * (360 / TRAIL_LENGTH) + now * 0.1) % 360;
+        for (let i = trailLength - 1; i >= 0; i--) {
+          const progress = i / trailLength;
+          const size = dotBaseSize * (1 - progress * 0.3);
+          const hue = (i * (360 / trailLength) + now * 0.1) % 360;
           const alpha = 0.18 * (1 - progress * 0.5) * idleOpacity;
           const grad = ctx.createRadialGradient(trail[i].x, trail[i].y, 0, trail[i].x, trail[i].y, size);
           grad.addColorStop(0, `hsla(${hue}, 100%, 60%, ${alpha})`);
