@@ -191,7 +191,7 @@ body {
 .content-wrapper--centered {
   justify-content: flex-start;
   gap: 1.5rem;
-  padding: 1rem 1.5rem;
+  padding: 0;
   overflow-y: auto;
   min-height: 0;
 }
