@@ -237,6 +237,7 @@ body {
 
 .content-wrapper--projects > .avatar-section .avatar-container {
   gap: 0;
+  flex-shrink: 0;
 }
 
 .content-wrapper--projects > .avatar-section .avatar-glow {
