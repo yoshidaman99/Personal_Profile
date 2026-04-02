@@ -89,4 +89,35 @@ export const projects: Project[] = [
     chatPrompt:
       "Tell me about your Pinecone metadata update workflow",
   },
+  {
+    id: "n8n-rag-chatbot",
+    title: "AI RAG Chatbot for School Districts",
+    subtitle: "Context-aware conversational agent powered by vector search",
+    image: "/projects/n8n-chat.webp",
+    alt: "n8n AI Agent chatbot workflow connected to OpenAI and Pinecone",
+    description:
+      "An intelligent, real-time chatbot built in n8n utilizing a Retrieval-Augmented Generation (RAG) architecture. The AI Agent leverages OpenAI's LLM capabilities alongside a Simple Memory module for conversational context. It dynamically queries a Pinecone Vector Store to retrieve highly specific district data, ensuring responses are accurate, grounded, and instantly available to users.",
+    category: "AI Development",
+    role: "Automation & AI Engineer",
+    year: "2024",
+    tags: ["AI Chatbot", "RAG Architecture", "Conversational AI", "LLM Integration"],
+    techStack: ["n8n", "OpenAI API", "Pinecone", "Vector Embeddings", "Prompt Engineering"],
+    workflowSteps: [
+      { step: "Chat Trigger", detail: "Activates when a user types a prompt into the chat interface" },
+      { step: "AI Agent Orchestration", detail: "Processes the user's intent and decides which tools to use" },
+      { step: "OpenAI Chat Model", detail: "Powers the agent's brain, generating human-like conversational responses" },
+      { step: "Simple Memory", detail: "Retains chat session history so the bot remembers context from previous questions" },
+      { step: "Vector Search Query", detail: "OpenAI Embeddings convert the user's query into a vector to search Pinecone for relevant data" },
+      { step: "Response Synthesis", detail: "Agent synthesizes retrieved data into a natural, accurate response delivered to the user" },
+    ],
+    benefits: [
+      { label: "24/7 Instant Answers" },
+      { label: "Context-Aware Chat" },
+      { label: "Data-Driven Accuracy" },
+      { label: "Zero Wait Time" },
+    ],
+    impact: "Deployed a fully autonomous chatbot capable of referencing complex district datasets instantly, eliminating wait times and drastically reducing the support burden on administrative staff.",
+    chatPrompt:
+      "Tell me about your AI RAG Chatbot for School Districts",
+  },
 ];
