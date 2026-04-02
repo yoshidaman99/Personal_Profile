@@ -66,9 +66,31 @@ export default function ProjectsShowcase({
     );
   });
 
-  const getBenefitIcon = (label: string): ReactNode => {
+  const iconMap: Record<BenefitIcon, ReactNode> = {
+    dollar: <DollarSign />,
+    zap: <Zap />,
+    trending: <TrendingUp />,
+    shield: <ShieldCheck />,
+    database: <Database />,
+    clock: <Clock />,
+    brain: <Brain />,
+    target: <Target />,
+    mail: <Mail />,
+    refresh: <RefreshCw />,
+    bell: <Bell />,
+    check: <CheckCircle2 />,
+    globe: <Globe />,
+    users: <Users />,
+    "bar-chart": <BarChart3 />,
+    lock: <Lock />,
+    layers: <Layers />,
+    rocket: <Rocket />,
+  };
+
+  const getBenefitIcon = (label: string, icon?: BenefitIcon): ReactNode => {
+    if (icon && iconMap[icon]) return iconMap[icon];
     const l = label.toLowerCase();
-    if (l.includes("$") || l.includes("savings")) return <DollarSign />;
+    if (l.includes("$") || l.includes("savings") || l.includes("cost")) return <DollarSign />;
     if (l.includes("renewal")) return <RefreshCw />;
     if (l.includes("email") || l.includes("parsing")) return <Mail />;
     if (l.includes("notification") || l.includes("missed")) return <Bell />;
@@ -76,12 +98,18 @@ export default function ProjectsShowcase({
     if (l.includes("api limit") || l.includes("api safe")) return <ShieldCheck />;
     if (l.includes("manual")) return <ShieldCheck />;
     if (l.includes("24/7")) return <Clock />;
-    if (l.includes("context")) return <Brain />;
+    if (l.includes("context") || l.includes("aware")) return <Brain />;
     if (l.includes("accuracy") || l.includes("data-driven")) return <Target />;
     if (l.includes("wait time")) return <Zap />;
     if (l.includes("scaling") || l.includes("instant")) return <TrendingUp />;
     if (l.includes("automated") || l.includes("automation")) return <Zap />;
     if (l.includes("zero")) return <ShieldCheck />;
+    if (l.includes("sync") || l.includes("global")) return <Globe />;
+    if (l.includes("team") || l.includes("user")) return <Users />;
+    if (l.includes("analytics") || l.includes("report")) return <BarChart3 />;
+    if (l.includes("secur") || l.includes("compliance")) return <Lock />;
+    if (l.includes("scalab") || l.includes("multi")) return <Layers />;
+    if (l.includes("fast") || l.includes("launch")) return <Rocket />;
     return <Zap />;
   };
 
