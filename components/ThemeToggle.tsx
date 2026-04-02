@@ -4,17 +4,29 @@ import { Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
+function getSystemTheme(): "dark" | "light" {
+  if (typeof window === "undefined") return "dark";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     const stored = localStorage.getItem("theme") as "dark" | "light" | null;
-    if (stored) {
-      setTheme(stored);
-      document.documentElement.setAttribute("data-theme", stored);
-    } else {
-      setTheme("dark");
-      document.documentElement.setAttribute("data-theme", "dark");
+    const resolved = stored || getSystemTheme();
+    setTheme(resolved);
+    document.documentElement.setAttribute("data-theme", resolved);
+
+    if (!stored) {
+      const mq = window.matchMedia("(prefers-color-scheme: dark)");
+      const handler = (e: MediaQueryListEvent) => {
+        const next = e.matches ? "dark" : "light";
+        setTheme(next);
+        document.documentElement.setAttribute("data-theme", next);
+      };
+      mq.addEventListener("change", handler);
+      return () => mq.removeEventListener("change", handler);
     }
   }, []);
 
