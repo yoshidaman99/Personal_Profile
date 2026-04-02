@@ -49,6 +49,12 @@ export default function AvatarHeader({
       </AnimatePresence>
       <Avatar state={avatarState} />
 
+      <div className="avatar-status-text" role="status" aria-live="polite">
+        {avatarState === "thinking" && "AI Jerel is thinking..."}
+        {avatarState === "speaking" && "AI Jerel is responding"}
+        {avatarState === "idle" && hasMessages && "AI Jerel is ready"}
+      </div>
+
       <motion.div
         className="greeting"
         initial={{ opacity: 0, y: 20 }}
