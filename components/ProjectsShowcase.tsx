@@ -4,17 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, DollarSign, Zap, TrendingUp, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { projects, type Project } from "@/lib/projects";
-import ChatBubble from "@/components/ChatBubble";
-import type { UIMessage } from "ai";
 import { useRef, useCallback, useEffect } from "react";
-import type { RefObject } from "react";
 
 interface ProjectsShowcaseProps {
   visible: boolean;
   onBack: () => void;
   onLearnMore: (project: Project) => void;
-  messages: UIMessage[];
-  messagesEndRef: RefObject<HTMLDivElement | null>;
   filter: string;
 }
 
