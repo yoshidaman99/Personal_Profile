@@ -66,6 +66,12 @@ An automation workflow built in **n8n** that takes text data from a Google Sprea
 
 **Tech Stack:** n8n, Google Sheets, Pinecone, OpenAI Embeddings
 
+**Key Benefits & ROI:**
+- **$40K Annual Savings** — The client no longer needs to hire a dedicated data encoder because the entire data processing pipeline runs automatically through n8n
+- **100% Fully Automated** — No manual intervention required from trigger to logging
+- **Instant Data Scaling** — Handles growing datasets without any additional resources or personnel
+- **Zero Human Error** — Automated validation and processing eliminates mistakes that come with manual data entry
+
 **Tags:** \`n8n\`, \`Google Sheets\`, \`Pinecone\`, \`OpenAI\`
 
 ### CONTACT / NEXT STEPS
