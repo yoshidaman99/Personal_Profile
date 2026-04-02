@@ -954,8 +954,6 @@ body {
   letter-spacing: 0.02em;
   white-space: nowrap;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-  position: relative;
-  cursor: default;
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -966,55 +964,7 @@ body {
   color: var(--accent);
 }
 
-.project-benefit-tag[title]:hover {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 16px rgba(255, 255, 255, 0.08);
-}
-
-.project-benefit-tag[title]:hover::after {
-  content: attr(title);
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: #ffffff;
-  font-size: 0.72rem;
-  font-weight: 400;
-  white-space: normal;
-  width: max-content;
-  max-width: 200px;
-  padding: 0.45rem 0.75rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-  z-index: 10;
-  pointer-events: none;
-  animation: tooltip-in 0.2s ease forwards;
-}
-
-.project-benefit-tag[title]:hover::before {
-  content: "";
-  position: absolute;
-  top: calc(100% + 2px);
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-bottom-color: rgba(0, 0, 0, 0.85);
-  z-index: 10;
-  pointer-events: none;
-  animation: tooltip-in 0.2s ease forwards;
-}
-
-@keyframes tooltip-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-
-.project-benefit-tag:not([title]):hover,
-.project-benefit-tag[title=""]:hover {
+.project-benefit-tag:hover {
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 2px 16px rgba(255, 255, 255, 0.08);
 }
