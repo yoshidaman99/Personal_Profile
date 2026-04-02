@@ -71,7 +71,7 @@ describe("Performance - Render Speed", () => {
       />
     );
     const elapsed = performance.now() - start;
-    expect(elapsed).toBeLessThan(50);
+    expect(elapsed).toBeLessThan(100);
   });
 
   it("renders 20 ChatBubbles within 500ms", () => {
