@@ -16,6 +16,13 @@ export default function ProjectsShowcase({
   onBack,
   onLearnMore,
 }: ProjectsShowcaseProps) {
+  const benefitIcons: Record<number, React.ReactNode> = {
+    0: <DollarSign />,
+    1: <Zap />,
+    2: <TrendingUp />,
+    3: <ShieldCheck />,
+  };
+
   return (
     <AnimatePresence>
       {visible && (
