@@ -272,4 +272,36 @@ export const projects: Project[] = [
     chatPrompt:
       "Tell me about your Zoho Recruit AI Resume Parser and Data Backfill workflow",
   },
+  {
+    id: "n8n-lm-assignments-email-rcvr-sql",
+    title: "Locumsmart Assignments to MS SQL Processor",
+    subtitle: "Automated downstream data routing and document processing pipeline",
+    image: "/projects/n8n-lm-assignments-email-rcvr-sql.webp",
+    alt: "n8n workflow showing webhook trigger from email receiver, parallel data parsing, document downloading, and Microsoft SQL database insertions",
+    description:
+      "Acting as the downstream processor for the Email Receiver pipeline, this n8n workflow catches incoming webhook payloads containing newly parsed assignment data. It concurrently parses the information, updates processing statuses, authenticates to download related documents via API, and executes multiple Microsoft SQL queries to securely store all records and document metadata in the central database.",
+    category: "Backend Automation",
+    role: "Automation Engineer",
+    year: "2026",
+    tags: ["n8n", "Microsoft SQL Server", "Webhooks", "Custom Code (JavaScript)", "REST API (HTTP Requests)"],
+    techStack: ["n8n", "Microsoft SQL Server", "Webhooks", "JavaScript", "REST API"],
+    workflowSteps: [
+      { step: "Webhook Trigger", detail: "Triggered automatically by a webhook payload sent from the upstream Email Receiver workflow" },
+      { step: "Assignment Data Parsing", detail: "Parses and extracts the incoming assignment data using a JavaScript code node" },
+      { step: "Core SQL Insertion", detail: "Executes a SQL query to insert the core assignment data into the MS SQL database" },
+      { step: "Status Tracking", detail: "Prepares and executes a secondary SQL query to update the assignment processing status" },
+      { step: "Document Retrieval", detail: "Authenticates via API to generate a token and downloads any associated assignment documents via HTTP request" },
+      { step: "Document Logging", detail: "Processes the document metadata with JavaScript and executes a final SQL query to store the document records" },
+    ],
+    benefits: [
+      { label: "Automated Data Routing", icon: "database", info: "Instantly routes parsed email data into the correct database tables" },
+      { label: "Instant SQL Insertion", icon: "zap" },
+      { label: "Document Auto-Download", icon: "layers" },
+      { label: "Seamless Workflow Chaining", icon: "refresh", info: "Acts as Part 2 of the Email Receiver pipeline with zero manual handoff" },
+      { label: "$8K Annual Savings", icon: "dollar" },
+    ],
+    impact: "Completed the end-to-end automation of assignment tracking by instantly routing parsed email data and associated documents directly into the SQL database, eliminating manual entry delays.",
+    chatPrompt:
+      "Tell me about your Locumsmart Assignments to MS SQL Processor workflow",
+  },
 ];
