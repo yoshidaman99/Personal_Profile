@@ -30,4 +30,20 @@ export const projects: Project[] = [
     chatPrompt:
       "Tell me about your Google Sheets to Pinecone automation project",
   },
+  {
+    id: "n8n-pinecone-metadata",
+    title: "Update Pinecone Metadata with District Names",
+    image: "/projects/n8n-pinecone-metadata.webp",
+    description:
+      "An n8n workflow that targets existing vectors in a Pinecone database and enriches them with new metadata — specifically district names linked to video IDs. Vectors are batched in groups of 100 to stay within API limits, then updated via HTTP POST requests.",
+    tags: ["n8n", "HTTP Requests (REST API)", "Pinecone"],
+    benefits: [
+      { label: "Bulk Metadata Updates", info: "Enriches existing vectors with district name metadata automatically" },
+      { label: "API Limit Safe" },
+      { label: "Zero Manual Editing" },
+      { label: "100% Fully Automated" },
+    ],
+    chatPrompt:
+      "Tell me about your Pinecone metadata update workflow",
+  },
 ];
