@@ -62,9 +62,27 @@ export default function Home() {
   };
 
   const handleQuickNav = useCallback((text: string) => {
+    if (text.toLowerCase().includes("project")) {
+      setShowProjects(true);
+      setShowChips(false);
+      return;
+    }
     setShowChips(false);
     append({ role: "user", content: text });
   }, [append]);
+
+  const handleProjectsBack = useCallback(() => {
+    setShowProjects(false);
+    setShowChips(true);
+  }, []);
+
+  const handleLearnMore = useCallback(
+    (project: Project) => {
+      setShowProjects(false);
+      append({ role: "user", content: project.chatPrompt });
+    },
+    [append]
+  );
 
   const hasMessages = messages.length > 0;
 
