@@ -1089,6 +1089,10 @@ body {
   flex: 1;
   overflow-y: auto;
   scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.projects-showcase:hover {
   scrollbar-color: var(--border-hover) transparent;
 }
 
@@ -1101,8 +1105,13 @@ body {
 }
 
 .projects-showcase::-webkit-scrollbar-thumb {
-  background: var(--border-hover);
+  background: transparent;
   border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.projects-showcase:hover::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
 }
 
 .projects-showcase::-webkit-scrollbar-thumb:hover {
