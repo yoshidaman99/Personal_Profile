@@ -1085,9 +1085,28 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1.5rem 0.5rem;
+  padding: 1.5rem 1rem;
   flex: 1;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hover) transparent;
+}
+
+.projects-showcase::-webkit-scrollbar {
+  width: 6px;
+}
+
+.projects-showcase::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.projects-showcase::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: 3px;
+}
+
+.projects-showcase::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 .projects-title {
