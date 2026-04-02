@@ -9,6 +9,8 @@ import ChatBubble from "@/components/ChatBubble";
 import SuggestionChips from "@/components/SuggestionChips";
 import ChatInput from "@/components/ChatInput";
 import ThemeToggle from "@/components/ThemeToggle";
+import ProjectsShowcase from "@/components/ProjectsShowcase";
+import type { Project } from "@/lib/projects";
 
 type AvatarState = "idle" | "thinking" | "speaking";
 
