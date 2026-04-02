@@ -5,7 +5,7 @@ import { ArrowRight, DollarSign, Zap, TrendingUp, ShieldCheck } from "lucide-rea
 import Image from "next/image";
 import { projects, type Project } from "@/lib/projects";
 import ChatBubble from "@/components/ChatBubble";
-import type { UIMessage } from "ai/react";
+import type { UIMessage } from "ai";
 import type { RefObject } from "react";
 
 interface ProjectsShowcaseProps {
