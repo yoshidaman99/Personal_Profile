@@ -54,7 +54,6 @@
       "disableStaticImages": false,
       "minimumCacheTTL": 60,
       "formats": [
-        "image/avif",
         "image/webp"
       ],
       "maximumResponseBody": 50000000,
