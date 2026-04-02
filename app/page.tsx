@@ -67,6 +67,7 @@ export default function Home() {
       setShowChips(false);
       return;
     }
+    setShowProjects(false);
     setShowChips(false);
     append({ role: "user", content: text });
   }, [append]);
@@ -165,9 +166,11 @@ export default function Home() {
           visible={showProjects}
           onBack={handleProjectsBack}
           onLearnMore={handleLearnMore}
+          messages={messages}
+          messagesEndRef={messagesEndRef}
         />
 
-        {hasMessages && (
+        {!showProjects && hasMessages && (
           <div className="messages-area">
             <AnimatePresence mode="popLayout">
               {messages.map((message, i) => (
