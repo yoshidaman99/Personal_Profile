@@ -307,6 +307,7 @@ body {
 
 .content-wrapper--projects {
   gap: 0;
+  padding-top: 0;
 }
 
 .avatar-section {
