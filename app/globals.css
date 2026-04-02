@@ -992,9 +992,10 @@ body {
 }
 
 .project-learn-more:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   border-color: var(--accent);
-  box-shadow: 0 0 18px var(--accent-dim);
+  color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-dim), 0 0 40px rgba(0, 229, 255, 0.08);
 }
 
 .project-info {
