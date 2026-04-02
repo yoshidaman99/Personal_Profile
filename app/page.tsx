@@ -11,11 +11,11 @@ import ThemeToggle from "@/components/ThemeToggle";
 import ProjectsShowcase from "@/components/ProjectsShowcase";
 import { useAvatarState } from "@/lib/hooks/useAvatarState";
 import { useChatNavigation } from "@/lib/hooks/useChatNavigation";
+import type { Project } from "@/lib/projects";
+
 export default function Home() {
   const { messages, input, setInput, handleSubmit, isLoading, stop, append, setMessages } =
-    useChat({
-      api: "/api/chat",
-    });
+    useChat({ api: "/api/chat" });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -47,6 +47,13 @@ export default function Home() {
       inputRef,
     });
 
+  const handleLearnMoreWithProject = useCallback(
+    (project: Project) => {
+      handleLearnMore(project.chatPrompt);
+    },
+    [handleLearnMore]
+  );
+
   const hasMessages = messages.length > 0;
 
   return (
@@ -59,7 +66,7 @@ export default function Home() {
           avatarState={avatarState}
           hasMessages={hasMessages}
           showProjects={showProjects}
-          onBack={handleBackWithClear}
+          onBack={handleBack}
           onProjectsBack={handleProjectsBack}
           themeToggleSlot={<ThemeToggle />}
         />
