@@ -1,6 +1,7 @@
 import { streamText, type CoreMessage } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
-import { SYSTEM_PROMPT } from "@/lib/prompt";
+import { BASE_PROMPT, formatProjectContext } from "@/lib/prompt";
+import { searchProjects } from "@/lib/search";
 import { rateLimit } from "@/lib/rate-limit";
 
 export const maxDuration = 30;
