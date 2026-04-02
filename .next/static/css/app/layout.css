@@ -1063,7 +1063,10 @@ body {
 @media (max-height: 550px) {
   .content-wrapper--centered {
     gap: 0.4rem;
-    padding: 0.5rem 1rem;
+  }
+
+  .content-wrapper--centered > .avatar-section {
+    padding: 0 1rem;
   }
 
   .avatar-glow {
