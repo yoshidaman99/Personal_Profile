@@ -12,7 +12,7 @@
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-38b49df12a94ee57.js",
       "static/chunks/main-app-03a57d93ff92c4af.js",
-      "static/css/8cac2a45eedd4184.css",
+      "static/css/b77ae5fb77af07dc.css",
       "static/chunks/app/layout-b70ea0df431831f3.js"
     ],
     "/api/chat/route": [
@@ -28,7 +28,7 @@
       "static/chunks/255-38b49df12a94ee57.js",
       "static/chunks/main-app-03a57d93ff92c4af.js",
       "static/chunks/668-cb23c28e96b37989.js",
-      "static/chunks/app/page-8aac64d5c16ae727.js"
+      "static/chunks/app/page-960701a856d9f7ca.js"
     ]
   }
 }
