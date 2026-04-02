@@ -163,10 +163,10 @@ export const projects: Project[] = [
       { step: "Trigger Downstream Workflow", detail: "Final HTTP POST request pushes the combined data to trigger a downstream n8n workflow" },
     ],
     benefits: [
-      { label: "Instant Email Parsing", info: "Automatically intercepts and processes job-related emails the moment they arrive" },
-      { label: "Automated API Renewals" },
-      { label: "Zero Missed Notifications" },
-      { label: "$13K Annual Savings" },
+      { label: "Instant Email Parsing", icon: "mail", info: "Automatically intercepts and processes job-related emails the moment they arrive" },
+      { label: "Automated API Renewals", icon: "refresh" },
+      { label: "Zero Missed Notifications", icon: "bell" },
+      { label: "$13K Annual Savings", icon: "dollar" },
     ],
     impact: "Eliminated manual inbox monitoring by building a highly reliable, self-sustaining webhook listener that instantly bridges email notifications with third-party Locumsmart job data.",
     chatPrompt:
