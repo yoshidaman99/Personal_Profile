@@ -74,9 +74,9 @@ export default function Home() {
         {!showProjects && <ThemeToggle />}
 
         <div className="avatar-status-text" role="status" aria-live="polite">
-          {avatarState === "thinking" && "Jerel is thinking..."}
-          {avatarState === "speaking" && "Jerel is responding"}
-          {avatarState === "idle" && hasMessages && "Jerel is ready"}
+          {avatarState === "thinking" && "AI Jerel is thinking..."}
+          {avatarState === "speaking" && "AI Jerel is responding"}
+          {avatarState === "idle" && hasMessages && "AI Jerel is ready"}
         </div>
 
         <AnimatePresence>
