@@ -656,6 +656,13 @@ body {
   flex-shrink: 0;
 }
 
+.chat-input-inner {
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .chat-input-wrapper {
   position: relative;
   display: flex;
