@@ -287,6 +287,7 @@ body {
 .content-wrapper--projects > .chat-input-container {
   margin-bottom: 0 !important;
   width: 100%;
+  max-width: 680px;
   position: sticky;
   bottom: 0;
   z-index: 5;
@@ -649,6 +650,7 @@ body {
 
 .chat-input-container {
   width: 100%;
+  max-width: 680px;
   margin: 0 auto;
   padding: 0.75rem 1.5rem 1.5rem;
   flex-shrink: 0;
