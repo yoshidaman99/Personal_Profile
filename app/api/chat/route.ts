@@ -1,4 +1,4 @@
-import { streamText } from "ai";
+import { streamText, type CoreMessage } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { SYSTEM_PROMPT } from "@/lib/prompt";
 import { rateLimit } from "@/lib/rate-limit";
