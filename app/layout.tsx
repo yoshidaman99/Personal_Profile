@@ -35,6 +35,10 @@ export const metadata: Metadata = {
     "RAG Chatbot",
     "AI Chatbot",
     "Conversational AI",
+    "Microsoft Graph API",
+    "Email Automation",
+    "Webhooks",
+    "Locumsmart",
     "Philippines",
   ],
   openGraph: {
