@@ -1006,11 +1006,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: #ffffff;
-  border: 1px solid rgba(0, 229, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 10px;
   padding: 0.45rem 0.85rem;
   font-size: 0.78rem;
@@ -1029,8 +1029,8 @@ body {
 }
 
 .project-benefit-tag:hover {
-  background: rgba(0, 229, 255, 0.15);
-  box-shadow: 0 2px 16px rgba(0, 229, 255, 0.12);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 16px rgba(255, 255, 255, 0.08);
 }
 
 .project-learn-more:hover {
