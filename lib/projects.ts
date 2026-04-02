@@ -205,4 +205,38 @@ export const projects: Project[] = [
     chatPrompt:
       "Tell me about your Twilio Daily Sync workflow",
   },
+  {
+    id: "n8n-zoho-jobs-import",
+    title: "Zoho Jobs Bulk Import to MS SQL",
+    subtitle: "Automated bulk data extraction, decompression, and database insertion pipeline",
+    image: "/projects/n8n-zoho-jobs-import.webp",
+    alt: "n8n workflow showing Zoho API bulk data download, decompression, and MS SQL database import",
+    description:
+      "An advanced n8n workflow engineered to handle heavy data migrations from Zoho Recruit. It systematically authenticates with the Zoho API, triggers a bulk data export, downloads and decompresses the resulting ZIP archive, parses the raw CSV contents, cleans the data using custom code, and iteratively loads the records into a Microsoft SQL database.",
+    category: "Data Engineering",
+    role: "Automation Engineer",
+    year: "2025",
+    tags: ["n8n", "Zoho API (Recruit)", "File Processing (ZIP/CSV)", "Custom Code (JavaScript)", "Microsoft SQL Server"],
+    techStack: ["n8n", "Zoho Recruit API", "Microsoft SQL Server", "CSV/ZIP Processing", "JavaScript"],
+    workflowSteps: [
+      { step: "Manual Trigger", detail: "Initiates the workflow manually to begin the bulk import process" },
+      { step: "Zoho Access Token", detail: "HTTP POST request authenticates with Zoho and retrieves a secure session token" },
+      { step: "Zoho Bulk Request", detail: "HTTP POST request to Zoho Recruit instructs the system to generate a bulk export of job data" },
+      { step: "Get Bulk Data", detail: "HTTP request downloads the newly generated bulk data file" },
+      { step: "Decompress Archive", detail: "File processing node unzips and extracts the downloaded ZIP archive" },
+      { step: "Extract from File (CSV)", detail: "Parses the raw CSV text from the unzipped file into usable JSON data" },
+      { step: "Code (Data Transform)", detail: "Custom JavaScript node cleans, formats, and maps the parsed CSV data to match the destination database schema" },
+      { step: "Loop Over Items", detail: "Control node iterates through the formatted list of jobs one by one or in small batches" },
+      { step: "Microsoft SQL Insert", detail: "Executes a database query to insert or update the iterated records into Microsoft SQL Server" },
+    ],
+    benefits: [
+      { label: "Bulk Data Migration", icon: "database", info: "Handles large-scale data downloads and migrations from Zoho Recruit" },
+      { label: "Automated File Unzipping", icon: "zap" },
+      { label: "Zero Manual Parsing", icon: "check" },
+      { label: "$40K Annual Savings", icon: "dollar" },
+    ],
+    impact: "Streamlined complex bulk data migrations by entirely automating the download, extraction, and database loading of heavy Zoho Recruit exports, ensuring high-fidelity data synchronization with zero manual file handling.",
+    chatPrompt:
+      "Tell me about your Zoho Jobs Bulk Import to MS SQL workflow",
+  },
 ];
