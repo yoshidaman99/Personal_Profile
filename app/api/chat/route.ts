@@ -78,9 +78,14 @@ export async function POST(req: Request) {
     sanitized.push({ role: m.role as "user" | "assistant" | "system", content: m.content });
   }
 
+  const lastUserMessage = [...sanitized].reverse().find((m) => m.role === "user");
+  const userQuery = lastUserMessage?.content ?? "";
+  const relevantProjects = searchProjects(userQuery);
+  const systemPrompt = BASE_PROMPT + formatProjectContext(relevantProjects);
+
   const result = streamText({
     model: zai("glm-5-turbo"),
-    system: SYSTEM_PROMPT,
+    system: systemPrompt,
     messages: sanitized,
     temperature: 0.7,
     maxTokens: 1024,
