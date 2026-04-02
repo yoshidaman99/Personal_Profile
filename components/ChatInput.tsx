@@ -75,6 +75,7 @@ export default function ChatInput({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 1.2 }}
     >
+      <div className="chat-input-inner">
       <div className="chat-input-wrapper">
         <textarea
           ref={inputRef}
@@ -128,6 +129,7 @@ export default function ChatInput({
             {icon} {label}
           </button>
         ))}
+      </div>
       </div>
     </motion.form>
   );
