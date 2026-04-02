@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect, useSyncExternalStore } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type AvatarState = "idle" | "thinking" | "speaking";
 
@@ -16,59 +16,60 @@ function getFrameUrl(frame: number) {
   return `/avatar-frames/frame_${String(frame).padStart(4, "0")}.webp`;
 }
 
+const imagesMap = new Map<number, HTMLImageElement>();
+let imagesLoaded = false;
+let loadResolve: (() => void) | null = null;
+const loadPromise = new Promise<void>((resolve) => {
+  if (imagesLoaded) { resolve(); return; }
+  loadResolve = resolve;
+});
+
+if (typeof window !== "undefined") {
+  let loadedCount = 0;
+  for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    const img = new Image();
+    img.src = getFrameUrl(i);
+    const idx = i;
+    img.onload = () => {
+      loadedCount++;
+      if (loadedCount === TOTAL_FRAMES) {
+        imagesLoaded = true;
+        if (loadResolve) loadResolve();
+      }
+    };
+    imagesMap.set(idx, img);
+  }
+}
+
+function subscribeMouse(callback: () => void) {
+  window.addEventListener("mousemove", callback, { passive: true });
+  return () => window.removeEventListener("mousemove", callback);
+}
+
+function getMouseSnapshot() {
+  return { x: 0.5, y: 0.5 };
+}
+
 export default function Avatar({ state }: AvatarProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef(DEFAULT_FRAME);
   const mousePos = useRef({ x: 0.5, y: 0.5 });
-  const imagesRef = useRef<Map<number, HTMLImageElement>>(new Map());
-  const loadedRef = useRef(false);
-  const [loaded, setLoaded] = useState(false);
   const stateRef = useRef(state);
   const debugRef = useRef(false);
   const [debug, setDebug] = useState(false);
   const [debugInfo, setDebugInfo] = useState({ x: 0.5, y: 0.5, frame: DEFAULT_FRAME });
   const rafRef = useRef<number>(0);
-  const initRef = useRef(false);
 
-  useEffect(() => {
-    stateRef.current = state;
-  }, [state]);
+  stateRef.current = state;
 
-  useEffect(() => {
-    if (initRef.current) return;
-    initRef.current = true;
-
-    let loadedCount = 0;
-    const map = new Map<number, HTMLImageElement>();
-
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = getFrameUrl(i);
-      const idx = i;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === TOTAL_FRAMES && !loadedRef.current) {
-          loadedRef.current = true;
-          setLoaded(true);
-        }
-      };
-      map.set(idx, img);
-    }
-
-    imagesRef.current = map;
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    mousePos.current = {
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight,
+    };
   }, []);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = {
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      };
-    };
-
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "a" && e.ctrlKey) {
         setDebug((v) => {
@@ -78,24 +79,23 @@ export default function Avatar({ state }: AvatarProps) {
       }
     };
     window.addEventListener("keydown", handleKey);
-
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("keydown", handleKey);
     };
-  }, []);
+  }, [handleMouseMove]);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+  const canvasRef = useCallback((node: HTMLCanvasElement | null) => {
+    if (!node) return;
+
+    const ctx = node.getContext("2d");
     if (!ctx) return;
 
     const drawDefault = () => {
-      const img = imagesRef.current.get(DEFAULT_FRAME);
+      const img = imagesMap.get(DEFAULT_FRAME);
       if (img && img.complete && img.naturalWidth > 0) {
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
+        node.width = img.naturalWidth;
+        node.height = img.naturalHeight;
         ctx.drawImage(img, 0, 0);
       }
     };
@@ -103,7 +103,7 @@ export default function Avatar({ state }: AvatarProps) {
     drawDefault();
 
     const update = () => {
-      if (!loadedRef.current) {
+      if (!imagesLoaded) {
         drawDefault();
         rafRef.current = requestAnimationFrame(update);
         return;
@@ -138,13 +138,13 @@ export default function Avatar({ state }: AvatarProps) {
         setDebugInfo({ x: mousePos.current.x, y: mousePos.current.y, frame: clamped });
       }
 
-      const img = imagesRef.current.get(clamped);
+      const img = imagesMap.get(clamped);
       if (img && img.complete && img.naturalWidth > 0) {
-        if (canvas.width !== img.naturalWidth || canvas.height !== img.naturalHeight) {
-          canvas.width = img.naturalWidth;
-          canvas.height = img.naturalHeight;
+        if (node.width !== img.naturalWidth || node.height !== img.naturalHeight) {
+          node.width = img.naturalWidth;
+          node.height = img.naturalHeight;
         }
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, node.width, node.height);
         ctx.drawImage(img, 0, 0);
       }
 
@@ -152,46 +152,41 @@ export default function Avatar({ state }: AvatarProps) {
     };
 
     rafRef.current = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(rafRef.current);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   return (
     <div className="avatar-container">
       <div className="avatar-glow" />
-      <motion.div
-        className="avatar-frame avatar-frame--image"
-        animate={{
-          y: [0, -4, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      >
+      <div className="avatar-frame avatar-frame--image avatar-float">
         <canvas
           ref={canvasRef}
           className="avatar-image"
           draggable={false}
         />
-      </motion.div>
+      </div>
 
-      {state === "thinking" && (
-        <motion.div
-          className="thinking-text"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          Thinking<span className="thinking-dots"><span>.</span><span>.</span><span>.</span></span>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {state === "thinking" && (
+          <motion.div
+            className="thinking-text"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            Thinking<span className="thinking-dots"><span>.</span><span>.</span><span>.</span></span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {debug && (
         <div className="avatar-debug">
           <div>x: {debugInfo.x.toFixed(3)}</div>
           <div>y: {debugInfo.y.toFixed(3)}</div>
-          <div>frame: {debugInfo.debugInfo}</div>
+          <div>frame: {debugInfo.frame}</div>
         </div>
       )}
     </div>
