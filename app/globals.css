@@ -990,6 +990,8 @@ body {
 }
 
 .project-learn-more:hover {
+  background: rgba(0, 0, 0, 0.7);
+  border-color: var(--accent);
   box-shadow: 0 0 18px var(--accent-dim);
 }
 
