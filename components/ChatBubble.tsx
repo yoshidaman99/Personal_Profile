@@ -2,8 +2,21 @@
 
 import { motion } from "framer-motion";
 import { User } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { type Components } from "react-markdown";
 import type { UIMessage } from "ai";
+
+const ALLOWED_ELEMENTS = [
+  "p", "br", "strong", "em", "b", "i", "ul", "ol", "li",
+  "code", "pre", "a", "h1", "h2", "h3", "h4", "blockquote",
+];
+
+const markdownComponents: Components = {
+  a: ({ href, children, ...props }) => (
+    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+      {children}
+    </a>
+  ),
+};
 
 interface ChatBubbleProps {
   message: UIMessage;
@@ -12,7 +25,7 @@ interface ChatBubbleProps {
 
 function TypingIndicator() {
   return (
-    <div className="typing-indicator">
+    <div className="typing-indicator" aria-label="Jerel is typing">
       <span style={{ animationDelay: "0ms" }} />
       <span style={{ animationDelay: "150ms" }} />
       <span style={{ animationDelay: "300ms" }} />
@@ -30,9 +43,11 @@ export default function ChatBubble({ message, isLatest }: ChatBubbleProps) {
       initial={{ opacity: 0, y: 16, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+      role="article"
+      aria-label={isUser ? "Your message" : "Jerel's response"}
     >
       {!isUser && (
-        <div className="bubble-avatar">
+        <div className="bubble-avatar" aria-hidden="true">
           <img src="/avatar-frames/frame_0018.webp" alt="" className="bubble-avatar-img" />
         </div>
       )}
@@ -41,12 +56,14 @@ export default function ChatBubble({ message, isLatest }: ChatBubbleProps) {
           <TypingIndicator />
         ) : (
           <div className="bubble-content">
-            <ReactMarkdown>{message.content}</ReactMarkdown>
+            <ReactMarkdown allowedElements={ALLOWED_ELEMENTS} components={markdownComponents}>
+              {message.content}
+            </ReactMarkdown>
           </div>
         )}
       </div>
       {isUser && (
-        <div className="bubble-avatar bubble-avatar--user">
+        <div className="bubble-avatar bubble-avatar--user" aria-hidden="true">
           <User size={14} strokeWidth={2.5} />
         </div>
       )}
