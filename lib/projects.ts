@@ -120,35 +120,4 @@ export const projects: Project[] = [
     chatPrompt:
       "Tell me about your AI RAG Chatbot for School Districts",
   },
-  {
-    id: "n8n-email-receiver",
-    title: "Automated Email Parsing & Locumsmart Integration",
-    subtitle: "Webhook-driven email processor with auto-renewing API subscriptions",
-    image: "/projects/n8n-email-receiver.webp",
-    alt: "n8n workflow showing webhook email receiver and Microsoft Graph API subscription renewals",
-    description:
-      "An advanced n8n pipeline designed to monitor an inbox via Microsoft Graph webhooks. When specific job-related emails arrive (such as modifications or cancellations), the workflow intercepts the payload, extracts the Job ID, authenticates with the Locumsmart API, retrieves the necessary AR data, and triggers a secondary processing workflow. A built-in sub-workflow automatically renews the Microsoft Graph subscriptions every 3 days to ensure continuous, uninterrupted monitoring.",
-    category: "Backend Automation",
-    role: "Automation Engineer",
-    year: "2026",
-    tags: ["Email Automation", "Webhooks", "API Integration", "Microsoft Graph", "Locumsmart"],
-    techStack: ["n8n", "Microsoft Graph API", "Locumsmart API", "Webhooks", "JavaScript"],
-    workflowSteps: [
-      { step: "Subscription Renewal (3-day schedule)", detail: "Scheduled trigger automatically renews Microsoft Graph email webhook subscriptions every 3 days" },
-      { step: "Webhook Trigger", detail: "Main webhook receives instant payload when targeted emails (Canceled/Modified jobs) arrive" },
-      { step: "Microsoft Authentication", detail: "System dynamically authenticates with Microsoft to fetch the full email body details" },
-      { step: "Extract Job ID", detail: "Code node extracts the specific Job ID from the email content using custom JavaScript" },
-      { step: "Locumsmart API Sync", detail: "System authenticates with the Locumsmart API and downloads the corresponding AR data" },
-      { step: "Trigger Downstream Workflow", detail: "Final HTTP POST request pushes the combined data to trigger a downstream n8n workflow" },
-    ],
-    benefits: [
-      { label: "Instant Email Parsing", info: "Automatically intercepts and processes job-related emails the moment they arrive" },
-      { label: "Automated API Renewals" },
-      { label: "Zero Missed Notifications" },
-      { label: "$13K Annual Savings" },
-    ],
-    impact: "Eliminated manual inbox monitoring by building a highly reliable, self-sustaining webhook listener that instantly bridges email notifications with third-party Locumsmart job data.",
-    chatPrompt:
-      "Tell me about your Email Receiver and Locumsmart integration",
-  },
 ];

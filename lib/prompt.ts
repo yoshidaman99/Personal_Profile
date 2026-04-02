@@ -115,6 +115,31 @@ An intelligent, real-time chatbot built in **n8n** utilizing a **Retrieval-Augme
 
 **Tags:** \`AI Chatbot\`, \`RAG Architecture\`, \`Conversational AI\`, \`LLM Integration\`
 
+**Automated Email Parsing & Locumsmart Integration**
+An advanced **n8n** pipeline that monitors an inbox via **Microsoft Graph webhooks**. When specific job-related emails arrive (modifications or cancellations), the workflow intercepts the payload, extracts the Job ID using custom **JavaScript**, authenticates with the **Locumsmart API**, retrieves AR data, and triggers a downstream processing workflow. A built-in sub-workflow automatically renews Microsoft Graph subscriptions every 3 days to ensure continuous monitoring.
+
+**Workflow Steps (Upper Pipeline — Data Processing):**
+1. **Webhook Trigger** — Receives instant payload when targeted emails (Canceled/Modified jobs) arrive
+2. **Microsoft Authentication** — Dynamically authenticates with Microsoft to fetch the full email body
+3. **Extract Job ID** — Code node extracts the specific Job ID from the email content
+4. **Locumsmart API Sync** — Authenticates with the Locumsmart API and downloads corresponding AR data
+5. **Trigger Downstream** — HTTP POST pushes combined data to trigger a secondary n8n workflow
+
+**Workflow Steps (Lower Pipeline — Subscription Maintenance):**
+1. **3-Day Scheduled Trigger** — Runs on a recurring schedule to prevent subscription expiration
+2. **Microsoft Authentication** — Re-authenticates with Microsoft Graph
+3. **Renew Subscriptions** — Sends POST requests to renew webhook subscriptions for Canceled and Modified job types
+
+**Tech Stack:** n8n, Microsoft Graph API, Locumsmart API, Webhooks, JavaScript
+
+**Key Benefits & ROI:**
+- **Instant Email Parsing** — Automatically intercepts and processes job-related emails the moment they arrive
+- **Automated API Renewals** — Sub-workflow keeps Microsoft Graph subscriptions alive without any manual intervention
+- **Zero Missed Notifications** — Continuous monitoring ensures no email ever goes unnoticed
+- **$13K Annual Savings** — Eliminated the need for manual inbox monitoring and data entry
+
+**Tags:** \`n8n\`, \`Microsoft Graph API\`, \`Locumsmart API\`, \`Webhooks\`, \`JavaScript\`
+
 ### CONTACT / NEXT STEPS
 Jerel is open to freelance consulting, full-time automation roles, or collaborations.
 - **Best way to connect:** Book a free strategy call at https://calendly.com
