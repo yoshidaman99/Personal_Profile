@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect, useSyncExternalStore } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useState, useCallback } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 type AvatarState = "idle" | "thinking" | "speaking";
 
@@ -18,11 +18,6 @@ function getFrameUrl(frame: number) {
 
 const imagesMap = new Map<number, HTMLImageElement>();
 let imagesLoaded = false;
-let loadResolve: (() => void) | null = null;
-const loadPromise = new Promise<void>((resolve) => {
-  if (imagesLoaded) { resolve(); return; }
-  loadResolve = resolve;
-});
 
 if (typeof window !== "undefined") {
   let loadedCount = 0;
@@ -34,7 +29,6 @@ if (typeof window !== "undefined") {
       loadedCount++;
       if (loadedCount === TOTAL_FRAMES) {
         imagesLoaded = true;
-        if (loadResolve) loadResolve();
       }
     };
     imagesMap.set(idx, img);
@@ -46,50 +40,36 @@ function subscribeMouse(callback: () => void) {
   return () => window.removeEventListener("mousemove", callback);
 }
 
-function getMouseSnapshot() {
-  return { x: 0.5, y: 0.5 };
-}
+const emptyMouse = { x: 0.5, y: 0.5 };
 
 export default function Avatar({ state }: AvatarProps) {
-  const frameRef = useRef(DEFAULT_FRAME);
-  const mousePos = useRef({ x: 0.5, y: 0.5 });
-  const stateRef = useRef(state);
-  const debugRef = useRef(false);
-  const [debug, setDebug] = useState(false);
-  const [debugInfo, setDebugInfo] = useState({ x: 0.5, y: 0.5, frame: DEFAULT_FRAME });
-  const rafRef = useRef<number>(0);
-
-  stateRef.current = state;
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    mousePos.current = {
-      x: e.clientX / window.innerWidth,
-      y: e.clientY / window.innerHeight,
-    };
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "a" && e.ctrlKey) {
-        setDebug((v) => {
-          debugRef.current = !v;
-          return !v;
-        });
-      }
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("keydown", handleKey);
-    };
-  }, [handleMouseMove]);
-
   const canvasRef = useCallback((node: HTMLCanvasElement | null) => {
     if (!node) return;
 
     const ctx = node.getContext("2d");
     if (!ctx) return;
+
+    let frame = DEFAULT_FRAME;
+    let raf = 0;
+    const mousePos = { x: 0.5, y: 0.5 };
+    let currentState: AvatarState = "idle";
+    let isDebug = false;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mousePos.x = e.clientX / window.innerWidth;
+      mousePos.y = e.clientY / window.innerHeight;
+    };
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "a" && e.ctrlKey) {
+        isDebug = !isDebug;
+        const debugEl = document.querySelector(".avatar-debug") as HTMLElement | null;
+        if (debugEl) debugEl.style.display = isDebug ? "block" : "none";
+      }
+    };
+
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("keydown", onKey);
 
     const drawDefault = () => {
       const img = imagesMap.get(DEFAULT_FRAME);
@@ -105,17 +85,17 @@ export default function Avatar({ state }: AvatarProps) {
     const update = () => {
       if (!imagesLoaded) {
         drawDefault();
-        rafRef.current = requestAnimationFrame(update);
+        raf = requestAnimationFrame(update);
         return;
       }
 
       let clamped: number;
 
-      if (stateRef.current === "thinking") {
+      if (currentState === "thinking") {
         clamped = 183;
-        frameRef.current = clamped;
+        frame = clamped;
       } else {
-        const x = mousePos.current.x;
+        const x = mousePos.x;
         let targetFrame: number;
         if (x <= 0.46) {
           targetFrame = Math.round(109 - (x / 0.46) * 63);
@@ -127,15 +107,10 @@ export default function Avatar({ state }: AvatarProps) {
           targetFrame = Math.round(150 + ((x - 0.559) / 0.441) * 42);
         }
 
-        const current = frameRef.current;
-        const diff = targetFrame - current;
-        const lerped = Math.round(current + diff * 0.12);
+        const diff = targetFrame - frame;
+        const lerped = Math.round(frame + diff * 0.12);
         clamped = Math.max(1, Math.min(TOTAL_FRAMES, lerped));
-        frameRef.current = clamped;
-      }
-
-      if (debugRef.current) {
-        setDebugInfo({ x: mousePos.current.x, y: mousePos.current.y, frame: clamped });
+        frame = clamped;
       }
 
       const img = imagesMap.get(clamped);
@@ -148,13 +123,27 @@ export default function Avatar({ state }: AvatarProps) {
         ctx.drawImage(img, 0, 0);
       }
 
-      rafRef.current = requestAnimationFrame(update);
+      raf = requestAnimationFrame(update);
     };
 
-    rafRef.current = requestAnimationFrame(update);
+    raf = requestAnimationFrame(update);
+
+    const stateObserver = new MutationObserver(() => {
+      const container = node.closest(".avatar-container");
+      if (!container) return;
+      const thinkingEl = container.querySelector(".thinking-text");
+      currentState = thinkingEl ? "thinking" : "idle";
+    });
+    stateObserver.observe(node.closest(".avatar-container")!, {
+      childList: true,
+      subtree: true,
+    });
 
     return () => {
-      cancelAnimationFrame(rafRef.current);
+      cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("keydown", onKey);
+      stateObserver.disconnect();
     };
   }, []);
 
@@ -181,14 +170,6 @@ export default function Avatar({ state }: AvatarProps) {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {debug && (
-        <div className="avatar-debug">
-          <div>x: {debugInfo.x.toFixed(3)}</div>
-          <div>y: {debugInfo.y.toFixed(3)}</div>
-          <div>frame: {debugInfo.frame}</div>
-        </div>
-      )}
     </div>
   );
 }
