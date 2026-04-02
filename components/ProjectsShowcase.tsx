@@ -40,6 +40,8 @@ export default function ProjectsShowcase({
   useEffect(() => {
     return () => clearTimeout(scrollTimer.current);
   }, []);
+
+  const benefitIcons: Record<number, React.ReactNode> = {
     0: <DollarSign />,
     1: <Zap />,
     2: <TrendingUp />,
@@ -50,7 +52,9 @@ export default function ProjectsShowcase({
     <AnimatePresence>
       {visible && (
         <motion.div
+          ref={showcaseRef}
           className="projects-showcase"
+          onScroll={handleScroll}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 30 }}
