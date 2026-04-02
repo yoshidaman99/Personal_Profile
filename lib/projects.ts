@@ -239,4 +239,37 @@ export const projects: Project[] = [
     chatPrompt:
       "Tell me about your Zoho Jobs Bulk Import to MS SQL workflow",
   },
+  {
+    id: "n8n-zoho-missing-field",
+    title: "Zoho Recruit AI Resume Parser & Data Backfill",
+    subtitle: "Automated missing field extraction using AI and document conversion",
+    image: "/projects/n8n-zoho-missing-field.webp",
+    alt: "n8n workflow showing Zoho Recruit API, Google Drive document conversion, and AI Agent resume parsing",
+    description:
+      "An advanced data enrichment pipeline that audits Zoho Recruit for candidate profiles missing crucial metadata. The workflow dynamically extracts candidate resumes—utilizing a Google Drive conversion API workaround for difficult file types—and feeds the raw text into an AI Agent powered by DeepSeek and Gemini. The AI reads the unstructured resume, identifies the missing 'Profession' or 'Speciality', automatically updates the Zoho Recruit database via REST API, and logs the changes to a Google Sheet.",
+    category: "AI & Data Engineering",
+    role: "Automation Engineer",
+    year: "2025",
+    tags: ["n8n", "Zoho Recruit API", "AI Agents (DeepSeek / Gemini)", "Google Drive API", "Google Sheets API"],
+    techStack: ["n8n", "Zoho Recruit API", "Google Drive API", "Google Sheets API", "DeepSeek LLM", "Gemini LLM"],
+    workflowSteps: [
+      { step: "Query Missing Profiles", detail: "Queries Zoho Recruit API for candidates missing 'Profession' or 'Speciality' fields and merges the result lists" },
+      { step: "Loop & Extract Text", detail: "Loops through each candidate and attempts to extract raw text from their attached resume" },
+      { step: "Smart Document Conversion", detail: "If direct extraction fails, uploads the file to Google Drive for OCR/conversion, extracts text from the resulting Doc, then deletes the temp file" },
+      { step: "AI Parsing (DeepSeek / Gemini)", detail: "Feeds the resume text into an AI Agent configured with DeepSeek and Gemini models to analyze and deduce the missing fields" },
+      { step: "Parse AI Response", detail: "Parses the AI output back into structured JSON containing the extracted profession and speciality" },
+      { step: "Update Zoho Recruit", detail: "Routes the structured data via HTTP request to push the AI-extracted fields back into the candidate's Zoho Recruit profile" },
+      { step: "Log to Google Sheets", detail: "Appends a record of each successful update to a Google Sheet for auditing and tracking purposes" },
+    ],
+    benefits: [
+      { label: "AI Data Enrichment", icon: "brain", info: "Uses DeepSeek and Gemini LLMs to intelligently parse unstructured resume data" },
+      { label: "Automated Resume Parsing", icon: "zap" },
+      { label: "Smart OCR Conversion", icon: "layers" },
+      { label: "Zero Manual Entry", icon: "check" },
+      { label: "$32K Annual Savings", icon: "dollar" },
+    ],
+    impact: "Completely automated the tedious process of backfilling incomplete candidate profiles by using AI to read and extract data from unstructured resume files, significantly improving database health and recruiter search efficiency.",
+    chatPrompt:
+      "Tell me about your Zoho Recruit AI Resume Parser and Data Backfill workflow",
+  },
 ];
