@@ -172,4 +172,37 @@ export const projects: Project[] = [
     chatPrompt:
       "Tell me about your Email Receiver and Locumsmart integration",
   },
+  {
+    id: "n8n-twilio-sync",
+    title: "Twilio to MS SQL Daily Sync",
+    subtitle: "Automated ETL pipeline for daily communication logs",
+    image: "/projects/n8n-twilio-daily-sync.webp",
+    alt: "n8n workflow showing scheduled daily sync between Twilio API and Microsoft SQL database",
+    description:
+      "A scheduled n8n workflow that automatically extracts daily message logs from the Twilio API, transforms the data into SQL-compatible formats, and performs batch insertions into a Microsoft SQL database. The system also verifies the backup success and dispatches an automated notification containing the daily sync statistics.",
+    category: "Data Engineering",
+    role: "Automation Engineer",
+    year: "2026",
+    tags: ["ETL Pipeline", "Data Sync", "Database Management", "API Integration"],
+    techStack: ["n8n", "Twilio API", "Microsoft SQL Server", "JavaScript", "Cron Scheduling"],
+    workflowSteps: [
+      { step: "Schedule Trigger", detail: "Initiates the workflow automatically on a set schedule (e.g., every midnight)" },
+      { step: "Configure Date Parameters", detail: "JavaScript node calculates the correct date ranges and formats query parameters for the API call" },
+      { step: "Fetch Twilio Messages", detail: "HTTP GET request fetches communication logs (SMS/Voice) from the Twilio API" },
+      { step: "Transform to SQL Format", detail: "Custom code processes the raw JSON response, cleaning and mapping it to match the destination database schema" },
+      { step: "Prepare Batch JSON", detail: "Groups transformed records into batches for efficient bulk-insertion" },
+      { step: "Microsoft SQL Insert", detail: "Executes the database query to insert or upsert the batched Twilio records into Microsoft SQL Server" },
+      { step: "Verify Sync Stats", detail: "Follow-up SQL query checks how many rows were successfully added or updated during the current run" },
+      { step: "Send Success Notification", detail: "Dispatches an automated email or alert containing the sync statistics to notify the team" },
+    ],
+    benefits: [
+      { label: "Automated SQL Backups", icon: "database" },
+      { label: "Zero Manual Export", icon: "check" },
+      { label: "Instant Success Alerts", icon: "bell" },
+      { label: "$20K Annual Savings", icon: "dollar" },
+    ],
+    impact: "Streamlined data retention by replacing manual CSV exports with a fully automated, daily ETL pipeline, ensuring all critical communication logs are securely archived in the company's SQL database without human intervention.",
+    chatPrompt:
+      "Tell me about your Twilio Daily Sync workflow",
+  },
 ];

@@ -140,6 +140,29 @@ An advanced **n8n** pipeline that monitors an inbox via **Microsoft Graph webhoo
 
 **Tags:** \`n8n\`, \`Microsoft Graph API\`, \`Locumsmart API\`, \`Webhooks\`, \`JavaScript\`
 
+**Twilio to MS SQL Daily Sync**
+A scheduled **n8n** ETL pipeline that automatically extracts daily message logs from the **Twilio API**, transforms the data into SQL-compatible formats, and performs batch insertions into a **Microsoft SQL Server** database. The system verifies backup success and dispatches an automated notification with the daily sync statistics.
+
+**Workflow Steps:**
+1. **Schedule Trigger** — Initiates the workflow automatically on a set schedule (e.g., every midnight)
+2. **Configure Date Parameters** — JavaScript node calculates date ranges and formats query parameters for the API call
+3. **Fetch Twilio Messages** — HTTP GET request fetches communication logs (SMS/Voice) from the Twilio API
+4. **Transform to SQL Format** — Custom code processes raw JSON, cleaning and mapping it to match the database schema
+5. **Prepare Batch JSON** — Groups transformed records into batches for efficient bulk-insertion
+6. **Microsoft SQL Insert** — Executes insert or upsert query to store the batched Twilio records
+7. **Verify Sync Stats** — Follow-up SQL query checks how many rows were successfully added or updated
+8. **Send Success Notification** — Dispatches an automated email containing the sync statistics to the team
+
+**Tech Stack:** n8n, Twilio API, Microsoft SQL Server, JavaScript, Cron Scheduling
+
+**Key Benefits & ROI:**
+- **Automated SQL Backups** — Daily communication logs are archived without any manual CSV exports
+- **Zero Manual Export** — Entire ETL pipeline runs on autopilot from extraction to insertion
+- **Instant Success Alerts** — Team receives automated sync statistics after every run
+- **$20K Annual Savings** — Eliminated the need for manual data export and entry work
+
+**Tags:** \`n8n\`, \`Twilio API\`, \`Microsoft SQL Server\`, \`JavaScript\`, \`Cron Scheduling\`
+
 ### CONTACT / NEXT STEPS
 Jerel is open to freelance consulting, full-time automation roles, or collaborations.
 - **Best way to connect:** Book a free strategy call at https://calendly.com
