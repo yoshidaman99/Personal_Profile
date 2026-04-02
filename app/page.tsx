@@ -168,6 +168,7 @@ export default function Home() {
           onLearnMore={handleLearnMore}
           messages={messages}
           messagesEndRef={messagesEndRef}
+          filter={input}
         />
 
         {!showProjects && hasMessages && (
@@ -193,6 +194,7 @@ export default function Home() {
           isLoading={isLoading}
           inputRef={inputRef}
           onQuickNav={handleQuickNav}
+          isShowcase={showProjects}
         />
       </div>
     </main>
