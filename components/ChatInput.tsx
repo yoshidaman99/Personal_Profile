@@ -121,11 +121,9 @@ export default function ChatInput({
           </motion.button>
         )}
       </div>
-      {!isShowcase && (
-        <span className="chat-input-hint">
-          Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
-        </span>
-      )}
+      <span className="chat-input-hint">
+        Press <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for new line
+      </span>
       <div className="quick-nav">
         {[
           { label: "me", icon: <User size={18} /> },
