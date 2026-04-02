@@ -253,11 +253,19 @@ body {
 }
 
 .content-wrapper--centered {
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1.5rem;
   padding: 1rem 1.5rem;
   overflow-y: auto;
   min-height: 0;
+}
+
+.content-wrapper--centered > .avatar-section {
+  margin-top: auto;
+}
+
+.content-wrapper--centered > .chat-input-container {
+  margin-bottom: auto;
 }
 
 .content-wrapper--centered .chat-input-container {
