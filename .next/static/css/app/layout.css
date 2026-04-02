@@ -351,10 +351,6 @@ body {
   background: var(--border);
 }
 
-.content-wrapper--projects {
-  gap: 0;
-}
-
 .avatar-section {
   display: flex;
   flex-direction: column;
