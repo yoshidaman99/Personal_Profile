@@ -73,17 +73,22 @@ const PROJECT_LIST_KEYWORDS = [
   "every single",
 ];
 
-export function searchProjects(query: string, topK = 5): Project[] {
+export interface SearchResult {
+  projects: Project[];
+  isFiltered: boolean;
+}
+
+export function searchProjects(query: string, topK = 5): SearchResult {
   const q = query.toLowerCase().trim();
 
   if (PROJECT_LIST_KEYWORDS.some((k) => q.includes(k))) {
-    return projects;
+    return { projects, isFiltered: false };
   }
 
   const queryTerms = tokenize(query);
 
   if (queryTerms.length === 0) {
-    return projects;
+    return { projects, isFiltered: false };
   }
 
   const scored = projects.map((p) => ({
@@ -95,5 +100,9 @@ export function searchProjects(query: string, topK = 5): Project[] {
 
   const matches = scored.filter((s) => s.score > 0).slice(0, topK);
 
-  return matches.length > 0 ? matches.map((m) => m.project) : projects;
+  if (matches.length > 0) {
+    return { projects: matches.map((m) => m.project), isFiltered: true };
+  }
+
+  return { projects, isFiltered: false };
 }
