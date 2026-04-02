@@ -9,7 +9,7 @@ const SRC_DIR = path.resolve(__dirname, "..");
 function countCssCustomProperties() {
   const cssPath = path.join(SRC_DIR, "app", "globals.css");
   const content = fs.readFileSync(cssPath, "utf-8");
-  const matches = content.match(/--[a-z-]+/g) || []);
+  const matches = content.match(/--[a-z-]+/g) || [];
   return matches ? matches.length : 0;
 }
 
