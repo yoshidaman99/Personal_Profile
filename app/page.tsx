@@ -11,23 +11,10 @@ import ThemeToggle from "@/components/ThemeToggle";
 import ProjectsShowcase from "@/components/ProjectsShowcase";
 import { useAvatarState } from "@/lib/hooks/useAvatarState";
 import { useChatNavigation } from "@/lib/hooks/useChatNavigation";
-import type { Project } from "@/lib/projects";
-
-const SESSION_KEY = "jerel-chat-messages";
-
 export default function Home() {
   const { messages, input, setInput, handleSubmit, isLoading, stop, append, setMessages } =
     useChat({
       api: "/api/chat",
-      initialMessages: (() => {
-        if (typeof window === "undefined") return [];
-        try {
-          const saved = sessionStorage.getItem(SESSION_KEY);
-          return saved ? JSON.parse(saved) : [];
-        } catch {
-          return [];
-        }
-      })(),
     });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
