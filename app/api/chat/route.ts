@@ -79,7 +79,7 @@ export async function POST(req: Request) {
   }
 
   const lastUserMessage = [...sanitized].reverse().find((m) => m.role === "user");
-  const userQuery = lastUserMessage?.content ?? "";
+  const userQuery = typeof lastUserMessage?.content === "string" ? lastUserMessage.content : "";
   const relevantProjects = searchProjects(userQuery);
   const systemPrompt = BASE_PROMPT + formatProjectContext(relevantProjects);
 
