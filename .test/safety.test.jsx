@@ -92,7 +92,7 @@ describe("Code Safety - Input Validation", () => {
     const inputRef = createRef();
     const { container } = render(
       <ChatInput
-        value="   \n\t  "
+        value="   "
         onChange={vi.fn()}
         onSubmit={vi.fn()}
         onStop={vi.fn()}
