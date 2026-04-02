@@ -6,8 +6,9 @@ const TRAIL_LENGTH = 20;
 const DOT_BASE_SIZE = 220;
 const IDLE_TIMEOUT = 3000;
 const FIREWORK_PARTICLES = 10;
-const MAX_PARTICLES = 80;
+const MAX_PARTICLES = 150;
 const FRAME_INTERVAL = 1000 / 30;
+const POP_PARTICLES = 28;
 
 interface Particle {
   x: number;
@@ -16,6 +17,7 @@ interface Particle {
   vy: number;
   life: number;
   hue: number;
+  size: number;
 }
 
 export default function RainbowCursor() {
@@ -42,9 +44,11 @@ export default function RainbowCursor() {
 
     const pos = { x: -100, y: -100 };
     let visible = true;
+    let prevVisible = true;
     let tabVisible = true;
     let idleOpacity = 1;
     let isIdle = false;
+    let hasPoppedOnIdle = false;
     const FADE_SPEED = 0.03;
 
     const trail: { x: number; y: number }[] = Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }));
@@ -83,6 +87,35 @@ export default function RainbowCursor() {
           vy: Math.sin(angle) * speed,
           life: 1,
           hue: (baseHue + i * (360 / FIREWORK_PARTICLES)) % 360,
+          size: 20,
+        });
+      }
+    };
+
+    const spawnPop = (cx: number, cy: number) => {
+      const baseHue = Math.random() * 360;
+      for (let i = 0; i < POP_PARTICLES; i++) {
+        const angle = (Math.PI * 2 * i) / POP_PARTICLES + (Math.random() - 0.5) * 0.3;
+        const speed = 3 + Math.random() * 8;
+        particles.push({
+          x: cx, y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1,
+          hue: (baseHue + i * (360 / POP_PARTICLES)) % 360,
+          size: 12 + Math.random() * 14,
+        });
+      }
+      for (let i = 0; i < 8; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1 + Math.random() * 3;
+        particles.push({
+          x: cx, y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 0.8,
+          hue: (baseHue + 60) % 360,
+          size: 28 + Math.random() * 20,
         });
       }
     };
@@ -98,6 +131,7 @@ export default function RainbowCursor() {
     const resetIdleTimer = () => {
       clearTimers();
       isIdle = false;
+      hasPoppedOnIdle = false;
       idleTimer = setTimeout(() => {
         isIdle = true;
       }, IDLE_TIMEOUT);
@@ -144,11 +178,26 @@ export default function RainbowCursor() {
 
       if (isIdle) {
         idleOpacity = Math.max(0, idleOpacity - FADE_SPEED);
+        if (!hasPoppedOnIdle && idleOpacity <= 0.3) {
+          hasPoppedOnIdle = true;
+          spawnPop(pos.x, pos.y);
+        }
       } else {
         idleOpacity = Math.min(1, idleOpacity + FADE_SPEED * 2);
       }
 
-      if ((!visible && particles.length === 0) || idleOpacity <= 0) return;
+      if (!prevVisible && visible) {
+        // came back from interactive element — no pop needed
+      }
+      if (prevVisible && !visible && idleOpacity > 0.5) {
+        spawnPop(pos.x, pos.y);
+      }
+      prevVisible = visible;
+
+      if ((!visible && particles.length === 0) || idleOpacity <= 0) {
+        // still render particles even when invisible
+        if (particles.length === 0) return;
+      }
 
       trail[0] = { x: pos.x, y: pos.y };
       for (let i = 1; i < TRAIL_LENGTH; i++) {
@@ -178,17 +227,18 @@ export default function RainbowCursor() {
         p.y += p.vy;
         p.vy += 0.08;
         p.vx *= 0.98;
-        p.life -= 0.015;
+        p.life -= 0.018;
         if (p.life <= 0) {
           particles.splice(i, 1);
           continue;
         }
-        const size = 20 * p.life;
-        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size);
-        grad.addColorStop(0, `hsla(${p.hue}, 100%, 60%, ${p.life * 0.3 * idleOpacity})`);
-        grad.addColorStop(1, `hsla(${p.hue}, 100%, 60%, 0)`);
+        const pSize = p.size * p.life;
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, pSize);
+        grad.addColorStop(0, `hsla(${p.hue}, 100%, 65%, ${p.life * 0.5})`);
+        grad.addColorStop(0.6, `hsla(${p.hue}, 100%, 55%, ${p.life * 0.2})`);
+        grad.addColorStop(1, `hsla(${p.hue}, 100%, 50%, 0)`);
         ctx.beginPath();
-        ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, pSize, 0, Math.PI * 2);
         ctx.fillStyle = grad;
         ctx.fill();
       }
