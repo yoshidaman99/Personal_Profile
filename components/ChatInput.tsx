@@ -86,6 +86,7 @@ export default function ChatInput({
       <div className="chat-input-inner">
       <div className="chat-input-wrapper">
         <textarea
+          id="chat-input"
           ref={inputRef}
           className="chat-input"
           placeholder={placeholder.current}
@@ -94,6 +95,7 @@ export default function ChatInput({
           onKeyDown={handleKeyDown}
           disabled={isLoading}
           rows={1}
+          aria-label={isShowcase ? "Filter projects" : "Chat with Jerel's AI avatar"}
         />
         {isLoading ? (
           <motion.button
