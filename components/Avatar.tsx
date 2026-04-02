@@ -13,7 +13,7 @@ const TOTAL_FRAMES = 192;
 const DEFAULT_FRAME = 21;
 
 function getFrameUrl(frame: number) {
-  return `/avatar-frames/frame_${String(frame).padStart(4, "0")}.webp`;
+  return "/avatar-frames/frame_" + String(frame).padStart(4, "0") + ".webp";
 }
 
 const imagesMap = new Map<number, HTMLImageElement>();
@@ -73,8 +73,9 @@ export default function Avatar({ state }: AvatarProps) {
       }
 
       let clamped: number;
+      const st = stateRef.current;
 
-      if (stateRef.current === "thinking") {
+      if (st === "thinking") {
         clamped = 183;
         frame = clamped;
       } else {
