@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     "Vector Database",
     "Pinecone Metadata",
     "n8n Automation",
+    "RAG Chatbot",
+    "AI Chatbot",
+    "Conversational AI",
     "Philippines",
   ],
   openGraph: {
