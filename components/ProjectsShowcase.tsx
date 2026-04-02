@@ -14,9 +14,16 @@ import {
   Mail,
   RefreshCw,
   Bell,
+  CheckCircle2,
+  Globe,
+  Users,
+  BarChart3,
+  Lock,
+  Layers,
+  Rocket,
 } from "lucide-react";
 import Image from "next/image";
-import { projects, type Project } from "@/lib/projects";
+import { projects, type Project, type BenefitIcon } from "@/lib/projects";
 import { useRef, useCallback, useEffect, type ReactNode } from "react";
 
 interface ProjectsShowcaseProps {
