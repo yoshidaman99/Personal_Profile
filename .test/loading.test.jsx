@@ -61,7 +61,7 @@ describe("Loading - Image Optimization", () => {
 
   it("ProjectsShowcase uses Next.js Image component", () => {
     const content = fs.readFileSync(showcasePath, "utf-8");
-    expect(content).toContain("from 'next/image'");
+    expect(content).toContain("from \"next/image\"");
     expect(content).toContain("<Image");
   });
 
