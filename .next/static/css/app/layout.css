@@ -998,9 +998,6 @@ body {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
   background: var(--accent-btn-bg);
   color: #ffffff;
   border: 2px solid var(--accent);
