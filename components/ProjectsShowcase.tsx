@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, DollarSign, Zap, TrendingUp, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, DollarSign, Zap, TrendingUp, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { projects, type Project } from "@/lib/projects";
 
