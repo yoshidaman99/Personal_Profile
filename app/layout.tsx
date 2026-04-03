@@ -13,7 +13,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Jerel Yoshida — AI Automation Specialist",
   description:
-    "Chat with Jerel's AI avatar. 9+ years of experience in workflow automation, Go High Level, WordPress development, and front-end engineering.",
+    "Meet Jerel Yoshida — an AI Automation Specialist with 9+ years of experience building intelligent workflows, sales funnels, and CRM automations. Chat with his AI avatar to explore real projects in n8n, GoHighLevel, Pinecone, and more. Book a free strategy call and discover how automation can transform your business.",
   icons: {
     icon: [
       { url: "/favicon.ico" },
