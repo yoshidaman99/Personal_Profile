@@ -97,12 +97,37 @@ export default function Home() {
                 />
               ))}
             </AnimatePresence>
-      <Avatar state={avatarState} />
+            {isLoading && (
+              <motion.div
+                className="thinking-indicator"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+              >
+                <span className="thinking-label">Thinking</span>
+                <span className="thinking-dots-inline">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+              </motion.div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+        )}
 
-      <div className="avatar-status-text" role="status" aria-live="polite">
-        {avatarState === "thinking" && "AI Jerel is thinking..."}
-        {avatarState === "speaking" && "AI Jerel is responding"}
-        {avatarState === "idle" && hasMessages && "AI Jerel is ready"}
+        <ChatInput
+          value={input}
+          onChange={setInput}
+          onSubmit={handleSubmit}
+          onStop={stop}
+          isLoading={isLoading}
+          inputRef={inputRef}
+          onQuickNav={handleQuickNav}
+          isShowcase={showProjects}
+        />
       </div>
-
-      <motion.div
+    </main>
+  );
+}
