@@ -171,6 +171,18 @@
   box-shadow: 0 2px 16px rgba(255, 255, 255, 0.08);
 }
 
+.light-image .project-benefit-tag {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-primary);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.light-image .project-benefit-tag:hover {
+  background: rgba(0, 0, 0, 0.14);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+}
+
 .project-learn-more:hover {
   background: rgba(26, 26, 26, 0.5);
   color: var(--accent);
