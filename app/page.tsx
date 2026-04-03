@@ -18,6 +18,8 @@ export default function Home() {
     useChat({ api: "/api/chat" });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesAreaRef = useRef<HTMLDivElement>(null);
+  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [showChips, setShowChips] = useState(true);
   const avatarState = useAvatarState(isLoading);
