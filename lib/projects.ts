@@ -335,7 +335,7 @@ export const projects: Project[] = [
     ],
     impact: "Optimized the inbound lead funnel by ensuring every form submission is instantly assigned, visually tracked in the sales pipeline, and immediately acknowledged via email without any manual administrative work.",
     chatPrompt:
-      "Describe this GHL Contact Automation workflow, outline the exact steps, list the tools, and format it as a JSON project entry.",
+      "Tell me about your GHL Inbound Contact Form Automation",
     imageTheme: "light",
   },
   {
@@ -369,7 +369,7 @@ export const projects: Project[] = [
     ],
     impact: "Maximized gym membership sign-ups by replacing manual follow-ups with a fully automated, responsive SMS funnel that intelligently reacts to lead behavior to close sales.",
     chatPrompt:
-      "Describe this GHL Gym Subscription workflow, outline the exact steps including conditional branching, list the tools, and format it as a JSON project entry.",
+      "Tell me about your GHL Gym Trial Conversion Funnel",
     imageTheme: "light",
   },
   {
