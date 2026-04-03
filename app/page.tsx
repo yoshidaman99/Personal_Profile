@@ -37,6 +37,16 @@ export default function Home() {
 
   const setAvatarIdle = useCallback(() => {}, []);
 
+  const handleMessagesScroll = useCallback(() => {
+    const el = messagesAreaRef.current;
+    if (!el) return;
+    el.classList.add("is-scrolling");
+    clearTimeout(scrollTimerRef.current);
+    scrollTimerRef.current = setTimeout(() => {
+      el.classList.remove("is-scrolling");
+    }, 800);
+  }, []);
+
   const { handleBack, handleChipSelect, handleQuickNav, handleProjectsBack, handleLearnMore } =
     useChatNavigation({
       append,
