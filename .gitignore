@@ -7,3 +7,9 @@ dist/
 .env
 .env.local
 .env*.local
+.source/
+.ref/
+.build/
+.test/
+.opencode/
+.github/
