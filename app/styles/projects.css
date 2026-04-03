@@ -172,27 +172,27 @@
 }
 
 .light-image .project-benefit-tag {
-  background: rgba(0, 0, 0, 0.08);
-  color: var(--text-primary);
-  border-color: rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  background: rgba(22, 40, 72, 0.18);
+  color: #1a2a4a;
+  border-color: rgba(22, 40, 72, 0.22);
+  box-shadow: 0 2px 12px rgba(22, 40, 72, 0.1);
 }
 
 .light-image .project-benefit-tag:hover {
-  background: rgba(0, 0, 0, 0.14);
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  background: rgba(22, 40, 72, 0.28);
+  box-shadow: 0 2px 16px rgba(22, 40, 72, 0.16);
 }
 
 .light-image .project-learn-more {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(22, 40, 72, 0.8);
   color: #ffffff;
-  border-color: rgba(0, 0, 0, 0.6);
+  border-color: rgba(22, 40, 72, 0.7);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
 .light-image .project-learn-more:hover {
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(22, 40, 72, 0.92);
   color: var(--accent);
   border-color: var(--accent);
   box-shadow: 0 0 20px var(--accent-dim);
