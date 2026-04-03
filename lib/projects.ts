@@ -334,5 +334,6 @@ export const projects: Project[] = [
     impact: "Eliminated dropped leads by ensuring every missed call receives an instant text acknowledgment and is securely tracked as a callback task in the sales pipeline.",
     chatPrompt:
       "Describe this GHL Callback Lead Tracker workflow, outline the exact steps, list the tools, and format it as a JSON project entry.",
+    imageTheme: "light",
   },
 ];
