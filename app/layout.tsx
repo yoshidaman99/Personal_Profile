@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Jerel Yoshida — AI Automation Specialist",
     description:
-      "Chat with Jerel's AI avatar about automation, n8n workflows, Pinecone vector databases, Go High Level, and how to streamline your business.",
+      "Explore Jerel Yoshida's portfolio of automation projects — from n8n workflows and AI chatbots to GoHighLevel sales funnels and data pipelines. Chat with his AI avatar to learn how he helps businesses eliminate manual work, save thousands annually, and scale operations through smart automation.",
     type: "website",
   },
 };
