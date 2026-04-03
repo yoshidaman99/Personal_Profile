@@ -304,4 +304,34 @@ export const projects: Project[] = [
     chatPrompt:
       "Tell me about your Locumsmart Assignments to MS SQL Processor workflow",
   },
+  {
+    id: "ghl-callback-lead-tracker",
+    title: "GHL Missed Call Lead Tracker & Auto-Reply",
+    subtitle: "Automated SMS response and CRM pipeline routing for missed calls",
+    image: "/projects/ghl-callback-lead-tracker.webp",
+    alt: "GoHighLevel workflow showing automated SMS response and CRM opportunity creation for missed incoming calls",
+    description:
+      "A GoHighLevel (GHL) automation designed to capture missed incoming calls (busy, voicemail, or no-answer). The workflow immediately engages the caller with a delayed, natural-feeling automated SMS text message, and then automatically creates or updates an opportunity card in the CRM pipeline to guarantee a manual follow-up from the team.",
+    category: "Marketing Automation",
+    role: "GHL Expert & Automation Engineer",
+    year: "2026",
+    tags: ["GoHighLevel", "Lead Generation", "SMS Automation", "CRM Workflow"],
+    techStack: ["GoHighLevel (GHL)", "SMS Integration", "CRM Pipelines"],
+    workflowSteps: [
+      { step: "Call Trigger", detail: "Trigger activates when an incoming phone call is marked as busy, voicemail, or unanswered" },
+      { step: "Wait (Pacing)", detail: "System pauses briefly to make the upcoming reply feel organic" },
+      { step: "SMS Auto-Reply", detail: "An automated SMS message is dispatched to the caller to maintain engagement" },
+      { step: "Wait (CRM Pacing)", detail: "System pauses again to pace the pipeline update" },
+      { step: "Create/Update Opportunity", detail: "An Opportunity is automatically generated or updated in the CRM to track the lead for a callback" },
+    ],
+    benefits: [
+      { label: "Zero Missed Leads", icon: "target" },
+      { label: "Instant SMS Reply", icon: "zap" },
+      { label: "Automated CRM Tracking", icon: "database" },
+      { label: "Higher Conversion Rates", icon: "trending" },
+    ],
+    impact: "Eliminated dropped leads by ensuring every missed call receives an instant text acknowledgment and is securely tracked as a callback task in the sales pipeline.",
+    chatPrompt:
+      "Describe this GHL Callback Lead Tracker workflow, outline the exact steps, list the tools, and format it as a JSON project entry.",
+  },
 ];
