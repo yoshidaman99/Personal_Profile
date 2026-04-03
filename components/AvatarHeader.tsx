@@ -48,7 +48,8 @@ export default function AvatarHeader({
         )}
       </AnimatePresence>
       <Avatar state={avatarState} />
-      <AnimatePresence>
+
+      <motion.div
         className="greeting"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
