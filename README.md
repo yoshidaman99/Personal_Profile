@@ -66,4 +66,4 @@ npm run build
 ## Contact
 
 - **Email:** jerel.r.yoshida@gmail.com
-- **Book a call:** [calendly.com](https://calendly.com)
+- **Book a call:** [calendly.com](https://calendly.com/yoshidaman12345/30min)
