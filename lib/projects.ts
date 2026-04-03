@@ -45,6 +45,7 @@ export interface Project {
   benefits: Benefit[];
   impact: string;
   chatPrompt: string;
+  imageTheme?: "light" | "dark";
 }
 
 export const projects: Project[] = [
