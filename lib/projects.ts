@@ -400,7 +400,40 @@ export const projects: Project[] = [
     ],
     impact: "Eliminated dropped leads by ensuring every missed call receives an instant text acknowledgment and is securely tracked as a callback task in the sales pipeline.",
     chatPrompt:
-      "Describe this GHL Callback Lead Tracker workflow, outline the exact steps, list the tools, and format it as a JSON project entry.",
+      "Tell me about your GHL Missed Call Lead Tracker and Auto-Reply",
+    imageTheme: "light",
+  },
+  {
+    id: "ghl-seasonal-offering",
+    title: "GHL Date-Triggered Seasonal Campaigns",
+    subtitle: "Automated SMS promotional sequence with smart reply routing",
+    image: "/projects/ghl-seasonal-offering.webp",
+    alt: "GoHighLevel workflow showing custom date triggers, seasonal SMS offers, and conditional branching based on replies",
+    description:
+      "A targeted GoHighLevel (GHL) marketing automation triggered by custom dates, such as birthdays or seasonal events. The workflow dispatches tailored SMS offers, waits for user engagement, and branches dynamically. Responsive leads are instantly routed to a dedicated membership workflow, while unresponsive contacts receive strategically timed reminders before being evaluated and tagged for conversion.",
+    category: "Marketing Automation",
+    role: "GHL Expert & Automation Engineer",
+    year: "2025",
+    tags: ["GoHighLevel", "SMS Marketing", "Conditional Logic", "Seasonal Campaigns", "Date-Based Triggers"],
+    techStack: ["GoHighLevel (GHL)", "SMS Integration", "Conditional Branching", "CRM Tags"],
+    workflowSteps: [
+      { step: "Custom Date Trigger", detail: "Trigger activates automatically based on a custom date field stored in the CRM (e.g., matching a specific month)" },
+      { step: "Seasonal Offer SMS", detail: "System dispatches an initial Seasonal Offer SMS containing the promotion to the targeted contact" },
+      { step: "Wait (Reply Monitoring)", detail: "Workflow enters a waiting period to give the contact time to read and respond to the text" },
+      { step: "Conditional Branch", detail: "Branch logic evaluates if the contact replied or if the wait timer expired" },
+      { step: "Path A: Reply → Membership Workflow", detail: "Responsive contacts are immediately pushed into a secondary 'Membership Workflow' to finalize their upgrade" },
+      { step: "Path B: Timeout → Reminder SMS", detail: "Unresponsive contacts receive a secondary Reminder SMS after 23 hours" },
+      { step: "Final Condition Check", detail: "System checks for engagement on the reminder — successful replies get a 'Membership' tag; no response ends the workflow gracefully" },
+    ],
+    benefits: [
+      { label: "Automated Seasonal Sales", icon: "zap", info: "Runs date-specific promotional campaigns automatically without any manual triggering" },
+      { label: "Smart SMS Follow-up", icon: "mail" },
+      { label: "Higher Conversion Rates", icon: "trending" },
+      { label: "$23K Annual Savings", icon: "dollar" },
+    ],
+    impact: "Boosted recurring revenue by automating date-specific marketing campaigns that intelligently follow up with leads and route successful conversions directly into the membership pipeline without manual monitoring.",
+    chatPrompt:
+      "Tell me about your GHL Date-Triggered Seasonal Campaigns",
     imageTheme: "light",
   },
 ];
