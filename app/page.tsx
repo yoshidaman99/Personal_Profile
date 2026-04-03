@@ -99,7 +99,7 @@ export default function Home() {
         />
 
         {hasMessages && (
-          <div className="messages-area" role="log" aria-label="Chat messages" aria-live="polite">
+          <div ref={messagesAreaRef} className="messages-area" role="log" aria-label="Chat messages" aria-live="polite" onScroll={handleMessagesScroll}>
             <AnimatePresence mode="popLayout">
               {messages.map((message, i) => (
                 <ChatBubble
