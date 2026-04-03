@@ -148,7 +148,7 @@ export default function ProjectsShowcase({
                 }}
                 whileHover={{ y: -4 }}
               >
-                <div className="project-image-wrapper">
+                <div className={`project-image-wrapper${project.imageTheme === "light" ? " light-image" : ""}`}>
                   <Image
                     src={project.image}
                     alt={project.alt}
