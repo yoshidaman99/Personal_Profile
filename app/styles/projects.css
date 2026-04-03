@@ -26,15 +26,17 @@
 .projects-showcase::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 3px;
-  transition: background 0.3s ease;
+  transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .projects-showcase.is-scrolling::-webkit-scrollbar-thumb {
   background: var(--border-hover);
+  transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .projects-showcase::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
+  transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .projects-title {
